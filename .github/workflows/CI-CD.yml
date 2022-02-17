@@ -1,0 +1,43 @@
+name: Deployment Pipeline
+
+# Controls when the workflow will run
+on:
+  push:
+    paths:
+     - 'Deployment Configuration/ProcessDetails.HX_Demo.dev.json'
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  getProcessInfo:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    outputs:
+      componentIds: ${{ steps.setProcessInfo.outputs.componentIds }}
+      packageVersions: ${{ steps.setProcessInfo.outputs.packageVersions }}
+      processNames: ${{steps.setProcessInfo.outputs.processNames}}
+      # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Process Info
+        uses: actions/checkout@v2
+      - id: setProcessLevelInfo
+        run: |
+            ProcessDetails=$(cat ./Deployment Configuration/ProcessDetails.HX_Demo.dev.json)
+            environmentID=$(echo  ${ProcessDetails} | jq '.[] | .environmentID')
+            echo $environmentID
+            processName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].processName')
+            componentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].componentID')
+            packageVersion=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].packageVersion')
+           
+            ComponentsArray=$(echo $componentID)
+            echo $ComponentsArray
+            echo "::set-output name=componentIds::$ComponentsArray"
+            ProcessNamesArray=$(echo $processName)
+            echo $ProcessNamesArray
+            echo "::set-output name=processNames::$ProcessNamesArray"
+            PackageVersionArray=$(echo $packageVersion)
+            echo $packageVersion
+            echo "::set-output name=packageVersions::$PackageVersionArray"
