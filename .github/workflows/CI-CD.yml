@@ -104,6 +104,9 @@ jobs:
        id: packageDeploy
        run: |
              envName={{needs.getProcessInfo.outputs.environmentName}}
+             echo $envName
+             envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
+             echo $envId
              echo ${{needs.createPackage.outputs.packageId}}
              for p in ${{needs.createPackage.outputs.packageId}}
                do
