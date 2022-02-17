@@ -18,7 +18,7 @@ jobs:
       componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
-      devEnvironmentId: ${{steps.setProcessLevelInfo.outputs.environmentId}}
+      
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
       # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -45,8 +45,20 @@ jobs:
             PackageVersionArray=$(echo $packageVersion)
             echo $PackageVersionArray
             echo "::set-output name=packageVersions::($PackageVersionArray)"
-            
+
+
+  getEnvironmentInfo:
+   runs-on: ubuntu-latest
+   outputs:
+     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.environmentId}}
+   steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Process Info
+        uses: actions/checkout@v2
+      - id: setEnvironmentLevelInfo
+        run: |
             DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
+            echo $DevEnvironmentDetails
             devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
             echo $devEnvironmentID
             echo "::set-output name=devEnvironmentId::$devEnvironmentID"
