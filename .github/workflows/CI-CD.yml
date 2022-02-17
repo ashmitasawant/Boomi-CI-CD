@@ -103,13 +103,14 @@ jobs:
      - name: Package Deploy
        id: packageDeploy
        run: |
-             envName={{needs.getEnvironmentInfo.outputs.environmentName}}
+             envName={{needs.getProcessInfo.outputs.environmentName}}
              echo ${{needs.createPackage.outputs.packageId}}
              for p in ${{needs.createPackage.outputs.packageId}}
                do
                  if [ $envName=="Development" ]; 
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
+                     echo $envId
                      CODE=`curl  --request POST \
                                --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
                                --header 'content-type: application/json' \
