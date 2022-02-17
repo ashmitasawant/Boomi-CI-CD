@@ -91,10 +91,11 @@ jobs:
      - name: Package Deploy
        id: packageDeploy
        run: |
+             envName={{needs.getProcessInfo.outputs.environmentName}}
              echo ${{needs.createPackage.outputs.packageId}}
              for p in ${{needs.createPackage.outputs.packageId}}
                do
-                 if [${{needs.getProcessInfo.outputs.environmentName}}=="Development"];
+                 if [ $envName=="Development" ]; 
                  then
                     echo "Hi"
                  fi
