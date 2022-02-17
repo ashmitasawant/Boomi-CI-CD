@@ -58,7 +58,6 @@ jobs:
       - id: setEnvironmentLevelInfo
         run: |
             DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
-            echo $DevEnvironmentDetails
             devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
             echo $devEnvironmentID
             echo "::set-output name=devEnvironmentId::$devEnvironmentID"
@@ -99,7 +98,7 @@ jobs:
    env: 
       MY_AUTHORIZATION: ${{ secrets.MY_AUTHORIZATION }}
    runs-on: ubuntu-latest    
-   needs: [createPackage,getProcessInfo]
+   needs: [createPackage,getProcessInfo,getEnvironmentInfo]
    steps:     
      - name: Package Deploy
        id: packageDeploy
@@ -110,12 +109,13 @@ jobs:
                do
                  if [ $envName=="Development" ]; 
                  then
+                     envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      CODE=`curl  --request POST \
                                --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
                                --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
-                               --data '{"environmentId": "${{env.DEVENVIRONMENT_ID}}","packageId": "'$p'"}'`
+                               --data '{"environmentId": "$envId","packageId": "'$p'"}'`
                                
                                echo $CODE   
                  fi
