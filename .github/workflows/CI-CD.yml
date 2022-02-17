@@ -103,7 +103,7 @@ jobs:
      - name: Package Deploy
        id: packageDeploy
        run: |
-             envName={{needs.getProcessInfo.outputs.environmentName}}
+             envName={{needs.getEnvironmentInfo.outputs.environmentName}}
              echo ${{needs.createPackage.outputs.packageId}}
              for p in ${{needs.createPackage.outputs.packageId}}
                do
