@@ -18,7 +18,6 @@ jobs:
       componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
-      
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
       # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -103,11 +102,9 @@ jobs:
      - name: Package Deploy
        id: packageDeploy
        run: |
-             envName={{needs.getProcessInfo.outputs.environmentName}}
+             envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
-             envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
-             echo $envId
-             echo ${{needs.createPackage.outputs.packageId}}
+       
              for p in ${{needs.createPackage.outputs.packageId}}
                do
                  if [ $envName=="Development" ]; 
