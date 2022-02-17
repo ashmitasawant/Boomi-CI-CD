@@ -111,14 +111,7 @@ jobs:
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      echo $envId
-                     CODE=`curl  --request POST \
-                               --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
-                               --header 'content-type: application/json' \
-                               --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
-                               --data '{"environmentId": "$envId","packageId": "'$p'"}'`
-                               
-                               echo $CODE   
+                       
                  fi
                done         
                                
