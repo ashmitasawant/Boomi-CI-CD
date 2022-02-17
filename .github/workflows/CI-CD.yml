@@ -50,7 +50,7 @@ jobs:
   getEnvironmentInfo:
    runs-on: ubuntu-latest
    outputs:
-     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.environmentId}}
+     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
    steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Process Info
