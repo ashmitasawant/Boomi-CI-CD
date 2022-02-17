@@ -15,9 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      componentIds: ${{ steps.setProcessInfo.outputs.componentIds }}
-      packageVersions: ${{ steps.setProcessInfo.outputs.packageVersions }}
-      processNames: ${{steps.setProcessInfo.outputs.processNames}}
+      componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
+      packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
+      processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
+      environmentId: ${{steps.setProcessLevelInfo.outputs.environmentId}}
+      environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
       # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -28,6 +30,11 @@ jobs:
             ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
             environmentID=$(echo  ${ProcessDetails} | jq '.[] | .environmentID')
             echo $environmentID
+            echo "::set-output name=environmentId::$environmentID"
+            
+            environmentName=$(echo ${ProcessDetails} | jq '.[] | .environmentName')
+            echo $environmentName
+            echo "::set-output name=environmentName::$environmentName"
             processName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].processName')
             componentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].componentID')
             packageVersion=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].packageVersion')
@@ -39,5 +46,25 @@ jobs:
             echo $ProcessNamesArray
             echo "::set-output name=processNames::$ProcessNamesArray"
             PackageVersionArray=$(echo $packageVersion)
-            echo $packageVersion
+            echo $PackageVersionArray
             echo "::set-output name=packageVersions::$PackageVersionArray"
+
+
+  createPackage:
+   environment: Dev
+   env: 
+      MY_AUTHORIZATION: ${{ secrets.MY_AUTHORIZATION }}
+   runs-on: ubuntu-latest   
+   outputs:
+    packageId: ${{ steps.packageCreation.outputs.packageIds }}
+   needs: getProcessInfo
+   steps:
+      - uses: actions/checkout@v2
+      - name: Package Creation
+        id: packageCreation
+        run: |
+              echo ${{needs.getProcessInfo.outputs.componentIds}}
+              echo ${{needs.getProcessInfo.outputs.packageVersions}}
+              echo ${{needs.getProcessInfo.outputs.processNames}}
+              echo ${{needs.getProcessInfo.outputs.environmentId}}
+              echo ${{needs.getProcessInfo.outputs.environmentName}}
