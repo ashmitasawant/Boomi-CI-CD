@@ -18,7 +18,7 @@ jobs:
       componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
-      environmentId: ${{steps.setProcessLevelInfo.outputs.environmentId}}
+      devEnvironmentId: ${{steps.setProcessLevelInfo.outputs.environmentId}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
       # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -28,10 +28,7 @@ jobs:
       - id: setProcessLevelInfo
         run: |
             ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
-            environmentID=$(echo  ${ProcessDetails} | jq '.[] | .environmentID')
-            echo $environmentID
-            echo "::set-output name=environmentId::$environmentID"
-            
+                      
             environmentName=$(echo ${ProcessDetails} | jq '.[] | .environmentName')
             echo $environmentName
             echo "::set-output name=environmentName::$environmentName"
@@ -48,7 +45,11 @@ jobs:
             PackageVersionArray=$(echo $packageVersion)
             echo $PackageVersionArray
             echo "::set-output name=packageVersions::($PackageVersionArray)"
-
+            
+            DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
+            devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $devEnvironmentID
+            echo "::set-output name=devEnvironmentId::$devEnvironmentID"
 
   createPackage:
    environment: Dev
@@ -97,7 +98,14 @@ jobs:
                do
                  if [ $envName=="Development" ]; 
                  then
-                    echo "Hi"
+                     CODE=`curl  --request POST \
+                               --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
+                               --header 'content-type: application/json' \
+                               --header 'accept: application/json' \
+                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                               --data '{"environmentId": "${{env.DEVENVIRONMENT_ID}}","packageId": "'$p'"}'`
+                               
+                               echo $CODE   
                  fi
                done         
                                
