@@ -178,4 +178,4 @@ jobs:
         id: packageUndeploy
         run: |
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
-              echo $deployments
+              echo ${deployments}
