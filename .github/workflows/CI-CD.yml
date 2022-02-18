@@ -19,6 +19,7 @@ jobs:
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
+      modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -34,16 +35,24 @@ jobs:
             processName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].processName')
             componentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].componentID')
             packageVersion=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].packageVersion')
+            mode=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].mode')
+            
            
             ComponentsArray=$(echo $componentID)
             echo $ComponentsArray
             echo "::set-output name=componentIds::($ComponentsArray)"
+            
             ProcessNamesArray=$(echo $processName)
             echo $ProcessNamesArray
             echo "::set-output name=processNames::($ProcessNamesArray)"
+            
             PackageVersionArray=$(echo $packageVersion)
             echo $PackageVersionArray
             echo "::set-output name=packageVersions::($PackageVersionArray)"
+            
+            ModeArray=$(echo $mode)
+            echo $ModeArray
+            echo "::set-output name=modes::($ModeArray)"
 
 
   getEnvironmentInfo:
@@ -120,10 +129,12 @@ jobs:
        run: |
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
+             packageIds=${{needs.createPackage.outputs.packageId}}
+             modes=${{needs.createPackage.outputs.modes}}
        
-             for p in ${{needs.createPackage.outputs.packageId}}
+             for ((i=0;i<${#packageIds[@]};i++))
                do
-                 if [[ $envName == "Development" ]]
+                 if [ $envName == "Development" ] &&  [ ${mode[$i]} == "deploy" ];
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      CODE=`curl  --request POST \
@@ -134,7 +145,7 @@ jobs:
                                --data '{"environmentId": "'$envId'","packageId": "'$p'"}'`
                                
                                echo $CODE 
-                 elif [[ $envName == "Test" ]]  
+                 elif [ $envName == "Test" ] &&  [ ${mode[$i]} == "deploy" ];
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
                      CODE=`curl  --request POST \
@@ -147,10 +158,7 @@ jobs:
                                echo $CODE 
                  fi
                done         
-               if [[ $envName != "Dev" ]] || [[ $envName != "Test" ]]
-               then
-                  echo "No environment match"
-               fi                
+                          
 
         
         
