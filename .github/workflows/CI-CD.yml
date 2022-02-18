@@ -181,9 +181,9 @@ jobs:
         id: packageUndeploy
         run: |
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
-              for p in ${{needs.getProcessInfo.outputs.deploymentIds}}
-               do
-                  echo $p                           
-               done 
+              for ((i=0;i<${#deployments[@]};i++))
+                do
+                  echo $i
+                done
               
               
