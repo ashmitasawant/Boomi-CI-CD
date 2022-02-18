@@ -134,7 +134,7 @@ jobs:
        
              for ((i=0;i<${#packageIds[@]};i++))
                do
-                 if [ $envName == "Development" ];
+                 if [[ $envName == "Development" ]] && [[ ${mode[$i]} != "deploy" ]]
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      CODE=`curl  --request POST \
@@ -145,7 +145,7 @@ jobs:
                                --data '{"environmentId": "'$envId'","packageId": "'$p'"}'`
                                
                                echo $CODE 
-                 elif [ $envName == "Test" ];
+                 elif [[ $envName == "Test" ]] && [[ ${mode[$i]} != "deploy" ]]
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
                      CODE=`curl  --request POST \
