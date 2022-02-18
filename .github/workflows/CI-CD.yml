@@ -183,7 +183,7 @@ jobs:
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
               for p in ${{needs.getProcessInfo.outputs.deploymentIds}}
                do
-                  echo $i                           
+                  echo $p                           
                done 
               
               
