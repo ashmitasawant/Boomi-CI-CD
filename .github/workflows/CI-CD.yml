@@ -186,7 +186,7 @@ jobs:
                   CODE=`curl  --request DELETE \
                                  --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
                                  --header 'content-type: application/json' \
-                                 --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/"'${deployments[$i]}'"`
+                                 --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/"'${deployments[$i]}'"'`
 
                                  echo $CODE 
                 done
