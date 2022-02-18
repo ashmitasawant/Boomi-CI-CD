@@ -100,18 +100,22 @@ jobs:
         run: |
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
+              modes=${{needs.getProcessInfo.outputs.modes}} 
               
               for ((i=0;i<${#components[@]};i++))
               do
-                  CODE=`curl  --request POST \
-                               --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
-                               --header 'content-type: application/json' \
-                               --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/PackagedComponent' \
-                               --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
-                               echo $CODE
-                               packageIds=$(echo ${CODE} | jq '.packageId')
-                               packageIdsArray+="$packageIds "
+                  if [[ ${modes[$i]} == "deploy" ]]
+                  then
+                      CODE=`curl  --request POST \
+                                   --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/PackagedComponent' \
+                                   --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
+                                   echo $CODE
+                                   packageIds=$(echo ${CODE} | jq '.packageId')
+                                   packageIdsArray+="$packageIds "
+                  fi
               done              
               echo "::set-output name=packageIds::$packageIdsArray"
               
