@@ -128,7 +128,7 @@ jobs:
        run: |
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
-             packageIds=${{needs.createPackage.outputs.packageId}}
+             packageIds=(${{needs.createPackage.outputs.packageId}})
              modes=${{needs.getProcessInfo.outputs.modes}}
              
              for ((i=0;i<${#packageIds[@]};i++))
