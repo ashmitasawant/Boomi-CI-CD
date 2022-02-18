@@ -123,7 +123,7 @@ jobs:
        
              for p in ${{needs.createPackage.outputs.packageId}}
                do
-                 if [ $envName=="Development" ]; 
+                 if [[ $envName == "Development" ]]
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      CODE=`curl  --request POST \
@@ -134,10 +134,23 @@ jobs:
                                --data '{"environmentId": "'$envId'","packageId": "'$p'"}'`
                                
                                echo $CODE 
-                       
+                 elif [[ $envName == "Test" ]]  
+                 then
+                     envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
+                     CODE=`curl  --request POST \
+                               --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
+                               --header 'content-type: application/json' \
+                               --header 'accept: application/json' \
+                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                               --data '{"environmentId": "'$envId'","packageId": "'$p'"}'`
+                               
+                               echo $CODE 
                  fi
                done         
-                               
-              
+               if [[ $envName != "Dev" ]] || [[ $envName != "Test" ]]
+               then
+                  echo "No environment match"
+               fi                
+
         
         
