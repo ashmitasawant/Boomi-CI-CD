@@ -184,7 +184,7 @@ jobs:
               modes=${{needs.getProcessInfo.outputs.modes}}
               for ((i=0;i<${#deployments[@]};i++))
                 do
-                  if [[ ${modes[$i]} == "deploy" ]] && [[ $deployments != "" ]] 
+                  if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
                   then
                     CODE=`curl  --request DELETE \
                                    --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
