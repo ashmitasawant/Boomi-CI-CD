@@ -57,7 +57,7 @@ jobs:
             
             DeploymentsArray=$(echo $deploymentID)
             echo $DeploymentsArray
-            echo "::set-output name=deploymentIds::$DeploymentsArray"
+            echo "::set-output name=deploymentIds::($DeploymentsArray)"
             
             
   getEnvironmentInfo:
