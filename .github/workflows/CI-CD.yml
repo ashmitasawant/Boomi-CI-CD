@@ -20,6 +20,7 @@ jobs:
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
+      deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
       # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -36,6 +37,7 @@ jobs:
             componentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].componentID')
             packageVersion=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].packageVersion')
             mode=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].mode')
+            deploymentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].deploymentID')
             
             ComponentsArray=$(echo $componentID)
             echo $ComponentsArray
@@ -52,6 +54,10 @@ jobs:
             ModeArray=$(echo $mode)
             echo $ModeArray
             echo "::set-output name=modes::($ModeArray)"
+            
+            DeploymentsArray$(echo $deploymentID)
+            echo $DeploymentsArray
+            echo "::set-output name=deploymentIds::($DeploymentsArray)"
             
             
   getEnvironmentInfo:
@@ -162,3 +168,14 @@ jobs:
                  fi
                done         
                            
+  
+  undeployPackage:
+   runs-on: ubuntu-latest
+   needs: getProcessInfo
+   steps:
+      - uses: actions/checkout@v2
+      - name: Package Undeploy
+        id: packageUndeploy
+        run: |
+              deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
+              echo $deployments
