@@ -181,14 +181,18 @@ jobs:
         id: packageUndeploy
         run: |
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
+              modes=${{needs.getProcessInfo.outputs.modes}}
               for ((i=0;i<${#deployments[@]};i++))
                 do
-                  CODE=`curl  --request DELETE \
-                                 --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
-                                 --header 'content-type: application/json' \
-                                 --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/'${deployments[$i]}''`
+                  if [[ ${modes[$i]} == "deploy" ]] && [[ $deployments != "" ]] 
+                  then
+                    CODE=`curl  --request DELETE \
+                                   --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
+                                   --header 'content-type: application/json' \
+                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/'${deployments[$i]}''`
 
-                                 echo $CODE 
+                                   echo $CODE 
+                  fi
                 done
               
               
