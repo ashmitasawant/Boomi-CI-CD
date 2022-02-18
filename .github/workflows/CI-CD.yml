@@ -50,6 +50,9 @@ jobs:
    runs-on: ubuntu-latest
    outputs:
      devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
+     devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
+     testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
+     testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
    steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Process Info
@@ -60,6 +63,19 @@ jobs:
             devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
             echo $devEnvironmentID
             echo "::set-output name=devEnvironmentId::$devEnvironmentID"
+            
+            devAtomID=$(echo ${DevEnvironmentDetails} | jq '.[] | .atomId')
+            echo $devAtomID
+            echo "::set-output name=devAtomId::$devAtomID"
+            
+            TestEnvironmentDetails=$(cat ./EnvironmentConfiguration/Test.Env.Config.json)
+            testEnvironmentID=$(echo  ${TestEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $testEnvironmentID
+            echo "::set-output name=testEnvironmentId::$testEnvironmentID"
+            
+            testAtomID=$(echo ${TestEnvironmentDetails} | jq '.[] | .atomId')
+            echo $testAtomID
+            echo "::set-output name=testAtomId::$testAtomID"
 
   createPackage:
    environment: Dev
