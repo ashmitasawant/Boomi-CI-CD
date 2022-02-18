@@ -183,11 +183,6 @@ jobs:
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
               for i in ${{needs.getProcessInfo.outputs.deploymentIds}}
               do
-                CODE=`curl  --request DELETE \
-                                 --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
-                                 --header 'content-type: application/json' \
-                                 --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/"'$i'"'`
-
-                                 echo $CODE 
+                echo $i
               done
               
