@@ -55,7 +55,7 @@ jobs:
             echo $ModeArray
             echo "::set-output name=modes::($ModeArray)"
             
-            DeploymentsArray$(echo $deploymentID)
+            DeploymentsArray=$(echo $deploymentID)
             echo $DeploymentsArray
             echo "::set-output name=deploymentIds::($DeploymentsArray)"
             
