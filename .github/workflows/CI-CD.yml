@@ -170,6 +170,9 @@ jobs:
                            
   
   undeployPackage:
+   environment: Dev
+   env: 
+      MY_AUTHORIZATION: ${{ secrets.MY_AUTHORIZATION }}
    runs-on: ubuntu-latest
    needs: [getProcessInfo,deployPackage]
    steps:
