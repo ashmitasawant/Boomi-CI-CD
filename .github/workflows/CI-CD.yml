@@ -141,7 +141,7 @@ jobs:
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
                                --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
-                               --data '{"environmentId": "'$envId'","packageId": "'$i'"}'`
+                               --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                
                                echo $CODE 
                  elif [[ $envName == "Test" ]]  && [[ ${mode[$i]} != "deploy" ]]
@@ -152,7 +152,7 @@ jobs:
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
                                --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
-                               --data '{"environmentId": "'$envId'","packageId": "'$i'"}'`
+                               --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                
                                echo $CODE 
                  fi
