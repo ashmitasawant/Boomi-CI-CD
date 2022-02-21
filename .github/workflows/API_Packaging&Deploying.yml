@@ -11,13 +11,13 @@ jobs:
    getAPI_Details:
     runs-on: ubuntu-latest
     outputs:
-      apiComponentIds: ${{ steps.setProcessLevelInfo.outputs.apiComponentIds }}
-      apiPackageVersions: ${{ steps.setProcessLevelInfo.outputs.apiPackageVersions }}
-      processNames: ${{steps.setProcessLevelInfo.outputs.apiNames}}
-      apiNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
-      environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
-      modes: ${{steps.setProcessLevelInfo.outputs.modes}}
-      apiDeploymentIds: ${{steps.setProcessLevelInfo.outputs.apiDeploymentIds}}
+      apiComponentIds: ${{ steps.setAPILevelInfo.outputs.apiComponentIds }}
+      apiPackageVersions: ${{ steps.setAPILevelInfo.outputs.apiPackageVersions }}
+      processNames: ${{steps.setAPILevelInfo.outputs.apiNames}}
+      apiNames: ${{steps.setAPILevelInfo.outputs.processNames}}
+      environmentName: ${{steps.setAPILevelInfo.outputs.environmentName}}
+      modes: ${{steps.setAPILevelInfo.outputs.modes}}
+      apiDeploymentIds: ${{steps.setAPILevelInfo.outputs.apiDeploymentIds}}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get API Info
