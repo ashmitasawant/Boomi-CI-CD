@@ -210,8 +210,8 @@ jobs:
              SubmissionPayload=$(cat ./DeploymentConfiguration/SubmissionPayload.json)
              echo $SubmissionPayload
         
-             processes=($(echo ${{needs.getProcessInfo.outputs.processNames}}))
-             
+             processes=${{needs.getProcessInfo.outputs.processNames}}
+             echo $processes
              if [[ ${processes[*]} =~ (^|[[:space:]])TestWS($|[[:space:]]) ]]; 
              then
                   CODE=`curl --write-out '%{http_code}' \
