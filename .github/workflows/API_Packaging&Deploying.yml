@@ -9,8 +9,8 @@ on:
   
 jobs:
    getAPI_Details:
-   runs-on: ubuntu-latest
-   outputs:
+    runs-on: ubuntu-latest
+    outputs:
       apiComponentIds: ${{ steps.setProcessLevelInfo.outputs.apiComponentIds }}
       apiPackageVersions: ${{ steps.setProcessLevelInfo.outputs.apiPackageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.apiNames}}
@@ -18,7 +18,7 @@ jobs:
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       apiDeploymentIds: ${{steps.setProcessLevelInfo.outputs.apiDeploymentIds}}
-   steps:
+    steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get API Info
         uses: actions/checkout@v2
