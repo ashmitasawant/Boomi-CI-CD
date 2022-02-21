@@ -107,9 +107,9 @@ jobs:
         run: |
               apiComponents=${{needs.getAPI_Details.outputs.apiComponentIds}}
               apiPackageVersions=${{needs.getAPI_Details.outputs.apiPackageVersions}}
-              modes=${{needs.getProcessInfo.outputs.modes}} 
+              modes=${{needs.getAPI_Details.outputs.modes}} 
               
-              for ((i=0;i<${#components[@]};i++))
+              for ((i=0;i<${#apiComponents[@]};i++))
               do
                   if [[ ${modes[$i]} == "deploy" ]]
                   then
