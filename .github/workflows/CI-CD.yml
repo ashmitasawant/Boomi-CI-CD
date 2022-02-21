@@ -134,7 +134,8 @@ jobs:
       BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
    runs-on: ubuntu-latest    
    needs: [createPackage,getProcessInfo,getEnvironmentInfo]
-   steps:     
+   steps:   
+     - uses: actions/checkout@v2
      - name: Package Deploy
        id: packageDeploy
        run: |
