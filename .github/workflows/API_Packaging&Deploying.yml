@@ -26,15 +26,15 @@ jobs:
         run: |
             APIDetails=$(cat ./DeploymentConfiguration/ApiDetails.HX_Demo.dev.json)
                       
-            environmentName=$(echo ${ProcessDetails} | jq '.[] | .environmentName')
+            environmentName=$(echo ${APIDetails} | jq '.[] | .environmentName')
             echo $environmentName
             echo "::set-output name=environmentName::$environmentName"
-            processName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].processName')
-            apiName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].apiName')
-            apiComponentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].componentID')
-            apipackageVersion=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].packageVersion')
-            mode=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].mode')
-            api_deploymentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].deploymentID')
+            processName=$(echo ${APIDetails} | jq '.[] | .apiDetails[].processName')
+            apiName=$(echo ${APIDetails} | jq '.[] | .apiDetails[].apiName')
+            apiComponentID=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].componentID')
+            apipackageVersion=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].packageVersion')
+            mode=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].mode')
+            api_deploymentID=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].deploymentID')
             
             APIComponentsArray=$(echo $apiComponentID)
             echo $APIComponentsArray
