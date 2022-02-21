@@ -1,0 +1,127 @@
+name: API Packaging and Deploying Pipeline
+
+# Controls when the workflow will run
+on:
+  push:
+    paths:
+     - 'DeploymentConfiguration/ApiDetails.HX_Demo.dev.json'
+  workflow_dispatch:
+  
+   getAPI_Details:
+   runs-on: ubuntu-latest
+   outputs:
+      apiComponentIds: ${{ steps.setProcessLevelInfo.outputs.apiComponentIds }}
+      apiPackageVersions: ${{ steps.setProcessLevelInfo.outputs.apiPackageVersions }}
+      processNames: ${{steps.setProcessLevelInfo.outputs.apiNames}}
+      apiNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
+      environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
+      modes: ${{steps.setProcessLevelInfo.outputs.modes}}
+      apiDeploymentIds: ${{steps.setProcessLevelInfo.outputs.apiDeploymentIds}}
+   steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get API Info
+        uses: actions/checkout@v2
+      - id: setAPILevelInfo
+        run: |
+            APIDetails=$(cat ./DeploymentConfiguration/ApiDetails.HX_Demo.dev.json)
+                      
+            environmentName=$(echo ${ProcessDetails} | jq '.[] | .environmentName')
+            echo $environmentName
+            echo "::set-output name=environmentName::$environmentName"
+            processName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].processName')
+            apiName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].apiName')
+            apiComponentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].componentID')
+            apipackageVersion=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].packageVersion')
+            mode=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].mode')
+            api_deploymentID=$(echo  ${ProcessDetails} | jq '.[] | .processDetails[].deploymentID')
+            
+            APIComponentsArray=$(echo $apiComponentID)
+            echo $APIComponentsArray
+            echo "::set-output name=apiComponentIds::($APIComponentsArray)"
+            
+            API_NamesArray=$(echo $apiName)
+            echo $API_NamesArray
+            echo "::set-output name=apiNames::($API_NamesArray)"
+            
+            ProcessNamesArray=$(echo $processName)
+            echo $ProcessNamesArray
+            echo "::set-output name=processNames::($ProcessNamesArray)"
+            
+            API_PackageVersionArray=$(echo $apipackageVersion)
+            echo $API_PackageVersionArray
+            echo "::set-output name=apiPackageVersions::($API_PackageVersionArray)"
+            
+            ModeArray=$(echo $mode)
+            echo $ModeArray
+            echo "::set-output name=modes::($ModeArray)"
+            
+            API_DeploymentsArray=$(echo $api_deploymentID)
+            echo $API_DeploymentsArray
+            echo "::set-output name=apiDeploymentIds::($API_DeploymentsArray)"
+  
+  
+  getEnvironmentInfo:
+   runs-on: ubuntu-latest
+   outputs:
+     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
+     devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
+     testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
+     testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
+   steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Process Info
+        uses: actions/checkout@v2
+      - id: setEnvironmentLevelInfo
+        run: |
+            DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
+            devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $devEnvironmentID
+            echo "::set-output name=devEnvironmentId::$devEnvironmentID"
+            
+            devAtomID=$(echo ${DevEnvironmentDetails} | jq '.[] | .atomId')
+            echo $devAtomID
+            echo "::set-output name=devAtomId::$devAtomID"
+            
+            TestEnvironmentDetails=$(cat ./EnvironmentConfiguration/Test.Env.Config.json)
+            testEnvironmentID=$(echo  ${TestEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $testEnvironmentID
+            echo "::set-output name=testEnvironmentId::$testEnvironmentID"
+            
+            testAtomID=$(echo ${TestEnvironmentDetails} | jq '.[] | .atomId')
+            echo $testAtomID
+            echo "::set-output name=testAtomId::$testAtomID"
+  
+  createAPI_Package:
+   environment: Dev
+   env: 
+      BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+   runs-on: ubuntu-latest
+   outputs:
+    apipackageId: ${{ steps.packageCreation.outputs.apiPackageIds }}
+   needs: getAPI_Details
+   steps:
+      - uses: actions/checkout@v2
+      - name:  API Package Creation
+        id: packageCreation
+        run: |
+              apiComponents=${{needs.getAPI_Details.outputs.apiComponentIds}}
+              apiPackageVersions=${{needs.getAPI_Details.outputs.apiPackageVersions}}
+              modes=${{needs.getProcessInfo.outputs.modes}} 
+              
+              for ((i=0;i<${#components[@]};i++))
+              do
+                  if [[ ${modes[$i]} == "deploy" ]]
+                  then
+                      CODE=`curl  --request POST \
+                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/PackagedComponent' \
+                                   --data '{"componentId": "'${apiComponents[$i]}'","packageVersion":"'${apiPackageVersions[$i]}'"}'`
+                                   echo $CODE
+                                   packageIds=$(echo ${CODE} | jq '.packageId')
+                                   apiPackageIdsArray+="$packageIds "
+                  fi
+              done              
+              echo "::set-output name=apiPackageIds::$apiPackageIdsArray"
+            
