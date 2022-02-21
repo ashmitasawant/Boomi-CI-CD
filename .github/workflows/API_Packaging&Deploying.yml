@@ -61,14 +61,14 @@ jobs:
             echo "::set-output name=apiDeploymentIds::($API_DeploymentsArray)"
   
   
-  getEnvironmentInfo:
-   runs-on: ubuntu-latest
-   outputs:
+   getEnvironmentInfo:
+    runs-on: ubuntu-latest
+    outputs:
      devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
      devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
      testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
      testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
-   steps:
+    steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Process Info
         uses: actions/checkout@v2
@@ -92,15 +92,15 @@ jobs:
             echo $testAtomID
             echo "::set-output name=testAtomId::$testAtomID"
   
-  createAPI_Package:
-   environment: Dev
-   env: 
+   createAPI_Package:
+    environment: Dev
+    env: 
       BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
-   runs-on: ubuntu-latest
-   outputs:
-    apipackageId: ${{ steps.packageCreation.outputs.apiPackageIds }}
-   needs: getAPI_Details
-   steps:
+    runs-on: ubuntu-latest
+    outputs:
+      apipackageId: ${{ steps.packageCreation.outputs.apiPackageIds }}
+    needs: getAPI_Details
+    steps:
       - uses: actions/checkout@v2
       - name:  API Package Creation
         id: packageCreation
