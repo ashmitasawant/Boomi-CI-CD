@@ -31,7 +31,7 @@ jobs:
             echo "::set-output name=environmentName::$environmentName"
             processName=$(echo ${APIDetails} | jq '.[] | .apiDetails[].processName')
             apiName=$(echo ${APIDetails} | jq '.[] | .apiDetails[].apiName')
-            apiComponentID=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].componentID')
+            apiComponentID=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].apiComponentID')
             apipackageVersion=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].packageVersion')
             mode=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].mode')
             api_deploymentID=$(echo  ${APIDetails} | jq '.[] | .apiDetails[].deploymentID')
