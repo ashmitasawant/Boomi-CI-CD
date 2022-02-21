@@ -4,17 +4,17 @@
 	"processDetails": [{
 			"processName": "TestWS",
 			"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
-			"mode": "undeploy",
-			"packageVersion": "1.143",
-		        "deploymentID":"862509e8-9149-4a08-81ba-9b5249af329d"
+			"mode": "deploy",
+			"packageVersion": "1.144",
+		        "deploymentID":""
 
 		},
 		{
 			"processName": "TestForWS",
 			"componentID": "a7f1b658-ea28-4b36-9627-187f5d6f6446",
-			"mode": "undeploy",
-			"packageVersion": "1.143",
-			"deploymentID":"cf3ff252-f860-4494-b297-8d088c25c571"
+			"mode": "deploy",
+			"packageVersion": "1.144",
+			"deploymentID":""
 		}
 	]
 
