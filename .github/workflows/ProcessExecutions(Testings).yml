@@ -62,7 +62,7 @@ jobs:
                            echo "The process executed successfully"
                             data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
                             responseArray=[$data]
-                            lastDeploymentId=$(echo ${responseArray} | jq '.[-1] | .deploymentId')
+                            lastDeploymentId=$(echo ${responseArray} | jq '.[-1]')
                             echo $lastDeploymentId
                         else 
                            echo $CODE
