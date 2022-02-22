@@ -64,6 +64,11 @@ jobs:
                             responseArray=[$data]
                             lastDeploymentId=$(echo ${responseArray} | jq '.[-1]')
                             echo $lastDeploymentId >> ./HXv1Demo.Dev.SuccessTests.json
+                            git config user.name ashmitasawant
+                             git config user.email ashmitasawant3@gmail.com
+                             git add .
+                             git commit -m "Published Changes"
+                             git push
                             
                         else 
                            echo $CODE
