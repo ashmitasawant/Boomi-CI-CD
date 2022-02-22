@@ -38,10 +38,10 @@ jobs:
    runs-on: ubuntu-latest
    needs: getProcessInfo
    steps:
-      - uses: actions/checkout@v2
       - name: Process Executions
+        uses: actions/checkout@v2
         id: processExecutions
-        run: |
+      - run: |
              SubmissionPayload=$(cat ./DeploymentConfiguration/SubmissionPayload.json)
              echo $SubmissionPayload
              BindPayload=$(cat ./DeploymentConfiguration/BindPayload.json)
@@ -60,7 +60,7 @@ jobs:
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
-                            data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json.json)
+                            data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
                             responseArray=[$data]
                             lastDeploymentId=$(echo ${responseArray} | jq '.[-1] | .deploymentId')
                             echo $lastDeploymentId
