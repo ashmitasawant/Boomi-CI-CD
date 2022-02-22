@@ -53,7 +53,7 @@ jobs:
              then
                   CODE=`curl --write-out '%{http_code}' \
                         --request POST \
-                        --header 'authorization: ${{env.MY_AUTHORIZATION}}' \
+                        --header 'authorization: ${{env.API_AUTHORIZATION}}' \
                         --header 'content-type: application/json' \
                         --url 'https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/' \
                         --data '{
