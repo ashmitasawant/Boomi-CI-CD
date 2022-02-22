@@ -51,12 +51,12 @@ jobs:
              echo $processes
              if [[ ${processes[*]} =~ (^|[[:space:]])TestWS($|[[:space:]]) ]]; 
              then
-                  CODE=`curl --write-out '%{http_code}' \
-                        --request POST \
-                        --header 'authorization: ${{env.API_AUTHORIZATION}}' \
-                        --header 'content-type: application/json' \
-                        --url 'https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/' \
-                        --data ''$SubmissionPayload''`
+                  CODE=`curl -i \
+                        -H "Accept: application/json" \
+                        -H "Authorization: ${{env.API_AUTHORIZATION}}" \
+                        -H "Content-Type:application/json" \
+                        -X POST --data "$(SubmissionPayload)" "https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/"`
+                       
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
