@@ -71,7 +71,7 @@ jobs:
                         --header 'authorization: ${{env.API_AUTHORIZATION}}' \
                         --header 'content-type: application/json' \
                         --url 'https://c01-sg.integrate.boomi.com/ws/rest/employeeDetails/v1/employeeDetails/' \
-                        --data '"'${SubmissionPayload}'"'`
+                        --data '"'${BindPayload}'"'`
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
