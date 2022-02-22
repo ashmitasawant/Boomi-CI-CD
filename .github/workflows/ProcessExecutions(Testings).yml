@@ -60,6 +60,10 @@ jobs:
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
+                            data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json.json)
+                            responseArray=[$data]
+                            lastDeploymentId=$(echo ${responseArray} | jq '.[-1] | .deploymentId')
+                            echo $lastDeploymentId
                         else 
                            echo $CODE
                         fi
