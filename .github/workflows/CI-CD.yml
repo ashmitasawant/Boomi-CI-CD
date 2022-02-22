@@ -156,8 +156,9 @@ jobs:
                                --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                
+                             
                                echo $CODE 
-                               echo $CODE >> HXv1Demo.Dev.Outcome.json
+                               echo $CODE, >> HXv1Demo.Dev.Outcome.json
                                git config user.name ashmitasawant
                                git config user.email ashmitasawant3@gmail.com
                                git add .
