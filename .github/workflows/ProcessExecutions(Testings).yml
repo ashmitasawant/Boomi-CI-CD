@@ -9,12 +9,34 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+ getProcessInfo:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    outputs:
+      processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
+      
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Process Info
+        uses: actions/checkout@v2
+      - id: setProcessLevelInfo
+        run: |
+            ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+                      
+            processName=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].processName')
+                       
+            ProcessNamesArray=$(echo $processName)
+            echo $ProcessNamesArray
+            echo "::set-output name=processNames::($ProcessNamesArray)"
+            
+            
  processExecution:
    environment: Dev
    env: 
       MY_AUTHORIZATION: ${{ secrets.MY_AUTHORIZATION }}
    runs-on: ubuntu-latest
-   needs: [getProcessInfo,getEnvironmentInfo]
+   needs: getProcessInfo
    steps:
       - uses: actions/checkout@v2
       - name: Process Executions
@@ -22,6 +44,8 @@ jobs:
         run: |
              SubmissionPayload=$(cat ./DeploymentConfiguration/SubmissionPayload.json)
              echo $SubmissionPayload
+             BindPayload=$(cat ./DeploymentConfiguration/BindPayload.json)
+             echo $BindPayload
         
              processes=${{needs.getProcessInfo.outputs.processNames}}
              echo $processes
@@ -47,11 +71,7 @@ jobs:
                         --header 'authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5ZRzFGQTQ6OWJmZDM5NWUtMzYxZC00MWFkLTgxMDctMTU0ZjU5Mzg0MDJm' \
                         --header 'content-type: application/json' \
                         --url 'https://c01-sg.integrate.boomi.com/ws/rest/employeeDetails/v1/employeeDetails/' \
-                        --data '    {
-                                      "name":"Abhishek",
-                                      "age":20,
-                                      "role":"Software Developer"
-                                     }'`
+                        --data '$BindPayload'`
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
