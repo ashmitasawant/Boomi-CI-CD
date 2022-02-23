@@ -56,8 +56,8 @@ jobs:
                         -H "Accept: application/json" \
                         -H "Authorization: ${{env.API_AUTHORIZATION}}" \
                         -H "Content-Type:application/json" \
-                        -X POST --data "SubmissionPayload" "https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/"`
-                       
+                        -X POST --data "{"nam":"Ashmita","ag":25,"rol":"Software Engineer"}" "https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/"`
+
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
@@ -72,7 +72,7 @@ jobs:
                               git commit -m "Published Changes"
                               git push
                             
-                        elif [[$CODE != *"200"* ]]
+                        elif [[ $CODE != *"200"* ]]
                         then 
                            echo $CODE
                            
