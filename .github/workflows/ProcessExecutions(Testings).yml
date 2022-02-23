@@ -51,6 +51,7 @@ jobs:
              echo $processes
              if [[ ${processes[*]} =~ (^|[[:space:]])TestWS($|[[:space:]]) ]]; 
              then
+                  processName="TestWS"
                   CODE=`curl -i \
                         -H "Accept: application/json" \
                         -H "Authorization: ${{env.API_AUTHORIZATION}}" \
@@ -60,17 +61,30 @@ jobs:
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
-                            data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
-                            responseArray=[$data]
-                            lastDeploymentId=$(echo ${responseArray} | jq '.[-1]')
-                            echo $lastDeploymentId, >> ./HXv1Demo.Dev.SuccessTests.json
-                            git config user.name ashmitasawant
-                             git config user.email ashmitasawant3@gmail.com
-                             git add .
-                             git commit -m "Published Changes"
-                             git push
+                           
+                              data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
+                              responseArray=[$data]
+                              lastDeploymentId=$(echo ${responseArray} | jq '.[-1]')
+                              echo $lastDeploymentId, >> ./HXv1Demo.Dev.SuccessTests.json
+                              git config user.name ashmitasawant
+                              git config user.email ashmitasawant3@gmail.com
+                              git add .
+                              git commit -m "Published Changes"
+                              git push
                             
-                        else 
+                        elif [[$CODE != *"200"* ]]
+                        then 
                            echo $CODE
+                           
+                           data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
+                              responseArray=[$data]
+                              lastDeploymentId=$(echo ${responseArray} | jq '.[-1] | .deploymentId')
+                              lastPackageId=$(echo ${responseArray} | jq '.[-1] | .packageId')
+                              lastPackageVersion=$(echo ${responseArray} | jq '.[-1] | .packageVersion')
+                              lastComponentId=$(echo ${responseArray} | jq '.[-1] | .componentId')
+                              process_Name=$processName
+                              
+                              
+                         
                         fi
              fi
