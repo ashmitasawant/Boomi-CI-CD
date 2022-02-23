@@ -58,7 +58,7 @@ jobs:
                         -H "Content-Type:application/json" \
                         -X POST --data "SubmissionPayload" "https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/"`
                        
-                        if [[ $CODE == *"200"* ]]
+                        if [ $CODE == *"200"* ]
                         then
                            echo "The process executed successfully"
                            
@@ -72,15 +72,14 @@ jobs:
                               git commit -m "Published Changes"
                               git push
                             
-                        elif [[$CODE != *"200"* ]]
+                        elif [$CODE != *"200"* ]
                         then 
                            echo $CODE
                            
-                           data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
-                              responseArray=[$data]
-                              lastDeploymentId=$(echo ${responseArray} | jq '.[-2] | .deploymentId')
+                           outcome=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
+                              response=[$outcome]
+                              lastDeploymentId=$(echo ${response} | jq '.[-2] | .deploymentId')
                               echo $lastDeploymentId
                               
-                         
-                        fi
+                       fi
              fi
