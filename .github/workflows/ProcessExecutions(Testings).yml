@@ -35,6 +35,7 @@ jobs:
    environment: Dev
    env: 
       API_AUTHORIZATION: ${{ secrets.API_AUTHORIZATION }}
+      BOOMI_AUTHORIZATION : ${{ secrets.BOOMI_AUTHORIZATION }}
    runs-on: ubuntu-latest
    needs: getProcessInfo
    steps:
@@ -78,8 +79,21 @@ jobs:
                            
                            outcome=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
                               response=[$outcome]
-                              lastDeploymentId=$(echo ${response} | jq '.[-2] | .deploymentId')
-                              echo $lastDeploymentId
+                              previousDeploymentId=$(echo ${response} | jq '.[-2] | .deploymentId')
+                              lastDeploymentId=$(echo ${response} | jq '.[-1] | .deploymentId')
+                              echo $previousDeploymentId
                               
-                       fi
+                              if [[ -z  $previousDeploymentId ]]
+                              then
+                              
+                                   CODE=`curl -i \
+                                              -H "Authorization: ${{env.BOOMI_AUTHORIZATION}}" \
+                                              -X DELETE "https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/'$lastDeploymentId'"`
+                                   if [[ $CODE == *"true""* ]]
+                                   then 
+                                     echo "The process undeployed successfully"
+                                   fi
+                               
+                              fi   
+                        fi
              fi
