@@ -64,7 +64,8 @@ jobs:
                            echo "The process executed successfully"
                            
                               ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
-                              indexValueOfProcess= $(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "$processName") | $i')
+                              echo $ProcessDetails
+                              indexValueOfProcess= $(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "TestWS") | $i')
                               echo "Index value is:" $indexValueOfProcess
                         fi
              fi
