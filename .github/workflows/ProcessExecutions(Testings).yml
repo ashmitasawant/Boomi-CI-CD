@@ -63,37 +63,7 @@ jobs:
                         then
                            echo "The process executed successfully"
                            
-                              data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
-                              responseArray=[$data]
-                              lastDeploymentId=$(echo ${responseArray} | jq '.[-1]')
-                              echo $lastDeploymentId, >> ./HXv1Demo.Dev.SuccessTests.json
-                              git config user.name ashmitasawant
-                              git config user.email ashmitasawant3@gmail.com
-                              git add .
-                              git commit -m "Published Changes"
-                              git push
-                            
-                        elif [[ $CODE != *"200"* ]]
-                        then 
-                           echo $CODE
-                           
-                           outcome=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
-                              response=[$outcome]
-                              previousDeploymentId=$(echo ${response} | jq '.[-2] | .deploymentId')
-                              lastDeploymentId=$(echo ${response} | jq '.[-1] | .deploymentId')
-                              echo $previousDeploymentId
-                              
-                              if [[ -z  $previousDeploymentId ]]
-                              then
-                              
-                                   CODE=`curl -i \
-                                              -H "Authorization: ${{env.BOOMI_AUTHORIZATION}}" \
-                                              -X DELETE "https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/'$lastDeploymentId'"`
-                                   if [[ $CODE == *"true""* ]]
-                                   then 
-                                     echo "The process undeployed successfully"
-                                   fi
-                               
-                              fi   
-                        fi
+                              ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+                              indexValueOfProcess= $(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "$processName") | $i'
+                              echo $indexValueOfProcess
              fi
