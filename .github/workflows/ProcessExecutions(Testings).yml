@@ -70,8 +70,8 @@ jobs:
                               echo $componentId
                               
                               data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json);
-                              responseArray=[$data]
-                              indexValueOfComponentId=$(echo  ${responseArray} | jq '.| range(0;length) as $i | select(.[$i].componentId== "'"$componentId"'") | $i');
+                              responseArray=[$data];
+                              indexValueOfComponentId=$(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId== "'$componentId'") | $c');
                               echo $indexValueOfComponentId
                               
                               
