@@ -75,6 +75,9 @@ jobs:
                               IFS=$'\n'
                               HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                               echo "Highest Index is:" $HighestIndexValue
+                              
+                              deploymentInfo=($(echo  ${responseArray} | jq '.['$HighestIndexValue']'
+                              echo $deploymentInfo
 
                               
                         fi
