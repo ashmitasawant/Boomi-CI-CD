@@ -71,7 +71,7 @@ jobs:
                               
                               data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
                               responseArray=[$data]
-                              indexValueOfComponentId=$(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c');
+                              indexValueOfComponentId=($(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
                               echo $indexValueOfComponentId
                               
                               
