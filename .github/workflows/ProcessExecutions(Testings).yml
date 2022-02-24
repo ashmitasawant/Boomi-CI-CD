@@ -79,8 +79,19 @@ jobs:
                               deploymentInfo=$(echo  ${responseArray} | jq '.['$HighestIndexValue']')
                               echo $deploymentInfo
                               
-                              ProcessComponentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .componentId')
-                              echo $ProcessComponentId
+                              processComponentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .componentId')
+                              echo $processComponentId
+                              processPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .packageId')
+                              processPackageVersion=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .packageVersion')
+                              processComponentVersion=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .componentVersion')
+                              previousPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'-1] | .packageId')
+                              processDeploymentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .deploymentId')
+                              
+                              echo $processPackageId
+                              echo $processPackageVersion
+                              echo $processComponentVersion
+                              echo $previousPackageId
+                              echo $processDeploymentId
 
                               
                         fi
