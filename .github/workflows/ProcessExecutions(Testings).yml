@@ -71,10 +71,10 @@ jobs:
                               
                               data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
                               responseArray=[$data]
-                              indexValueOfComponentId=$(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c')
-                              indexValueArrayOfComponentId=($indexValueOfComponentId)
-                              echo $indexValueArrayOfComponentId
-                              
+                              indexValueOfComponentId=($(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
+                              IFS=$'\n'
+                              echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1
+
                               
                         fi
              fi
