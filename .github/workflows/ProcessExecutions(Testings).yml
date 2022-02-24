@@ -79,7 +79,8 @@ jobs:
                               deploymentInfo=$(echo  ${responseArray} | jq '.['$HighestIndexValue']')
                               echo $deploymentInfo
                               
-                              
+                              ProcessComponentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .componentId')
+                              echo $ProcessComponentId
 
                               
                         fi
