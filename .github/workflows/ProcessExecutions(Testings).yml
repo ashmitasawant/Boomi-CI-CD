@@ -58,7 +58,6 @@ jobs:
                         -H "Authorization: ${{env.API_AUTHORIZATION}}" \
                         -H "Content-Type:application/json" \
                         -X POST --data "$SubmissionPayload" "https://c01-sg.integrate.boomi.com/ws/rest/personDetails/v1/personDetails/"`
-
                         if [[ $CODE == *"200"* ]]
                         then
                            echo "The process executed successfully"
@@ -66,14 +65,14 @@ jobs:
                               ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
                               echo $ProcessDetails
                               indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "'$processName'") | $i');
-                              echo "Index value of the process is:" $indexValueOfProcess
+                              echo "Index value is:" $indexValueOfProcess
                               componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                               echo $componentId
                               
                               data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
                               responseArray=[$data]
-                              indexValueOfComponentId=$(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId== "'$componentId'") | $c');
-                              echo "Index value of ComponentId is:" $indexValueOfComponentId
+                              indexValueOfComponentId=$(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId== "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5") | $c');
+                              echo $indexValueOfComponentId
                               
                               
                         fi
