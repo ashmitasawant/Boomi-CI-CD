@@ -94,7 +94,7 @@ jobs:
                               echo $previousPackageId
                               echo $processDeploymentId
                               echo $environmentId
-                              createSuccessJson='{"processName":'$processName',"processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"componentVersion":'$processComponentVersion',"previousPackageId":'$previousPackageId',"deploymentId":'$processDeploymentId',"environmentId":'$environmentId'}'
+                              createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"componentVersion":'$processComponentVersion',"previousPackageId":'$previousPackageId',"deploymentId":'$processDeploymentId',"environmentId":'$environmentId'}'
                                
                               echo $createSuccessJson >> HXv1Demo.Dev.SuccessTests.json
                               git config user.name ashmitasawant
