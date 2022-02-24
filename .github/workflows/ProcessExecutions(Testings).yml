@@ -65,9 +65,16 @@ jobs:
                            
                               ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
                               echo $ProcessDetails
-                              indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "TestWS") | $i')
+                              indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "$processName") | $i')
                               echo "Index value is:" $indexValueOfProcess
                               componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                               echo $componentId
+                              
+                              data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
+                              responseArray=[$data]
+                              indexValueOfComponentId=$(echo  ${responseArray} | jq '. | range(0;length) as $i | select(.[$i].componentId== "$componentId") | $i')
+                              echo $indexValueOfComponentId
+                              
+                              
                         fi
              fi
