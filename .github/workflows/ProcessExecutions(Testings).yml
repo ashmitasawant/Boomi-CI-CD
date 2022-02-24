@@ -73,7 +73,7 @@ jobs:
                               responseArray=[$data]
                               indexValueOfComponentId=($(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
                               IFS=$'\n'
-                              echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1
+                              echo "Highest index is: ${indexValueOfComponentId[*]}" | sort -nr | head -n1
 
                               
                         fi
