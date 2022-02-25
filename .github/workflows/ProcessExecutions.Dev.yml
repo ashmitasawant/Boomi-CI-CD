@@ -121,7 +121,7 @@ jobs:
                                
                         elif [[ $CODE != *"200"* ]]
                         then
-                           echo "The process executed successfully"
+                           echo $CODE
                            
                               ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json);
                               echo $ProcessDetails
@@ -139,6 +139,7 @@ jobs:
                               
                               successOutcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json)
                               devSucessOutcomeData=[$successOutcomeData]
+                              echo $devSucessOutcomeData
                             
                               if [ $HighestIndexValue == 0 ]
                               then
@@ -170,7 +171,7 @@ jobs:
                               echo $environmentId
                               createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
                                
-                              echo $createSuccessJson >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
+                              echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
                               git config user.name ashmitasawant
                                git config user.email ashmitasawant3@gmail.com
                                git add .
