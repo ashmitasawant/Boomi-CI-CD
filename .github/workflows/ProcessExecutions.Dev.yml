@@ -119,7 +119,7 @@ jobs:
                                git config pull.rebase false
                                git push --force origin main
                                
-                        if [[ $CODE == *"200"* ]]
+                        elif [[ $CODE != *"200"* ]]
                         then
                            echo "The process executed successfully"
                            
