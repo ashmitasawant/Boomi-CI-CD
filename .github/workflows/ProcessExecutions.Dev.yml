@@ -80,6 +80,15 @@ jobs:
                               HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                               echo "Highest Index is:" $HighestIndexValue
                               
+                              if [ $HighestIndexValue == 0 ]
+                              then
+                                 previousPackageId=""
+                                 echo $previousPackageId
+                              else
+                                 previousPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'-1] | .packageId')
+                                 echo $previousPackageId
+                              fi
+                              
                               deploymentInfo=$(echo  ${responseArray} | jq '.['$HighestIndexValue']')
                               echo $deploymentInfo
                               
@@ -92,12 +101,8 @@ jobs:
                               processDeploymentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .deploymentId')
                               environmentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .environmentId')
                               
-                              if [[ $HighestIndexValue == 0 ]]
-                              then 
-                                 previousPackageId= ""
-                              else
-                                 previousPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'-1] | .packageId')
-                              fi
+                              
+                              
                               echo $processPackageId
                               echo $processPackageVersion
                               echo $processComponentVersion
