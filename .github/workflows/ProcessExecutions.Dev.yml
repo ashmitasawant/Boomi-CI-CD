@@ -137,10 +137,9 @@ jobs:
                               HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                               echo "Highest Index is:" $HighestIndexValue
                               
-                              
-                              
-                              
-                              
+                              successOutcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json)
+                              devSucessOutcomeData=[$successOutcomeData]
+                            
                               if [ $HighestIndexValue == 0 ]
                               then
                                  previousPackageId=null
@@ -151,10 +150,7 @@ jobs:
                                   mode=deploy
                                   echo $previousPackageId
                               fi
-                              
-                              successOutcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json)
-                              devSucessOutcomeData=[$successOutcomeData]
-                                 
+                         
                               deploymentInfo=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValue']')
                               echo $deploymentInfo
                               
