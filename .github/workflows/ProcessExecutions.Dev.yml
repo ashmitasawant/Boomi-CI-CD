@@ -130,7 +130,7 @@ jobs:
                               componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                               echo $componentId
                               
-                              outcomeData =$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
+                              outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                               devOutcomeData=[$outcomeData]
                               indexValueOfComponentId=($(echo  ${devOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
                               IFS=$'\n'
