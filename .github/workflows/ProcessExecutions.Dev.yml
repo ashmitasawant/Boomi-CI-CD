@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v2
         id: processExecutions
       - run: |
-             SubmissionPayload=$(cat ./'DevPayloads/Submission.Dev.json);
+             SubmissionPayload=$(cat ./DevPayloads/Submission.Dev.json);
              echo $SubmissionPayload
              BindPayload=$(cat ./DevPayloads/Bind.Dev.json);
              echo $BindPayload
