@@ -158,7 +158,7 @@ jobs:
                                
                              
                                echo $CODE 
-                               echo $CODE, >> HXv1Demo.Dev.Outcome.json
+                               echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json
                                git config user.name ashmitasawant
                                git config user.email ashmitasawant3@gmail.com
                                git add .
@@ -178,7 +178,7 @@ jobs:
                                
                                echo $CODE 
                                echo $CODE 
-                               echo $CODE >> HXv1Demo.Test.Outcome.json
+                               echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
                                git config user.name ashmitasawant
                                git config user.email ashmitasawant3@gmail.com
                                git add .
