@@ -82,7 +82,7 @@ jobs:
                               
                               if [ $HighestIndexValue == 0 ]
                               then
-                                 previousPackageId=""
+                                 previousPackageId=null
                                  echo $previousPackageId
                               else
                                  previousPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'-1] | .packageId')
