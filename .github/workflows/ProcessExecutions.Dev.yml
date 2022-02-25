@@ -46,9 +46,9 @@ jobs:
         uses: actions/checkout@v2
         id: processExecutions
       - run: |
-             SubmissionPayload=$(cat ./DevPayloads/Submission.Dev.json);
+             SubmissionPayload=$(cat ./DevPayloads/Submission.Dev.json)
              echo $SubmissionPayload
-             BindPayload=$(cat ./DevPayloads/Bind.Dev.json);
+             BindPayload=$(cat ./DevPayloads/Bind.Dev.json)
              echo $BindPayload
         
              processes=${{needs.getProcessInfo.outputs.processNames}}
@@ -146,7 +146,7 @@ jobs:
                                  mode=undeploy
                                  echo $previousPackageId
                               else
-                                  previousPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'-1] | .packageId')
+                                  previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValue'-1] | .packageId')
                                   mode=deploy
                                   echo $previousPackageId
                               fi
