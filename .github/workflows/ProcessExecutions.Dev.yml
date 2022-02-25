@@ -88,10 +88,16 @@ jobs:
                               processPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .packageId')
                               processPackageVersion=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .packageVersion')
                               processComponentVersion=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .componentVersion')
-                              previousPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'-1] | .packageId')
+                              
                               processDeploymentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .deploymentId')
                               environmentId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'] | .environmentId')
                               
+                              if [[ $HighestIndexValue == 0 ]]
+                              then 
+                                 previousPackageId= ""
+                              else
+                                 previousPackageId=$(echo  ${responseArray} | jq '.['$HighestIndexValue'-1] | .packageId')
+                              fi
                               echo $processPackageId
                               echo $processPackageVersion
                               echo $processComponentVersion
