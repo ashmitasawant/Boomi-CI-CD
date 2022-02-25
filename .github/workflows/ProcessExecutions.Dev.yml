@@ -4,7 +4,10 @@ name: Testing Pipeline
 on:
   push:
     paths:
-     - 'DeploymentConfiguration/SubmissionPayload.json'
+     - 'DevPayloads/Submission.Dev.json'
+     - 'DevPayloads/Bind.Dev.json'
+     - 'DevPayloads/Quote.Dev.json'
+     
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -69,7 +72,7 @@ jobs:
                               componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                               echo $componentId
                               
-                              data=$(sed '$ s/.$//' ./HXv1Demo.Dev.Outcome.json)
+                              data=$(sed '$ s/.$//' .DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                               responseArray=[$data]
                               indexValueOfComponentId=($(echo  ${responseArray} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
                               IFS=$'\n'
@@ -96,7 +99,7 @@ jobs:
                               echo $environmentId
                               createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"componentVersion":'$processComponentVersion',"previousPackageId":'$previousPackageId',"deploymentId":'$processDeploymentId',"environmentId":'$environmentId'}'
                                
-                              echo $createSuccessJson >> HXv1Demo.Dev.SuccessTests.json
+                              echo $createSuccessJson >> DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json
                               git config user.name ashmitasawant
                                git config user.email ashmitasawant3@gmail.com
                                git add .
