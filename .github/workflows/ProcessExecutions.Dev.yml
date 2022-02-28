@@ -175,7 +175,7 @@ jobs:
              
              if [[ ${processes[*]} =~ (^|[[:space:]])TestForWS($|[[:space:]]) ]]; 
              then
-                  processName="TestWS"
+                  processName="TestForWS"
                   CODE=`curl -i \
                         -H "Accept: application/json" \
                         -H "Authorization: ${{env.API_AUTHORIZATION}}" \
@@ -290,3 +290,6 @@ jobs:
                                   
                         fi
              fi
+             
+             
+           
