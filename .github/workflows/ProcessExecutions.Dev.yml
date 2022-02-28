@@ -157,7 +157,7 @@ jobs:
                               then
                                  previousPackageId=null
                                  mode=undeploy
-                                 echo $previousPackageId
+                                 echo "Previour PID is:" $previousPackageId
                                  createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
                                  echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
                                   git config user.name ashmitasawant
