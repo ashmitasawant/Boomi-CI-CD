@@ -139,34 +139,46 @@ jobs:
                               
                              SuccessOutcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json)
                              devSuccessOutcomeData=[$SuccessOutcomeData]
-                             indexValueOfComponentId=($(echo  ${devSuccessOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].processId=='${componentId}' ) | $c'))
+                             indexValueOfComponentId=($(echo ${devSuccessOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].processId=='${componentId}' ) | $c'))
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                              echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
-                            
+                             
+                             processComponentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .componentId')
+                              processPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
+                              processPackageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
+                              processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
+                              
                               if [ $HighestIndexValue == 0 ]
                               then
                                  previousPackageId=null
                                  mode=undeploy
                                  echo $previousPackageId
+                                 createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
+                                 echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
+                                  git config user.name ashmitasawant
+                                   git config user.email ashmitasawant3@gmail.com
+                                   git add .
+                                   git commit -m "Published Changes"
+                                   git config pull.rebase false
+                                   git push --force origin main
+                              
                               else
                                   mode=deploy 
                                   previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
-                                 
+                                 createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
+                                 echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
+                                  git config user.name ashmitasawant
+                                   git config user.email ashmitasawant3@gmail.com
+                                   git add .
+                                   git commit -m "Published Changes"
+                                   git config pull.rebase false
+                                   git push --force origin main
+                              
                               fi
-                              processComponentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .componentId')
-                              processPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
-                              processPackageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
-                              processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
-                              createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
+                              
                                
-                              echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
-                              git config user.name ashmitasawant
-                               git config user.email ashmitasawant3@gmail.com
-                               git add .
-                               git commit -m "Published Changes"
-                               git config pull.rebase false
-                               git push --force origin main
+                              
                                 
                              
                                 
