@@ -157,31 +157,25 @@ jobs:
                               then
                                  previousPackageId=null
                                  mode=undeploy
-                                 echo "Previour PID is:" $previousPackageId
-                                 createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
-                                 echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
-                                  git config user.name ashmitasawant
-                                   git config user.email ashmitasawant3@gmail.com
-                                   git add .
-                                   git commit -m "Published Changes"
-                                   git config pull.rebase false
-                                   git push --force origin main
+                                 
+
                                    
                               
                               else
                                   mode=deploy 
                                   previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
-                                 createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
-                                 echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
-                                  git config user.name ashmitasawant
-                                   git config user.email ashmitasawant3@gmail.com
-                                   git add .
-                                   git commit -m "Published Changes"
-                                   git config pull.rebase false
-                                   git push --force origin main
+                                
                               
                               fi
-                              
+                              echo "Previour PID is:" $previousPackageId
+                              createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
+                              echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
+                              git config user.name ashmitasawant
+                              git config user.email ashmitasawant3@gmail.com
+                              git add .
+                              git commit -m "Published Changes"
+                              git config pull.rebase false
+                              git push --force origin main
                                
                               
                                 
