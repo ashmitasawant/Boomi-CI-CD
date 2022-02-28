@@ -153,7 +153,7 @@ jobs:
                               processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
                               echo $processDeploymentId
                               
-                              if [ $HighestIndexValue == 0 ]
+                              if [ $HighestIndexValueInSuccess == 0 ]
                               then
                                  previousPackageId=null
                                  mode=undeploy
