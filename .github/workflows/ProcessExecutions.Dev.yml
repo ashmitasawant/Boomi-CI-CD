@@ -90,7 +90,7 @@ jobs:
                                  previousPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'-1] | .packageId')
                                  echo $previousPackageId
                               fi
-                              
+                              echo "PPP is:" $previousPackageId
                               deploymentInfo=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue']')
                               echo $deploymentInfo
                               
@@ -159,7 +159,7 @@ jobs:
                                   mode=deploy 
                                   previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
                               fi
-                              
+                              echo "PPP is:" $previousPackageId
                               
                               createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
                               echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
@@ -208,7 +208,7 @@ jobs:
                                  previousPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'-1] | .packageId')
                                  echo $previousPackageId
                               fi
-                              
+                              echo "PPP is:" $previousPackageId
                               deploymentInfo=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue']')
                               echo $deploymentInfo
                               
@@ -278,7 +278,7 @@ jobs:
                                   previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
                               fi
                               
-                              
+                              echo "PPP is:" $previousPackageId
                               createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
                               echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
                               git config user.name ashmitasawant
