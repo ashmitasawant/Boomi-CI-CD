@@ -4,7 +4,7 @@
 	"processDetails": [{
 			"processName": "TestWS",
 			"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
-			"mode": "deploy",
+			"mode": "none",
 			"packageVersion": "v.7",
 		        "deploymentID":""
 
@@ -13,7 +13,7 @@
 			"processName": "TestForWS",
 			"componentID": "a7f1b658-ea28-4b36-9627-187f5d6f6446",
 			"mode": "deploy",
-			"packageVersion": "v.7",
+			"packageVersion": "v.8",
 			"deploymentID":""
 		}
 	]
