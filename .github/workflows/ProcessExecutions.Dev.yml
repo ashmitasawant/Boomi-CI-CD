@@ -145,9 +145,13 @@ jobs:
                              echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
                              
                              processComponentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .componentId')
+                             echo $processComponentId
                               processPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
+                              echo $processPackageId
                               processPackageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
+                              echo $processPackageVersion
                               processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
+                              echo $processDeploymentId
                               
                               if [ $HighestIndexValue == 0 ]
                               then
