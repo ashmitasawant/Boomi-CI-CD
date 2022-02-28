@@ -158,8 +158,6 @@ jobs:
                                
                              
                                echo $CODE 
-                               if [[ $CODE == *"200"* ]]
-                               then
                                    echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json
                                    git config user.name ashmitasawant
                                    git config user.email ashmitasawant3@gmail.com
@@ -167,7 +165,7 @@ jobs:
                                    git commit -m "Published Changes"
                                    git config pull.rebase false
                                    git push --force origin main
-                               fi
+                          
                                
                  elif [[ $envName == "Test" ]]  && [[ ${modes[$i]} == "deploy" ]]
                  then
@@ -180,8 +178,7 @@ jobs:
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                
                                echo $CODE 
-                               if [[ $CODE == *"200"* ]]
-                               then
+                              
                                  echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
                                  git config user.name ashmitasawant
                                  git config user.email ashmitasawant3@gmail.com
@@ -189,7 +186,7 @@ jobs:
                                  git commit -m "Published Changes"
                                  git config pull.rebase false
                                  git push --force origin main
-                              fi
+                              
                  fi
                done         
                            
