@@ -304,10 +304,11 @@ jobs:
                              packageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
                              packageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
                              deploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
-
+                             mode="deploy"
                              echo "PPP is:" $previousPackageId
                             
                            fi
+                           echo $mode
                             createSuccessJson='{"processName":"'$processName'","processId":'$componentId',"packageId":'$packageId',"packageVersion":'$packageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$deploymentId'}'
                             echo $createSuccessJson
                             echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
