@@ -78,11 +78,11 @@ jobs:
                     fi
                     outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                     devOutcomeData=[$outcomeData]
-                    getComponentIds=$(echo ${devOutcomeData} | jq '.[] | .componentId')
-                    componentIds=($getComponentIds)
-                    echo $getComponentIds
-                    echo $componentIds
+                    getComponentIds='($(echo ${devOutcomeData} | jq '.[] | .componentId'))'
                     
-                    for i in ${componentIds[*]}; do
+                    echo $getComponentIds
+                    
+                    
+                    for i in ${getComponentIds[*]}; do
                     echo $i
                     done | grep -c '${componentId}'
