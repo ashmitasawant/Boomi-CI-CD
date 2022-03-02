@@ -78,7 +78,7 @@ jobs:
               
                         outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                         devOutcomeData=[$outcomeData]
-                        indexValueOfComponentId=($(echo  ${devOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
+                        indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
                         IFS=$'\n'
                         HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                         echo "Highest Index is:" $HighestIndexValue
