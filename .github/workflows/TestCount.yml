@@ -175,15 +175,6 @@ jobs:
                               processPackageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
                               processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
 
-                              if [ $HighestIndexValueInSuccess == 1 ]
-                              then
-                                 previousPackageId=null
-                                 mode=undeploy
-                              else
-                                 mode=deploy 
-                                 previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
-                              fi
-
                               echo "PPP is:" $previousPackageId
                               createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
                            fi
