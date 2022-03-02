@@ -148,7 +148,7 @@ jobs:
                               
                              SuccessOutcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json)
                              devSuccessOutcomeData=[$SuccessOutcomeData]
-                             indexValueOfComponentId=($(echo ${devSuccessOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].processId=='${componentId}' ) | $c'))
+                             indexValueOfComponentId=($(echo ${devSuccessOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].processId=='${componentId}' ) | $i'))
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                              echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
