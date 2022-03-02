@@ -85,4 +85,4 @@ jobs:
                     
                     for i in ${getComponentIds[*]}; do
                     echo $i
-                    done | grep -c '${componentId}'
+                    done | grep -c "$componentId"
