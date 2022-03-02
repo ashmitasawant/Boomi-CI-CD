@@ -74,7 +74,7 @@ jobs:
                               echo "Index value is:" $indexValueOfProcess
                               componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                               echo $componentId
-                        fi
+                     
               
                         outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                         devOutcomeData=[$outcomeData]
