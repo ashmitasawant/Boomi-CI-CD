@@ -156,9 +156,9 @@ jobs:
                              previousPackageId=null
                              mode="undeploy"
                              echo $previousPackageId
-                             packageId=$(echo ${devOutcomeData} | jq '.[$HighestIndexValue] | .packageId')
-                             packageVersion=$(echo ${devOutcomeData} | jq '.[$HighestIndexValue] | .packageVersion')
-                             deploymentId=$(echo ${devOutcomeData} | jq '.[$HighestIndexValue] | .deploymentId')
+                             packageId=$(echo ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageId')
+                             packageVersion=$(echo ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageVersion')
+                             deploymentId=$(echo ${devOutcomeData} | jq '.['$HighestIndexValue'] | .deploymentId')
                              
                            else
                            
