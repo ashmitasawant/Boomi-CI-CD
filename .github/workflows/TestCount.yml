@@ -76,8 +76,8 @@ jobs:
                            indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
                            echo $indexValueOfComponentId
                            IFS=$'\n'
-                           HighestIndexValue=$("${indexValueOfComponentId[*]}" | sort -nr | head -n1)
-                           echo "Highest Index is:"$HighestIndexValue
+                           HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
+                           echo "Highest Index is of testWS:"$HighestIndexValue
                            getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
                     
                            echo $getComponentIds
