@@ -78,7 +78,9 @@ jobs:
                     fi
                     outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                     devOutcomeData=[$outcomeData]
-                    getComponentIds=[$(echo ${devOutcomeData} | jq '.[] | .componentId')]
+                    getComponentIds=($(echo ${devOutcomeData} | jq '.[] | .componentId'))
                     echo $getComponentIds
-                    countsOfComponentIds=$(echo ${getComponentIds} | jq '[.. | strings | select(. == '${componentId}')] | length')
-                    echo $countsOfComponentIds
+                    
+                    for i in ${getComponentIds[*]}; do
+                    echo $i
+                    done | grep -c '${componentId}'
