@@ -127,4 +127,57 @@ jobs:
                                git commit -m "Published Changes"
                                git config pull.rebase false
                                git push --force origin main
+                               
+             elif [[ $CODE != *"200"* ]]
+                        then
+                           echo $CODE
+                           
+                              ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json);
+                              echo $ProcessDetails
+                              indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "'$processName'") | $i');
+                              echo "Index value is:" $indexValueOfProcess
+                              componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
+                              echo $componentId
+                              
+                              outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
+                              devOutcomeData=[$outcomeData]
+                              indexValueOfComponentId=($(echo  ${devOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].componentId=='${componentId}' ) | $c'))
+                              IFS=$'\n'
+                              HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
+                              echo "Highest Index in Outcome file is:" $HighestIndexValue
+                              
+                             SuccessOutcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json)
+                             devSuccessOutcomeData=[$SuccessOutcomeData]
+                             indexValueOfComponentId=($(echo ${devSuccessOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].processId=='${componentId}' ) | $c'))
+                             IFS=$'\n'
+                             HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
+                             echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
+                             
+                             processComponentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .processId')
+                             processPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
+                             processPackageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
+                             processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
+                              
+                              if [ $HighestIndexValueInSuccess == 0 ]
+                              then
+                                 previousPackageId=null
+                                 mode=undeploy
+                              else
+                                  mode=deploy 
+                                  previousPackageId=$(echo  ${devSucessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
+                              fi
+                              echo "PPP is:" $previousPackageId
+                              
+                              createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
+                              echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
+                              git config user.name ashmitasawant
+                              git config user.email ashmitasawant3@gmail.com
+                              git add .
+                              git commit -m "Published Changes"
+                              git config pull.rebase false
+                              git push --force origin main
+                                  
+                        fi
+             fi                  
+         
                     
