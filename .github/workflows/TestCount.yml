@@ -159,7 +159,7 @@ jobs:
                              packageId=$(echo ${devOutcomeData} | jq '.[] | .packageId')
                              packageVersion=$(echo ${devOutcomeData} | jq '.[] | .packageVersion')
                              deploymentId=$(echo ${devOutcomeData} | jq '.[] | .deploymentId')
-                             createSuccessJson='{"processName":"'$processName'","processId":'$componentId',"packageId":'$packageId',"packageVersion":'$packageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$deploymentId'}'
+                             
                            else
                            
                              
@@ -175,9 +175,10 @@ jobs:
                              deploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
 
                              echo "PPP is:" $previousPackageId
-                             createSuccessJson='{"processName":"'$processName'","processId":'$componentId',"packageId":'$packageId',"packageVersion":'$packageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$deploymentId'}'
+                            
                            fi
-                           
+                            createSuccessJson='{"processName":"'$processName'","processId":'$componentId',"packageId":'$packageId',"packageVersion":'$packageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$deploymentId'}'
+                            echo $createSuccessJson
                             echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
                             git config user.name ashmitasawant
                             git config user.email ashmitasawant3@gmail.com
