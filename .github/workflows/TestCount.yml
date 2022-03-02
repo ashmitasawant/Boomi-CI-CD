@@ -81,8 +81,7 @@ jobs:
                     getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
                     
                     echo $getComponentIds
+                    componentsCount="$( grep -o "1" <<< ${getComponentIds[*]} | wc -w)"
+                    echo $componentsCount
                     
                     
-                    for i in ${getComponentIds[*]}; do
-                    echo $i
-                    done | grep -c "$componentId"
