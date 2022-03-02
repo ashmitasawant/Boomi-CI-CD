@@ -78,7 +78,7 @@ jobs:
                     fi
                     outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                     devOutcomeData=[$outcomeData]
-                    getComponentIds='($(echo ${devOutcomeData} | jq '.[] | .componentId'))'
+                    getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
                     
                     echo $getComponentIds
                     
