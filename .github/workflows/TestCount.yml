@@ -169,14 +169,13 @@ jobs:
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                              echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
+                              
+                             packageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
+                             packageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
+                             deploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
 
-                              processComponentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .processId')
-                              processPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
-                              processPackageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
-                              processDeploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
-
-                              echo "PPP is:" $previousPackageId
-                              createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$processDeploymentId'}'
+                             echo "PPP is:" $previousPackageId
+                             createSuccessJson='{"processName":"'$processName'","processId":'$componentId',"packageId":'$packageId',"packageVersion":'$packageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentId":'$deploymentId'}'
                            fi
                            
                             echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.Rollback.json
