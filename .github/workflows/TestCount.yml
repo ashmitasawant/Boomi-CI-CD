@@ -258,8 +258,8 @@ jobs:
 
                       ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json);
                       echo $ProcessDetails
-                      indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "'$processName'") | $i');
-                      echo "Index value is:" $indexValueOfProcess
+                      indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "'$processName'") | $i')
+                      echo "Index value is of process TestForWS is:" $indexValueOfProcess
                       componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                       echo $componentId
 
