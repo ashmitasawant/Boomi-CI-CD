@@ -158,7 +158,7 @@ jobs:
                                
                              
                                echo $CODE 
-                               type=$(echo ${CODE} | jq '.@type')
+                               type=$(echo ${CODE} | jq '.type')
                                if [ $type == "DeployedPackage" ]
                                then
                                    echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json
