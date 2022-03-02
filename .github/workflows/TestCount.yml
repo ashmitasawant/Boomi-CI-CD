@@ -193,7 +193,7 @@ jobs:
                         -H "Accept: application/json" \
                         -H "Authorization: ${{env.API_AUTHORIZATION}}" \
                         -H "Content-Type:application/json" \
-                        -X POST --data "$SubmissionPayload" "${{env.QUOTE_SUBMISSION}}"`
+                        -X POST --data "$BindPayload" "${{env.QUOTE_SUBMISSION}}"`
                         
                         if [[ $CODE == *"200"* ]]
                         then
