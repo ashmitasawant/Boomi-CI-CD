@@ -74,6 +74,7 @@ jobs:
                            outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                            devOutcomeData=[$outcomeData]
                            indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
+                           echo $indexValueOfComponentId
                            IFS=$'\n'
                            HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                            echo "Highest Index is:"$HighestIndexValue
@@ -138,7 +139,7 @@ jobs:
                             indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
                             IFS=$'\n'
                             HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
-                            echo "Highest Index in Outcome file is:" $HighestIndexValue
+                            echo "Highest Index in Outcome file is:"$HighestIndexValue
                             
                            getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
                     
@@ -163,7 +164,7 @@ jobs:
                              indexValueOfComponentId=($(echo ${devSuccessOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].processId=='${componentId}' ) | $c'))
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
-                             echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
+                             echo "Highest Index in SuccessOutcome file is:"$HighestIndexValueInSuccess
                               
                              packageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
                              packageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
@@ -211,7 +212,7 @@ jobs:
                            indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
                            IFS=$'\n'
                            HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
-                           echo "Highest Index is:" $HighestIndexValue
+                           echo "Highest Index is:"$HighestIndexValue
                            getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
                     
                            echo $getComponentIds
@@ -273,7 +274,7 @@ jobs:
                             indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
                             IFS=$'\n'
                             HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
-                            echo "Highest Index in Outcome file is:" $HighestIndexValue
+                            echo "Highest Index in Outcome file is:"$HighestIndexValue
                             
                            getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
                     
@@ -298,7 +299,7 @@ jobs:
                              indexValueOfComponentId=($(echo ${devSuccessOutcomeData} | jq '.| range(0;length) as $c | select(.[$c].processId=='${componentId}' ) | $c'))
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
-                             echo "Highest Index in SuccessOutcome file is:" $HighestIndexValueInSuccess
+                             echo "Highest Index in SuccessOutcome file is:"$HighestIndexValueInSuccess
                               
                              packageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
                              packageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
