@@ -186,7 +186,7 @@ jobs:
                        fi
              fi
              
-             if [[ ${processes[*]} =~ (^|[[:space:]])TestWS($|[[:space:]]) ]]; 
+             if [[ ${processes[*]} =~ (^|[[:space:]])TestForWS($|[[:space:]]) ]]; 
              then
                   processName="TestForWS"
                   CODE=`curl -i \
