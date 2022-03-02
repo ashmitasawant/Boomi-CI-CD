@@ -262,9 +262,59 @@ jobs:
                       componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                       echo $componentId
                       
-                      
+                      outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
+                      devOutcomeData=[$outcomeData]
+                      indexValueOfComponentId="("$(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i')")"
+                      IFS=$'\n'
+                      HighestIndexValue=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
+                      echo "Highest Index is:" $HighestIndexValue
+                      getComponentIds="("$(echo ${devOutcomeData} | jq '.[] | .componentId')")"
+                    
+                      echo $getComponentIds
+                      componentsCount="$( grep -o "$componentId" <<< ${getComponentIds[*]} | wc -w)"
+                      echo $componentsCount
 
-                       fi
+                      if [ $componentsCount == 1 ]
+                      then
+                         previousPackageId=null
+                         echo $previousPackageId
+                      else
+                         previousPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'-1] | .packageId')
+                         echo $previousPackageId
+                      fi
+                      
+                      echo "PPP is:" $previousPackageId
+                      deploymentInfo=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue']')
+                      echo $deploymentInfo   
+
+                      processComponentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentId')
+                      echo $processComponentId
+                      processPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageId')
+                      processPackageVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageVersion')
+                      processComponentVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentVersion')
+
+                      processDeploymentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .deploymentId')
+                      environmentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .environmentId')
+
+
+
+                      echo $processPackageId
+                      echo $processPackageVersion
+                      echo $processComponentVersion
+                      echo $previousPackageId
+                      echo $processDeploymentId
+                      echo $environmentId
+
+                      createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"componentVersion":'$processComponentVersion',"previousPackageId":'$previousPackageId',"deploymentId":'$processDeploymentId'}'
+                      echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json
+                      git config user.name ashmitasawant
+                      git config user.email ashmitasawant3@gmail.com
+                      git add .
+                      git commit -m "Published Changes"
+                      git config pull.rebase false
+                      git push --force origin main
+   
+                 fi
              fi
 
                       
