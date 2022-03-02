@@ -165,11 +165,11 @@ jobs:
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                              echo "Highest Index in SuccessOutcome file is:"$HighestIndexValueInSuccess
-                              
+                             previousPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
                              packageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
                              packageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
                              deploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
-
+                             mode="deploy"
                              echo "PPP is:" $previousPackageId
                             
                            fi
@@ -300,7 +300,7 @@ jobs:
                              IFS=$'\n'
                              HighestIndexValueInSuccess=$(echo "${indexValueOfComponentId[*]}" | sort -nr | head -n1)
                              echo "Highest Index in SuccessOutcome file is:"$HighestIndexValueInSuccess
-                              
+                             previousPackageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'-1] | .packageId')
                              packageId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageId')
                              packageVersion=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .packageVersion')
                              deploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
