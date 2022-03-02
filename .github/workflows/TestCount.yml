@@ -97,5 +97,24 @@ jobs:
                        echo $previousPackageId
                     fi
                     echo "PPP is:" $previousPackageId
+                    deploymentInfo=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue']')
+                    echo $deploymentInfo   
+                    
+                    processComponentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentId')
+                    echo $processComponentId
+                    processPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageId')
+                    processPackageVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageVersion')
+                    processComponentVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentVersion')
                               
+                    processDeploymentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .deploymentId')
+                    environmentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .environmentId')
+                              
+                              
+                              
+                    echo $processPackageId
+                    echo $processPackageVersion
+                    echo $processComponentVersion
+                    echo $previousPackageId
+                    echo $processDeploymentId
+                    echo $environmentId
                     
