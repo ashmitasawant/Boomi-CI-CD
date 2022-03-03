@@ -9,13 +9,6 @@
 			"previousPackageId": null,
 			"mode": "re-deploy",
 			"deploymentId": "5e610eba-794e-441e-adee-e1a04ffdc196"
-		},
-		{
-			"processName": "TestForWS",
-			"componentID": "a7f1b658-ea28-4b36-9627-187f5d6f6446",
-			"mode": "deploy",
-			"packageVersion": "v.18",
-			"deploymentID":""
 		}
 	]
 
