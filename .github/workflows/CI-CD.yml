@@ -197,7 +197,7 @@ jobs:
                                  git push --force origin main
                          
                      fi 
-                               
+               done                
                       
                            
   
