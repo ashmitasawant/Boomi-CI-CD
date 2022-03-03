@@ -146,7 +146,7 @@ jobs:
              
              for ((i=0;i<${#packageIds[@]};i++))
                do
-                 if [[ $envName == "Development" ]] && [[ ${modes[$i]} == "deploy" ]]
+                 if [ $envName == "Development" ] && [ ${modes[$i]} == "deploy" ] || [ ${modes[$i]} == "re-deploy" ]
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      CODE=`curl  --request POST \
