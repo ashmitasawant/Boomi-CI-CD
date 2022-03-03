@@ -141,8 +141,16 @@ jobs:
        run: |
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
-             packageIds=(${{needs.createPackage.outputs.packageId}})
              modes=${{needs.getProcessInfo.outputs.modes}}
+             
+             if [ ${modes[$i]} == "deploy" ]
+             then 
+                packageIds=(${{needs.createPackage.outputs.packageId}})
+             else
+                ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+                packageIds=($(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId'))
+             fi
+             echo $packageIds
              
              for ((i=0;i<${#packageIds[@]};i++))
                do
