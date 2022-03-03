@@ -83,7 +83,6 @@ jobs:
                            echo $getComponentIds
                            componentsCount="$( grep -o "$componentId" <<< ${getComponentIds[*]} | wc -w)"
                            echo $componentsCount
-
                            if [ $componentsCount == 1 ]
                            then
                              previousPackageId=null
@@ -95,25 +94,19 @@ jobs:
                           echo "PPP is:" $previousPackageId
                           deploymentInfo=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue']')
                           echo $deploymentInfo   
-
                           processComponentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentId')
                           echo $processComponentId
                           processPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageId')
                           processPackageVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageVersion')
                           processComponentVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentVersion')
-
                           processDeploymentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .deploymentId')
                           environmentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .environmentId')
-
-
-
                           echo $processPackageId
                           echo $processPackageVersion
                           echo $processComponentVersion
                           echo $previousPackageId
                           echo $processDeploymentId
                           echo $environmentId
-
                           createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"componentVersion":'$processComponentVersion',"previousPackageId":'$previousPackageId',"deploymentId":'$processDeploymentId'}'
                           echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json
                           git config user.name ashmitasawant
@@ -126,14 +119,12 @@ jobs:
                         elif [[ $CODE != *"200"* ]]
                         then
                             echo $CODE
-
                             ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json);
                             echo $ProcessDetails
                             indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "'$processName'") | $i');
                             echo "Index value is:" $indexValueOfProcess
                             componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                             echo $componentId
-
                             outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                             devOutcomeData=[$outcomeData]
                             indexValueOfComponentId=($(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i'))
@@ -182,7 +173,6 @@ jobs:
                             git commit -m "Published Changes"
                             git config pull.rebase false
                             git push --force origin main
-
                        fi
              fi
              
@@ -218,7 +208,6 @@ jobs:
                            echo $getComponentIds
                            componentsCount="$( grep -o "$componentId" <<< ${getComponentIds[*]} | wc -w)"
                            echo $componentsCount
-
                            if [ $componentsCount == 1 ]
                            then
                              previousPackageId=null
@@ -230,25 +219,19 @@ jobs:
                           echo "PPP is:" $previousPackageId
                           deploymentInfo=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue']')
                           echo $deploymentInfo   
-
                           processComponentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentId')
                           echo $processComponentId
                           processPackageId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageId')
                           processPackageVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageVersion')
                           processComponentVersion=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .componentVersion')
-
                           processDeploymentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .deploymentId')
                           environmentId=$(echo  ${devOutcomeData} | jq '.['$HighestIndexValue'] | .environmentId')
-
-
-
                           echo $processPackageId
                           echo $processPackageVersion
                           echo $processComponentVersion
                           echo $previousPackageId
                           echo $processDeploymentId
                           echo $environmentId
-
                           createSuccessJson='{"processName":"'$processName'","processId":'$processComponentId',"packageId":'$processPackageId',"packageVersion":'$processPackageVersion',"componentVersion":'$processComponentVersion',"previousPackageId":'$previousPackageId',"deploymentId":'$processDeploymentId'}'
                           echo $createSuccessJson, >> DeploymentOutcomeDev/HXv1Demo.Dev.SuccessTests.json
                           git config user.name ashmitasawant
@@ -261,14 +244,12 @@ jobs:
                         elif [[ $CODE != *"200"* ]]
                         then
                             echo $CODE
-
                             ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json);
                             echo $ProcessDetails
                             indexValueOfProcess=$(echo  ${ProcessDetails} | jq '.[].processDetails| range(0;length) as $i | select(.[$i].processName== "'$processName'") | $i');
                             echo "Index value is:" $indexValueOfProcess
                             componentId=$(echo  ${ProcessDetails} | jq '.[] | .processDetails['$indexValueOfProcess'].componentID')
                             echo $componentId
-
                             outcomeData=$(sed '$ s/.$//' DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json)
                             devOutcomeData=[$outcomeData]
                             indexValueOfComponentId=($(echo  ${devOutcomeData} | jq '.| range(0;length) as $i | select(.[$i].componentId=='${componentId}' ) | $i'))
@@ -318,9 +299,7 @@ jobs:
                             git commit -m "Published Changes"
                             git config pull.rebase false
                             git push --force origin main
-
                        fi
              fi
             
             
-
