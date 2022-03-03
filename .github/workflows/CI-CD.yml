@@ -177,10 +177,7 @@ jobs:
                    
                     if [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                      then
-                         ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
-                         packageId=($(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId'))
-                         echo $packageId
-                         
+                        
                          CODE=`curl  --request POST \
                                --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                --header 'content-type: application/json' \
@@ -190,7 +187,7 @@ jobs:
                                
                                echo $CODE 
                               
-                                 echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
+                                 echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Dev.Outcome.json
                                  git config user.name ashmitasawant
                                  git config user.email ashmitasawant3@gmail.com
                                  git add .
