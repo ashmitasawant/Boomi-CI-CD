@@ -179,15 +179,16 @@ jobs:
                     if [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                      then
                          envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
-                         echo "The env id is:" $envId
+                         echo "The env id is:" '"'$envId'"'
                          echo $i
                          echo "Package Ids are:" ${packageIds[$i]}
+                         
                          CODE=`curl  --request POST \
-                               --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
-                               --header 'content-type: application/json' \
-                               --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
-                               --data '{"environmentId": '"'$envId'"',"packageId": '"'${packageIds[$i]}'"'}'`
+                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                                   --data '{"environmentId": '"'$envId'"',"packageId": '"'${packageIds[$i]}'"'}'`
                                
                                echo $CODE 
                               
