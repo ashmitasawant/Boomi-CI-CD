@@ -176,8 +176,8 @@ jobs:
                                    git commit -m "Published Changes"
                                    git config pull.rebase false
                                    git push --force origin main
-                 
-                    elif [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
+                    fi
+                    if [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                     then 
                         envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                         CODE=`curl  --request POST \
@@ -198,6 +198,48 @@ jobs:
                                    git config pull.rebase false
                                    git push --force origin main
                      fi
+                     if [[ $envName == "Test" ]]  && [[ ${modes[$i]} == "deploy" ]]
+                     then
+                         envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
+                         CODE=`curl  --request POST \
+                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                                   --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
+
+                                   echo $CODE 
+
+                                     echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
+                                     git config user.name ashmitasawant
+                                     git config user.email ashmitasawant3@gmail.com
+                                     git add .
+                                     git commit -m "Published Changes"
+                                     git config pull.rebase false
+                                     git push --force origin main
+
+                     fi
+                     if [ $envName == "Test" ] && [ ${modes[$i]} == "re-deploy" ]  
+                      then 
+                          envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
+                          CODE=`curl  --request POST \
+                                 --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                 --header 'content-type: application/json' \
+                                 --header 'accept: application/json' \
+                                 --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                                 --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
+
+
+                                 echo $CODE 
+
+                                     echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Test.Outcome.json
+                                     git config user.name ashmitasawant
+                                     git config user.email ashmitasawant3@gmail.com
+                                     git add .
+                                     git commit -m "Published Changes"
+                                     git config pull.rebase false
+                                     git push --force origin main
+                       fi
                    done          
                       
                            
