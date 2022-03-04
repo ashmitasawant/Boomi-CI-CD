@@ -151,7 +151,7 @@ jobs:
                 packageIds="("$(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId')")"
              fi
              echo $packageIds
-             echo ${packageIds[1]}
+             echo "Index 0 value:" ${packageIds[0]}
              
              for ((i=0;i<${#packageIds[@]};i++))
                do
@@ -179,7 +179,7 @@ jobs:
                     elif [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                     then 
                        envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
-                       echo "Package at index 1 is:"${packageIds[1]}
+                       echo "Package at index 0 is:"${packageIds[0]}
                        CODE=`curl  --request POST \
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                    --header 'content-type: application/json' \
