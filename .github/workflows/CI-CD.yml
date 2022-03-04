@@ -148,7 +148,7 @@ jobs:
                 packageIds=(${{needs.createPackage.outputs.packageId}})
              else
                 ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
-                packageIds="("$(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId')")"
+                packageIds=($(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId'))
              fi
              echo $packageIds
              echo "Index 0 value:" ${packageIds[0]}
