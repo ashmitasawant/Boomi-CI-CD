@@ -181,6 +181,7 @@ jobs:
                        envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                        echo "'$envId'"
                        echo "Package at index 0 is:" "'${packageIds[0]}'"
+                       echo '$i'
                        CODE=`curl  --request POST \
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                    --header 'content-type: application/json' \
