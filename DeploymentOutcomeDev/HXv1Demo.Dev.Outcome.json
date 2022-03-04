@@ -5,3 +5,4 @@
 {"@type":"Error","message":"The packaged component (null) is not found."},
 {"@type":"Error","message":"The packaged component (null) is not found."},
 {"@type":"Error","message":"The packaged component (null) is not found."},
+{"@type":"DeployedPackage","deploymentId":"dbe47c1f-222f-476d-9e74-043d9b7748da","version":99,"packageId":"a240466a-92de-4313-8b15-e3901102fdae","packageVersion":"v.19","environmentId":"5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259","componentId":"bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5","componentVersion":13,"componentType":"process","deployedDate":"2022-03-04T06:33:48Z","deployedBy":"ashmita.sawant@neosalpha.com","active":true},
