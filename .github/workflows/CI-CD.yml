@@ -232,7 +232,7 @@ jobs:
 
                                  echo $CODE 
 
-                                     echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Test.Outcome.json
+                                     echo $CODE, >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
                                      git config user.name ashmitasawant
                                      git config user.email ashmitasawant3@gmail.com
                                      git add .
