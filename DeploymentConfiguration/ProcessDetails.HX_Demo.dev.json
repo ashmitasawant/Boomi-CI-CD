@@ -1,11 +1,11 @@
 [{
 
-	"environmentName": "Development",
+	"environmentName": "Test",
 	"processDetails": [{
 			"processName": "TestWS",
 			"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
-			"packageId": "2a890797-6b06-4aa5-9954-8b346299983a",
-			"packageVersion": "v.17",
+			"packageId": "582a2f00-2b86-4e2e-940e-a78369b97a57",
+			"packageVersion": "1.144",
 			"previousPackageId": null,
 			"mode": "re-deploy",
 			"deploymentId": "5e610eba-794e-441e-adee-e1a04ffdc196"
