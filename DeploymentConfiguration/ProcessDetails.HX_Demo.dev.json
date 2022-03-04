@@ -4,11 +4,12 @@
 	"processDetails": [{
 			"processName": "TestWS",
 			"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
-			"packageVersion": "v.19",
-			"mode": "deploy",
-			"deploymentId": ""
+			"packageId": "2a890797-6b06-4aa5-9954-8b346299983a",
+			"packageVersion": "v.17",
+			"previousPackageId": null,
+			"mode": "re-deploy",
+			"deploymentId": "5e610eba-794e-441e-adee-e1a04ffdc196"
 		}
 	]
 
 }]
-
