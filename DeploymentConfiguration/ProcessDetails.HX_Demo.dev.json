@@ -7,7 +7,7 @@
 			"packageId": "2a890797-6b06-4aa5-9954-8b346299983a",
 			"packageVersion": "v.17",
 			"previousPackageId": null,
-			"mode": "re-deploy",
+			"mode": "deploy",
 			"deploymentId": "5e610eba-794e-441e-adee-e1a04ffdc196"
 		}
 	]
