@@ -2,14 +2,17 @@
 
 	"environmentName": "Test",
 	"processDetails": [{
-			"processName": "TestWS",
-			"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
-			"packageId": "582a2f00-2b86-4e2e-940e-a78369b97a57",
-			"packageVersion": "1.144",
-			"previousPackageId": null,
-			"mode": "re-deploy",
-			"deploymentID": "54674f8f-ec86-44f5-8477-cffe68b4f326"
-		}
-	]
-
+				"processName": "TestWS",
+				"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
+				"packageVersion": "v.20",
+				"mode": "deploy",
+				"deploymentID": ""
+	               	   },
+			   {
+				"processName": "TestForWS",
+				"componentID": "a7f1b658-ea28-4b36-9627-187f5d6f6446",
+				"packageVersion": "v.20",
+				"mode": "deploy",
+				"deploymentID": ""
+			   }]
 }]
