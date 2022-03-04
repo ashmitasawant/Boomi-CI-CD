@@ -179,6 +179,7 @@ jobs:
                     elif [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                     then 
                        envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
+                       echo "Package at index 1 is:"${packageIds[1]}
                        CODE=`curl  --request POST \
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                    --header 'content-type: application/json' \
