@@ -148,10 +148,11 @@ jobs:
                 packageIds=(${{needs.createPackage.outputs.packageId}})
              else
                 ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
-                packageIds=($(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId'))
+                packages=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId')
+                packageIds=($packages)
              fi
              echo $packageIds
-             echo "Index 0 value:" ${packageIds[0]}
+             echo "Index 0 value:" ${packageIds[0]} 
              
              for ((i=0;i<${#packageIds[@]};i++))
                do
@@ -178,28 +179,24 @@ jobs:
                  
                     elif [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                     then 
-                       envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
-                       echo "'$envId'"
-                       echo "Package at index 0 is:" "'${packageIds[0]}'"
-                       echo ${i}
-                       CODE=`curl  --request POST \
-                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
-                                   --header 'content-type: application/json' \
-                                   --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
-                                   --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
+                        CODE=`curl  --request POST \
+                               --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                               --header 'content-type: application/json' \
+                               --header 'accept: application/json' \
+                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                               --data '{"environmentId":"'$envId'","packageId": ${packageIds[$i]}}'`
                                
+                             
                                echo $CODE 
                               
-                                 echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Dev.Outcome.json
-                                 git config user.name ashmitasawant
-                                 git config user.email ashmitasawant3@gmail.com
-                                 git add .
-                                 git commit -m "Published Changes"
-                                 git config pull.rebase false
-                                 git push --force origin main
-                         
-                     fi 
+                                   echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json
+                                   git config user.name ashmitasawant
+                                   git config user.email ashmitasawant3@gmail.com
+                                   git add .
+                                   git commit -m "Published Changes"
+                                   git config pull.rebase false
+                                   git push --force origin main
+                     fi
                    done          
                       
                            
