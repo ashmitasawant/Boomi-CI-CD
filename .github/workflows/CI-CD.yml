@@ -175,7 +175,7 @@ jobs:
                                    git commit -m "Published Changes"
                                    git config pull.rebase false
                                    git push --force origin main
-                    fi
+                 
                     elif [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                     then 
                        envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
