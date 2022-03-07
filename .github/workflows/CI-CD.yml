@@ -112,7 +112,7 @@ jobs:
               
               for ((i=0;i<${#components[@]};i++))
               do
-                  if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] 
+                  if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} == "none" ]
                   then
                       CODE=`curl  --request POST \
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
