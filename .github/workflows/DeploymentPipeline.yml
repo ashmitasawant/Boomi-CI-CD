@@ -21,4 +21,4 @@ jobs:
         run: |
             ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
             echo $ProcessDetails
-            ls /DeploymentConfiguration/
+            ls DeploymentConfiguration/
