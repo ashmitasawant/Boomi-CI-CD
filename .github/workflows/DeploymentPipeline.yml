@@ -26,5 +26,6 @@ jobs:
             
             for i in $listFiles
             do
-              echo $i
+              readFiles=$(cat $i)
+              echo $readFiles
             done
