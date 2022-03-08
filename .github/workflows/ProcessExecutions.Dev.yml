@@ -146,7 +146,7 @@ jobs:
                              packageId=$(echo ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageId')
                              packageVersion=$(echo ${devOutcomeData} | jq '.['$HighestIndexValue'] | .packageVersion')
                              deploymentId=$(echo ${devOutcomeData} | jq '.['$HighestIndexValue'] | .deploymentId')
-                             
+                             echo $deploymentId
                            else
                            
                              
@@ -162,7 +162,7 @@ jobs:
                              deploymentId=$(echo  ${devSuccessOutcomeData} | jq '.['$HighestIndexValueInSuccess'] | .deploymentId')
                              mode="deploy"
                              echo "PPP is:" $previousPackageId
-                            
+                             echo "DID is:" $deploymentId
                            fi
                             createSuccessJson='{"processName":"'$processName'","componentID":'$componentId',"packageId":'$packageId',"packageVersion":'$packageVersion',"previousPackageId":'$previousPackageId',"mode":"'$mode'","deploymentID":'$deploymentId'}'
                             echo $createSuccessJson
