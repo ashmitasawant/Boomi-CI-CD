@@ -26,6 +26,6 @@ jobs:
             
             for i in $listFiles
             do
-              readFiles=$(cat $i)
+              readFiles=$(cat ./DeploymentConfiguration/'$i')
               echo $readFiles
             done
