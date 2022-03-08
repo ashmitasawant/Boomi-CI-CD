@@ -23,3 +23,8 @@ jobs:
             echo $ProcessDetails
             listFiles=$(ls DeploymentConfiguration/)
             echo $listFiles
+            
+            for i in $listFiles
+            do
+              echo $i
+            done
