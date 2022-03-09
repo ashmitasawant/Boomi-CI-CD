@@ -71,19 +71,19 @@ jobs:
               echo $modes
               echo $deploymentIDs
               
-              for ((i=0;i<${#componentID[@]};i++))
-              do
-                  if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
-                  then
-                      CODE=`curl  --request POST \
-                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
-                                   --header 'content-type: application/json' \
-                                   --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/PackagedComponent' \
-                                   --data '{"componentId": "'${componentID[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
-                                   echo $CODE
-                                   packageIds=$(echo ${CODE} | jq '.packageId')
-                                   packageIdsArray+="$packageIds "
-                  fi
-              done      
+                for ((j=0;j<${#componentID[@]};j++))
+                do
+                    if [ ${modes[$j]} != "re-deploy" ] && [ ${modes[$j]} != "undeploy" ] && [ ${modes[$j]} != "none" ]
+                    then
+                        CODE=`curl  --request POST \
+                                     --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                     --header 'content-type: application/json' \
+                                     --header 'accept: application/json' \
+                                     --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/PackagedComponent' \
+                                     --data '{"componentId": "'${componentID[$j]}'","packageVersion":"'${packageVersions[$j]}'", "notes":"Package for deployment" }'`
+                                     echo $CODE
+                                     packageIds=$(echo ${CODE} | jq '.packageId')
+                                     packageIdsArray+="$packageIds "
+                    fi
+                done      
             done
