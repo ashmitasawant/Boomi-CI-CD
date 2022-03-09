@@ -59,11 +59,11 @@ jobs:
               echo $readFiles
               
               environmentNames=$(echo ${readFiles} | jq '.[] | .environmentName')
-              processNames=($(echo ${readFiles} | jq '.[] | .processDetails[].processName'))
-              componentIDs=($(echo  ${readFiles} | jq '.[] | .processDetails[].componentID'))
-              packageVersions=($(echo  ${readFiles} | jq '.[] | .processDetails[].packageVersion'))
-              modes=($(echo  ${readFiles} | jq '.[] | .processDetails[].mode'))
-              deploymentIDs=($(echo  ${readFiles} | jq '.[] | .processDetails[].deploymentID'))
+              processNames="("$(echo ${readFiles} | jq '.[] | .processDetails[].processName')")"
+              componentIDs="("$(echo  ${readFiles} | jq '.[] | .processDetails[].componentID')")"
+              packageVersions="("$(echo  ${readFiles} | jq '.[] | .processDetails[].packageVersion')")"
+              modes="("$(echo  ${readFiles} | jq '.[] | .processDetails[].mode')")"
+              deploymentIDs="("$(echo  ${readFiles} | jq '.[] | .processDetails[].deploymentID')")"
               echo $environmentNames
               echo $processNames
               echo $componentIDs
