@@ -55,31 +55,6 @@ jobs:
         uses: actions/checkout@v2
       - id: setProcessLevelInfo
         run: |
-            ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
-            echo $ProcessDetails
-            listFiles=$(ls DeploymentConfiguration/)
-            echo $listFiles
-            
-            for i in $listFiles
-            do
-              readFiles=$(cat ./DeploymentConfiguration/$i)
-              echo $readFiles
-              
-              environmentName=$(echo ${readFiles} | jq '.[] | .environmentName')
-              processName=$(echo ${readFiles} | jq '.[] | .processDetails[].processName')
-              componentID=$(echo ${readFiles} | jq '.[] | .processDetails[].componentID')
-              packageVersion=$(echo ${readFiles} | jq '.[] | .processDetails[].packageVersion')
-              mode=$(echo ${readFiles} | jq '.[] | .processDetails[].mode')
-              deploymentID=$(echo ${readFiles} | jq '.[] | .processDetails[].deploymentID')
-              
-              ComponentsArray="("$(echo $componentID)")"
-              echo $ComponentsArray
-             
-              echo "::set-output name=componentIds::($ComponentsArray)"
+              git show -s --date=format:'%Y%m%d-%H%M' --format=%cd  <commit id | default is the last commit>
 
-            done
-              
-             
-               
-              
-               
+            
