@@ -56,7 +56,7 @@ jobs:
       - id: setProcessLevelInfo
         run: |
            
-             git log -1 --pretty="format:%ct" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
+             git log -1 --pretty="format:%ci" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
               
 
             
