@@ -53,30 +53,22 @@ jobs:
             listFiles=$(ls DeploymentConfiguration/)
             echo $listFiles
             
-            for i in $listFiles
+            for i in 1 2
             do
-              readFiles=$(cat ./DeploymentConfiguration/$i)
-              echo $readFiles
-              
-              environmentNames=$(echo ${readFiles} | jq '.[] | .environmentName')
-              processNames="("$(echo ${readFiles} | jq '.[] | .processDetails[].processName')")"
-              componentIDs="("$(echo  ${readFiles} | jq '.[] | .processDetails[].componentID')")"
-              packageVersions="("$(echo  ${readFiles} | jq '.[] | .processDetails[].packageVersion')")"
-              modes="("$(echo  ${readFiles} | jq '.[] | .processDetails[].mode')")"
-              deploymentIDs="("$(echo  ${readFiles} | jq '.[] | .processDetails[].deploymentID')")"
-              echo $environmentNames
-              echo $processNames
-              echo $componentIDs
-              echo $packageVersions
-              echo $modes
-              echo $deploymentIDs
+                environmentNames="Development"
+                to="Dev"
+                processNames=("TestWS" "TestForWS")
+                componentIDs=("bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5" "a7f1b658-ea28-4b36-9627-187f5d6f6446")
+                packageVersions=("v.23" "v.22")
+                modes=("deploy" "none")
+                deploymentIDs=("" "")
+                for ((j=0;j<${#componentIDs[@]};j++))
+                do
+
+                      if (("${modes[$j]}" == "deploy" &  "${modes[$j]}" == "none" ))
+                      then
+                          echo ${modes[$j]}
+                          echo ${componentIDs[$j]}
+                      fi
+                done      
             done  
-            for ((j=0;j<${#componentIDs[@]};j++))
-            do
-                echo ${componentIDs[$j]}
-                if (("${modes[$j]}" == "deploy" &  "${modes[$j]}" == "none" ))
-                then
-                    echo ${modes[$j]}
-                    echo ${componentIDs[$j]}
-                fi    
-            done
