@@ -55,7 +55,7 @@ jobs:
         uses: actions/checkout@v2
       - id: setProcessLevelInfo
         run: |
-              git show -s --format=%ct
+             git log ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
               
 
             
