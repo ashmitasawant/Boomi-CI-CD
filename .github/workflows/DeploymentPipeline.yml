@@ -53,9 +53,9 @@ jobs:
             listFiles=$(ls DeploymentConfiguration/)
             echo $listFiles
             
-             for i in $listFiles
+            for i in $listFiles
              do
-             readFiles=$(cat ./DeploymentConfiguration/$i)
+              readFiles=$(cat ./DeploymentConfiguration/$i)
               echo $readFiles
               
               environmentNames=$(echo ${readFiles} | jq '.[] | .environmentName')
@@ -70,12 +70,14 @@ jobs:
               echo $packageVersions
               echo $modes
               echo $deploymentIDs
+              
+                for ((j=0;j<${#componentIDs[@]};j++))
+                do
+                    if [ ${modes[$j]} != "" ]; 
+                    then
+                        echo ${modes[$j]}
+                        echo ${componentIDs[$j]}
+                    fi
+               done
              done  
-             for ((j=0;j<${#componentIDs[@]};j++))
-              do
-                  if [ ${modes[$j]} == "deploy" ] 
-                  then
-                      echo ${modes[$j]}
-                      echo ${componentIDs[$j]}
-                  fi
-             done
+             
