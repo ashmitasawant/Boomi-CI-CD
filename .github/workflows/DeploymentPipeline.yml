@@ -72,26 +72,11 @@ jobs:
               mode=$(echo ${readFiles} | jq '.[] | .processDetails[].mode')
               deploymentID=$(echo ${readFiles} | jq '.[] | .processDetails[].deploymentID')
               
-              ComponentsArray=$(echo $componentID)
-              c=$(echo ($ComponentsArray))
-              echo $c
+              ComponentsArray="("$(echo $componentID)")"
+              echo $ComponentsArray
+             
               echo "::set-output name=componentIds::($ComponentsArray)"
 
-              ProcessNamesArray=$(echo $processName)
-              echo $ProcessNamesArray
-              echo "::set-output name=processNames::($ProcessNamesArray)"
-
-              PackageVersionArray=$(echo $packageVersion)
-              echo $PackageVersionArray
-              echo "::set-output name=packageVersions::($PackageVersionArray)"
-
-              ModeArray=$(echo $mode)
-              echo $ModeArray
-              echo "::set-output name=modes::($ModeArray)"
-
-              DeploymentsArray=$(echo $deploymentID)
-              echo $DeploymentsArray
-              echo "::set-output name=deploymentIds::($DeploymentsArray)"
             done
               
              
