@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
       - id: setAPILevelInfo
         run: |
-            APIDetails=$(cat ./DeploymentConfiguration/ApiDetails.HX_Demo.dev.json)
+            APIDetails=$(cat ./DeploymentConfiguration/APIsDeploymentConfiguration/ApiDetails.HX_Demo.dev.json)
                       
             environmentName=$(echo ${APIDetails} | jq '.[] | .environmentName')
             echo $environmentName
