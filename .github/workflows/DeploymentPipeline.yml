@@ -39,6 +39,13 @@ jobs:
             echo "::set-output name=testAtomId::$testAtomID"
   
   deployments:
+    outputs:
+      componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
+      packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
+      processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
+      environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
+      modes: ${{steps.setProcessLevelInfo.outputs.modes}}
+      deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
     environment: Dev
     env: 
       BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
@@ -65,25 +72,28 @@ jobs:
               mode=$(echo ${readFiles} | jq '.[] | .processDetails[].mode')
               deploymentID=$(echo ${readFiles} | jq '.[] | .processDetails[].deploymentID')
               
-              processNames=($processName)
-              componentIDs=($componentID)
-              packageVersions=($packageVersion)
-              modes=($mode)
-              deploymentIDs=($deploymentID)
-               
-              echo $environmentNames
-              echo $processNames
-              echo $componentIDs
-              echo $packageVersions
-              echo $modes
-              echo $deploymentIDs
-              for ((j=0;j<${#componentIDs[@]};j++))
-              do
+              ComponentsArray=$(echo $componentID)
+              c=$(echo ($ComponentsArray))
+              echo $c
+              echo "::set-output name=componentIds::($ComponentsArray)"
 
-                      if [ ${modes[$j]} == "deploy" ] && [ ${modes[$j]} == "none" ]
-                      then
-                          echo ${modes[$j]}
-                          echo ${componentIDs[$j]}
-                      fi
-              done      
-            done  
+              ProcessNamesArray=$(echo $processName)
+              echo $ProcessNamesArray
+              echo "::set-output name=processNames::($ProcessNamesArray)"
+
+              PackageVersionArray=$(echo $packageVersion)
+              echo $PackageVersionArray
+              echo "::set-output name=packageVersions::($PackageVersionArray)"
+
+              ModeArray=$(echo $mode)
+              echo $ModeArray
+              echo "::set-output name=modes::($ModeArray)"
+
+              DeploymentsArray=$(echo $deploymentID)
+              echo $DeploymentsArray
+              echo "::set-output name=deploymentIds::($DeploymentsArray)"
+              
+             
+               
+              
+               
