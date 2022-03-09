@@ -28,4 +28,8 @@ jobs:
             do
               readFiles=$(cat ./DeploymentConfiguration/$i)
               echo $readFiles
+              
+              environmentName=$(echo ${readFiles} | jq '.[] | .environmentName')
+              echo $environmentName
+
             done
