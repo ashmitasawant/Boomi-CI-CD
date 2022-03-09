@@ -30,6 +30,16 @@ jobs:
               echo $readFiles
               
               environmentName=$(echo ${readFiles} | jq '.[] | .environmentName')
-              echo $environmentName
+              processName=$(echo ${readFiles} | jq '.[] | .processDetails[].processName')
+              componentID=$(echo  ${readFiles} | jq '.[] | .processDetails[].componentID')
+              packageVersion=$(echo  ${readFiles} | jq '.[] | .processDetails[].packageVersion')
+              mode=$(echo  ${readFiles} | jq '.[] | .processDetails[].mode')
+              deploymentID=$(echo  ${readFiles} | jq '.[] | .processDetails[].deploymentID')
+              echo $environmentName 
+              echo $processName
+              echo $componentID
+              echo $packageVersion
+              echo $mode
+              echo $deploymentID
 
             done
