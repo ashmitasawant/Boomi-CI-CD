@@ -54,7 +54,7 @@ jobs:
             echo $listFiles
             
             for i in $listFiles
-             do
+            do
               readFiles=$(cat ./DeploymentConfiguration/$i)
               echo $readFiles
               
@@ -70,9 +70,9 @@ jobs:
               echo $packageVersions
               echo $modes
               echo $deploymentIDs
-             done  
-             for ((j=0;j<${#componentIDs[@]};j++))
-                do
+            done  
+            for ((j=0;j<${#componentIDs[@]};j++))
+            do
                     if [ ${modes[$j]} != "re-deploy" ] 
                     then
                      if [ ${modes[$j]} != "undeploy" ]
@@ -91,4 +91,4 @@ jobs:
                       fi
                      fi
                     fi
-               done
+             done
