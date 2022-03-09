@@ -55,8 +55,36 @@ jobs:
         uses: actions/checkout@v2
       - id: setProcessLevelInfo
         run: |
-             git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
-             git log -1 --pretty="format:%ci" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
-              
+             lastCommitTimestampForHxFiles=$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+             lastCommitTimestampForCrowFiles=$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json)
+             lastCommitTimestampForEventsFiles=$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json)
 
+              if [[ $(date -d "$lastCommitTimestampForHxFiles") > $(date -d "$lastCommitTimestampForCrowFiles") ]]
+              then 
+                 fileToBeRead="ProcessDetails.HX_Demo.dev.json"
+                 fileRead=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+              else 
+                 fileToBeRead="ProcessDetails.Crow_Demo.dev.json"
+                 fileRead=$(cat ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json)
+              fi
+              
+              if [[ $(date -d "$lastCommitTimestampForHxFiles") > $(date -d "$lastCommitTimestampForEventsFiles") ]] 
+              then
+                 fileToBeRead="ProcessDetails.HX_Demo.dev.json"
+                 fileRead=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+              else 
+                 fileToBeRead="ProcessDetails.Events_Demo.dev.json"
+                 fileRead=$(cat ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json)
+              fi
+              
+              if [[ $(date -d "$lastCommitTimestampForCrowFiles") > $(date -d "$lastCommitTimestampForEventsFiles") ]] 
+              then
+                 fileToBeRead="ProcessDetails.Crow_Demo.dev.json"
+                 fileRead=$(cat ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json)
+              else 
+                 fileToBeRead="ProcessDetails.Events_Demo.dev.json"
+                 fileRead=$(cat ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json)
+              fi
+              echo $fileToBeRead
+              echo $fileRead
             
