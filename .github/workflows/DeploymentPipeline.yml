@@ -87,4 +87,33 @@ jobs:
               fi
               echo $fileToBeRead
               echo $fileRead
+              
+              environmentName=$(echo ${fileRead} | jq '.[] | .environmentName')
+              echo $environmentName
+              echo "::set-output name=environmentName::$environmentName"
+              processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
+              componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
+              packageVersion=$(echo  ${fileRead} | jq '.[] | .processDetails[].packageVersion')
+              mode=$(echo  ${fileRead} | jq '.[] | .processDetails[].mode')
+              deploymentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].deploymentID')
+
+              ComponentsArray=$(echo $componentID)
+              echo $ComponentsArray
+              echo "::set-output name=componentIds::($ComponentsArray)"
+
+              ProcessNamesArray=$(echo $processName)
+              echo $ProcessNamesArray
+              echo "::set-output name=processNames::($ProcessNamesArray)"
+
+              PackageVersionArray=$(echo $packageVersion)
+              echo $PackageVersionArray
+              echo "::set-output name=packageVersions::($PackageVersionArray)"
+
+              ModeArray=$(echo $mode)
+              echo $ModeArray
+              echo "::set-output name=modes::($ModeArray)"
+
+              DeploymentsArray=$(echo $deploymentID)
+              echo $DeploymentsArray
+              echo "::set-output name=deploymentIds::($DeploymentsArray)"
             
