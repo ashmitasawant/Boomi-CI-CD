@@ -55,6 +55,6 @@ jobs:
         uses: actions/checkout@v2
       - id: setProcessLevelInfo
         run: |
-              git show -s --date=format:'%Y%m%d-%H%M' --format=%cd  <commit id | default is the last commit>
+              git show -s --format=%ct
 
             
