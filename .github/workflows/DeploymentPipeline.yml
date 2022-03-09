@@ -70,8 +70,8 @@ jobs:
               echo $packageVersions
               echo $modes
               echo $deploymentIDs
-              
-              for ((j=0;j<${#componentIDs[@]};j++))
+            done  
+            for ((j=0;j<${#componentIDs[@]};j++))
                 do
                     if [ ${modes[$j]} != "re-deploy" ] && [ ${modes[$j]} != "undeploy" ] && [ ${modes[$j]} != "none" ]
                     then
@@ -85,5 +85,5 @@ jobs:
                                      packageIds=$(echo ${CODE} | jq '.packageId')
                                      packageIdsArray+="$packageIds "
                     fi
-                done      
-              done
+            done      
+            
