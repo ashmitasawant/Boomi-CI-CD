@@ -70,8 +70,8 @@ jobs:
               echo $packageVersions
               echo $modes
               echo $deploymentIDs
-              
-                for ((j=0;j<${#componentIDs[@]};j++))
+             done  
+             for ((j=0;j<${#componentIDs[@]};j++))
                 do
                     if [ ${modes[$j]} != "re-deploy" ] 
                     then
@@ -92,5 +92,3 @@ jobs:
                      fi
                     fi
                done
-             done  
-             
