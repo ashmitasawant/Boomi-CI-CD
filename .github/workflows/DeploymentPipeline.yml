@@ -58,12 +58,19 @@ jobs:
               readFiles=$(cat ./DeploymentConfiguration/$i)
               echo $readFiles
               
-              environmentNames=$(echo ${readFiles} | jq '.[] | .environmentName')
-              processNames=($(echo ${readFiles} | jq '.[] | .processDetails[].processName'))
-              componentIDs=($(echo ${readFiles} | jq '.[] | .processDetails[].componentID'))
-              packageVersions=($(echo ${readFiles} | jq '.[] | .processDetails[].packageVersion'))
-              modes=($(echo ${readFiles} | jq '.[] | .processDetails[].mode'))
-              deploymentIDs=($(echo ${readFiles} | jq '.[] | .processDetails[].deploymentID'))
+              environmentName=$(echo ${readFiles} | jq '.[] | .environmentName')
+              processName=($(echo ${readFiles} | jq '.[] | .processDetails[].processName'))
+              componentID=($(echo ${readFiles} | jq '.[] | .processDetails[].componentID'))
+              packageVersion=($(echo ${readFiles} | jq '.[] | .processDetails[].packageVersion'))
+              mode=($(echo ${readFiles} | jq '.[] | .processDetails[].mode'))
+              deploymentID=($(echo ${readFiles} | jq '.[] | .processDetails[].deploymentID'))
+              
+              processNames=($processName)
+              componentIDs=($componentID)
+              packageVersions=($packageVersion)
+              modes=($mode)
+              deploymentIDs=($deploymentID)
+               
               echo $environmentNames
               echo $processNames
               echo $componentIDs
