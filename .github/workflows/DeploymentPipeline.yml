@@ -80,7 +80,7 @@ jobs:
               for ((j=0;j<${#componentIDs[@]};j++))
               do
 
-                      if (("${modes[$j]}" == "deploy" &  "${modes[$j]}" == "none" ))
+                      if [ ${modes[$j]} == "deploy" ] && [ ${modes[$j]}" == "none" ]
                       then
                           echo ${modes[$j]}
                           echo ${componentIDs[$j]}
