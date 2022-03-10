@@ -47,7 +47,7 @@ jobs:
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
-      accountIdToUse: ${{steps.setProcessLevelInfo.outputs.accountIdToUse}}
+      fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
     
@@ -94,9 +94,9 @@ jobs:
               echo $environmentName
               echo "::set-output name=environmentName::$environmentName"
               
-              accountIdToUse=$(echo ${fileRead} | jq '.[] | .accountIdToUse')
-              echo $accountIdToUse
-              echo "::set-output name=accountIdToUse::$accountIdToUse"
+              fileHoldersName=$(echo ${fileRead} | jq '.[] | .fileHoldersName')
+              echo $fileHoldersName
+              echo "::set-output name=fileHoldersName::$fileHoldersName"
               
               processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
               componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
@@ -141,16 +141,16 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-              accountIdToUse=${{needs.getProcessInfo.outputs.accountIdToUse}}
+              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
               
-              if [ $accountIdToUse == ASHMITA_SAWANT_ACCOUNTID ]
+              if [ $fileHoldersName == ASHMITA_SAWANT ]
               then
-                accountIdIdToUse=$ASHMITA_SAWANT_ACCOUNTID
+                accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
               fi
-              echo $accountIdIdToUse
+              echo $accountId
               echo $apiAuth
-              aID="trainingashmitasawant-D9P8J7"
+              
               for ((i=0;i<${#components[@]};i++))
               do
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
@@ -159,7 +159,7 @@ jobs:
                                    --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url "https://api.boomi.com/api/rest/v1/${aID}/PackagedComponent" \
+                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/PackagedComponent" \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
