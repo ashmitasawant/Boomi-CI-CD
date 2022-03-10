@@ -1,7 +1,7 @@
 [{
 
 	"environmentName": "Development",
-	"accountIdToUse":"ASHMITA_SAWANT_ACCOUNTID",
+	"fileHoldersName":"ASHMITA_SAWANT",
 	"processDetails": [{
 				"processName": "Test DDP and DPP",
 				"componentID": "c65243e1-59af-4271-9e79-cfe2dbcebf34",
