@@ -5,8 +5,7 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-env: 
- AUTHAPITOKEN: ${{secrets.AUTHAPITOKEN}}
+
 jobs:
   getEnvironmentInfo:
    runs-on: ubuntu-latest
