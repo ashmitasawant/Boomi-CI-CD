@@ -1,28 +1,14 @@
-name: Deployment Pipeline
-
-on:
-  push:
-    paths:
-     - 'DeploymentConfiguration/*'
-  workflow_dispatch:
+on: push
 env: 
    ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
 jobs:
-  getInfo:
-   runs-on: ubuntu-latest
-   outputs:
-    secret: ${{steps.secret.outputs.some-token}}
-   steps:
-   - name: Sample Azure action
-     id: secret
-     run: |
-          TOKEN1=$ASHMITA_SAWANT_ACCOUNTID
-          echo "::add-mask::$TOKEN1"
-          echo "::set-output name=some-token::$TOKEN1"
-  get:
-   runs-on: ubuntu-latest
-   needs: getInfo
-   steps:
-   - name: Sample Azure action
-     
-     run: echo ${{needs.getInfo.outputs.some-token}}
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - id: sets-a-secret
+        run: |
+          the_secret=$ASHMITA_SAWANT_ACCOUNTID
+          echo "::add-mask::$the_secret"
+          echo "::set-output name=secret-number::$the_secret"
+      - run: |
+          echo "the secret number is ${{ steps.sets-a-secret.outputs.secret-number }}"
