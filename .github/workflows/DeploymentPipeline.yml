@@ -161,8 +161,11 @@ jobs:
                  apiAuth=null
             fi
             AccountId=$(echo $accountId)
+            echo $AccountId
             echo "::set-output name=AccountId::$AccountId"
-            ApiAuth=$(echo $apiAuth)   
+            
+            ApiAuth=$(echo $apiAuth)  
+            echo $ApiAuth
             echo "::set-output name=ApiAuth::$ApiAuth"
             
   createPackage:
@@ -180,17 +183,19 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-             
-              
+              AccountID=${{needs.setAccountInfo.outputs.AccountId}}
+              echo $AccountID
+              APIAuth:${{needs.setAccountInfo.outputs.ApiAuth}}
+              echo $APIAuth
               for ((i=0;i<${#components[@]};i++))
               do
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
                   then
                       CODE=`curl  --request POST \
-                                   --header 'authorization: ${{needs.setAccountInfo.outputs.ApiAuth}}' \
+                                   --header 'authorization: $APIAuth' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/'${{needs.setAccountInfo.outputs.AccountId}}'/PackagedComponent' \
+                                   --url 'https://api.boomi.com/api/rest/v1/'$AccountID'/PackagedComponent' \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
