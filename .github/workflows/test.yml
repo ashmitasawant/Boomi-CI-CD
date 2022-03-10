@@ -5,20 +5,19 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-
+env: 
+   ASHMITA_ACCOUNTID: ${{secrets.ASHMITA_ACCOUNTID}}
 jobs:
   getEnvironmentInfo:
    runs-on: ubuntu-latest
   
    steps:
    - name: Sample Azure action
-     env: 
-       ASHMITA_ACCOUNTID: ${{secrets.ASHMITA_ACCOUNTID}}
+     
      run: echo $ASHMITA_ACCOUNTID
   get:
    runs-on: ubuntu-latest
    steps:
    - name: Sample Azure action
-     env: 
-      AUTHAPITOKEN: ${{secrets.AUTHAPITOKEN}}
-     run: echo ${{env.AUTHAPITOKEN}}
+     
+     run: echo $ASHMITA_ACCOUNTID
