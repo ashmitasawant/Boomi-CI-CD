@@ -13,11 +13,13 @@ jobs:
   
    steps:
    - name: Sample Azure action
-    
+     env: 
+       AUTHAPITOKEN: ${{secrets.AUTHAPITOKEN}}
      run: echo ${{env.AUTHAPITOKEN}}
   get:
    runs-on: ubuntu-latest
    steps:
    - name: Sample Azure action
-    
+     env: 
+      AUTHAPITOKEN: ${{secrets.AUTHAPITOKEN}}
      run: echo ${{env.AUTHAPITOKEN}}
