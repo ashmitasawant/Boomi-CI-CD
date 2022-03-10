@@ -6,7 +6,7 @@ on:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
 env: 
-   ASHMITA_ACCOUNTID: ${{secrets.ASHMITA_ACCOUNTID}}
+   ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
 jobs:
   getInfo:
    runs-on: ubuntu-latest
@@ -16,7 +16,7 @@ jobs:
    - name: Sample Azure action
      id: secret
      run: |
-          TOKEN1=$ASHMITA_ACCOUNTID
+          TOKEN1=$ASHMITA_SAWANT_ACCOUNTID
           echo "::add-mask::$TOKEN1"
           echo "::set-output name=some-token::$TOKEN1"
   get:
