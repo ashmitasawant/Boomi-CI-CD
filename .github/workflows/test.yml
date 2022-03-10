@@ -13,4 +13,4 @@ jobs:
    steps:
    - name: Sample Azure action
     
-     run: echo ${{secrets.APIAUTHTOKEN}}
+     run: echo ${{secrets.AUTHAPITOKEN}}
