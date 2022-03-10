@@ -8,6 +8,7 @@ jobs:
    outputs:
     secret-number: ${{steps.sets-a-secret.outputs.secret-number}}
    steps:
+      - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
               git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
