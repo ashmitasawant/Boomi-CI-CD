@@ -5,15 +5,13 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-env:
-  BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+
 jobs:
   getEnvironmentInfo:
    runs-on: ubuntu-latest
+  
    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Get Process Info
-        uses: actions/checkout@v2
-      - id: setEnvironmentLevelInfo
-        run: |
-              echo ${{secrets.BOOMI_AUTHORIZATION}}
+   - name: Sample Azure action
+     env: # Or as an environment variable
+      credentials: ${{ secrets.BOOMI_AUTHORIZATION }}
+     run: echo ${{env.credentials}}
