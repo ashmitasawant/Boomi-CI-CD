@@ -5,9 +5,7 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-env: 
-           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
-           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
+
 jobs:
             
   getEnvironmentInfo:
@@ -126,6 +124,9 @@ jobs:
               
   setAccountInfo:
    runs-on: ubuntu-latest
+   env: 
+           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
    outputs:
       AccountId: ${{ steps.setAccountInfo.outputs.AccountId }}
       ApiAuth: ${{ steps.setAccountInfo.outputs.ApiAuth }}
