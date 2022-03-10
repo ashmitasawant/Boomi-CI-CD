@@ -44,7 +44,7 @@ jobs:
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
-      accountId: ${{steps.setProcessLevelInfo.outputs.accountId}}
+      fileHolder'sName: ${{steps.setProcessLevelInfo.outputs.fileHolder'sName}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
     environment: Dev
@@ -93,9 +93,9 @@ jobs:
               echo $environmentName
               echo "::set-output name=environmentName::$environmentName"
               
-              accountId=$(echo ${fileRead} | jq '.[] | .accountId')
-              echo $accountId
-              echo "::set-output name=accountId::$accountId"
+              fileHolder'sName=$(echo ${fileRead} | jq '.[] | .fileHolder'sName')
+              echo $fileHolder'sName
+              echo "::set-output name=fileHolder'sName::$fileHolder'sName"
               
               processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
               componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
@@ -139,7 +139,7 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-              accountId=${{needs.getProcessInfo.outputs.accountId}}
+              fileHolder'sName=${{needs.getProcessInfo.outputs.fileHolder'sName}}
               echo $accountId
               
               for ((i=0;i<${#components[@]};i++))
