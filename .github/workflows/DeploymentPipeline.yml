@@ -124,35 +124,14 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
               
-               echo $fileHoldersName
-               if [ $fileHoldersName == "ashmitasawant" ]
-               then 
-                   accountId=$ASHMITA_SAWANT_ACCOUNTID
-                   apiAuth=$ASHMITA_SAWANT_API_AUTH
-               fi
-               if [ $fileHoldersName == "lalikarpenter" ]
-               then
-                 accountId=$LALIT_KARPENTER_ACCOUNTID
-                 apiAuth=$LALIT_KARPENTER_API_AUTH
-               fi
-               if [ $fileHoldersName == "kartikdashora" ]
-               then
-                 accountId=$KARTIK_DASHORA_ACCOUNTID
-                 apiAuth=$KARTIK_DASHORA_API_AUTH
-               fi
-               if [ $fileHoldersName == "lalitkumawat" ]
-               then
-                 accountId=$LALIT_KUMAWAT_ACCOUNTID
-                 apiAuth=$LALIT_KUMAWAT_API_AUTH
-               fi
-               if [ $fileHoldersName == "sanskritisharma" ]
-               then
-                 accountId=$SANSKRITI_SHARMA_ACCOUNTID
-                 apiAuth=$SANSKRITI_SHARMA_API_AUTH
-               fi
-           
-             echo $accountId
-             echo $apiAuth
+  setAccountInfo:
+   runs-on: ubuntu-latest
+   needs: getProcessInfo
+   steps:
+    - name: Set Account Info
+      id: setAccountInfo
+      run: echo ${{needs.getProcessInfo.outputs.fileHoldersName}}
+              
              
   createPackage:
  
