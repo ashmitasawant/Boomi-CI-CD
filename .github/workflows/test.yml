@@ -12,7 +12,7 @@ jobs:
       - id: sets-a-secret
         run: |
               
-              git log ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
+              git log  ProcessDetails.Crow_Demo.dev.json
               git log ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json
 
               git log -1 --date=format:"%Y/%m/%d %T" --format="%ct" ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
