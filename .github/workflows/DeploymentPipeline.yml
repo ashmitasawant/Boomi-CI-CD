@@ -124,33 +124,33 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
               
-              if [ $fileHoldersName == "ashmitasawant" ]
-              then
-                accountId=$ASHMITA_SAWANT_ACCOUNTID
-                apiAuth=$ASHMITA_SAWANT_API_AUTH
-              elif [ $fileHoldersName == "lalikarpenter" ]
-              then
-                accountId=$LALIT_KARPENTER_ACCOUNTID
-                apiAuth=$LALIT_KARPENTER_API_AUTH
-              elif [ $fileHoldersName == "kartikdashora" ]
-              then
-                accountId=$KARTIK_DASHORA_ACCOUNTID
-                apiAuth=$KARTIK_DASHORA_API_AUTH
-              elif [ $fileHoldersName == "lalitkumawat" ]
-              then
-                accountId=$LALIT_KUMAWAT_ACCOUNTID
-                apiAuth=$LALIT_KUMAWAT_API_AUTH 
-              elif [ $fileHoldersName == "sanskritisharma" ]
-              then
-                accountId=$SANSKRITI_SHARMA_ACCOUNTID
-                apiAuth=$SANSKRITI_SHARMA_API_AUTH 
-              else 
-                accountId=null
-                apiAuth=null
-              fi
-              echo $accountId
-              echo $apiAuth
-        
+               if [ $fileHoldersName == "ashmitasawant" ]
+               then 
+                 accountId=$ASHMITA_SAWANT_ACCOUNTID
+                 apiAuth=$ASHMITA_SAWANT_API_AUTH
+               elif [ $fileHoldersName == "lalikarpenter" ]
+               then
+                 accountId=$LALIT_KARPENTER_ACCOUNTID
+                 apiAuth=$LALIT_KARPENTER_API_AUTH
+               elif [ $fileHoldersName == "kartikdashora" ]
+               then
+                 accountId=$KARTIK_DASHORA_ACCOUNTID
+                 apiAuth=$KARTIK_DASHORA_API_AUTH
+               elif [ $fileHoldersName == "lalitkumawat" ]
+               then
+                 accountId=$LALIT_KUMAWAT_ACCOUNTID
+                 apiAuth=$LALIT_KUMAWAT_API_AUTH
+               elif [ $fileHoldersName == "sanskritisharma" ]
+               then
+                 accountId=$SANSKRITI_SHARMA_ACCOUNTID
+                 apiAuth=$SANSKRITI_SHARMA_API_AUTH
+               else 
+                 accountId=null
+                 apiAuth=null
+             fi
+             echo $accountId
+             echo $apiAuth
+             
   createPackage:
  
    runs-on: ubuntu-latest   
