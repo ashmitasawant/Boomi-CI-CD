@@ -44,6 +44,7 @@ jobs:
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
+      accountId: ${{steps.setProcessLevelInfo.outputs.accountId}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
     environment: Dev
@@ -91,6 +92,11 @@ jobs:
               environmentName=$(echo ${fileRead} | jq '.[] | .environmentName')
               echo $environmentName
               echo "::set-output name=environmentName::$environmentName"
+              
+              accountId=$(echo ${fileRead} | jq '.[] | .accountId')
+              echo $accountId
+              echo "::set-output name=accountId::$accountId"
+              
               processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
               componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
               packageVersion=$(echo  ${fileRead} | jq '.[] | .processDetails[].packageVersion')
@@ -133,6 +139,7 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
+              accountId=${{needs.getProcessInfo.outputs.accountId}}
               
               for ((i=0;i<${#components[@]};i++))
               do
@@ -142,7 +149,7 @@ jobs:
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/PackagedComponent' \
+                                   --url 'https://api.boomi.com/api/rest/v1/'$accountId'/PackagedComponent' \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
@@ -187,7 +194,7 @@ jobs:
                                --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                               --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                
                              
@@ -208,7 +215,7 @@ jobs:
                                --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                               --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
                                --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                
                              
@@ -229,7 +236,7 @@ jobs:
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                                   --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
                                    --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                    echo $CODE 
                                      echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
@@ -247,7 +254,7 @@ jobs:
                                  --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                  --header 'content-type: application/json' \
                                  --header 'accept: application/json' \
-                                 --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage' \
+                                 --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
                                  --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                  echo $CODE 
                                      echo $CODE, >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
@@ -282,7 +289,7 @@ jobs:
                     CODE=`curl  --request DELETE \
                                    --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
                                    --header 'content-type: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/'${deployments[$i]}''`
+                                   --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage/'${deployments[$i]}''`
                                    echo $CODE 
                   fi
                 done
