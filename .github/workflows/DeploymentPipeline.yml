@@ -3,7 +3,9 @@ name: Deployment Pipeline
 on:
   push:
     paths:
-     - 'DeploymentConfiguration/*'
+     - 'DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json'
+     - 'DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json'
+     - 'DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json'
   workflow_dispatch:
 env: 
            ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
