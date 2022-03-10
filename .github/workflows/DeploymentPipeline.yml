@@ -9,13 +9,7 @@ env:
            ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
            ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
 jobs:
-  getSecrets:
-   runs-on: ubuntu-latest
-   steps:
-     - name: get secrets based on file holders name
-     - id: getSecrets
-       run: |
-           
+            
   getEnvironmentInfo:
    runs-on: ubuntu-latest
    outputs:
