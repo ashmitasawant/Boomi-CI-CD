@@ -135,23 +135,24 @@ jobs:
       id: setAccountInfo
       run: |
            FileHoldersName=$(echo ${{needs.getProcessInfo.outputs.fileHoldersName}})
-            if [ $FileHoldersName == ashmitasawant ]
+           echo $FileHoldersName
+            if [ $FileHoldersName == "ashmitasawant" ]
             then
                 accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
-            elif [ $FileHoldersName == lalikarpenter ]
+            elif [ $FileHoldersName == "lalikarpenter" ]
             then
                  accountId=$LALIT_KARPENTER_ACCOUNTID
                  apiAuth=$LALIT_KARPENTER_API_AUTH
-            elif [ $FileHoldersName == kartikdashora ]
+            elif [ $FileHoldersName == "kartikdashora" ]
             then
                  accountId=$KARTIK_DASHORA_ACCOUNTID
                  apiAuth=$KARTIK_DASHORA_API_AUTH
-            elif [ $FileHoldersName == lalitkumawat ]
+            elif [ $FileHoldersName == "lalitkumawat" ]
             then
                  accountId=$LALIT_KUMAWAT_ACCOUNTID
                  apiAuth=$LALIT_KUMAWAT_API_AUTH
-            elif [ $FileHoldersName == sanskritisharma ]
+            elif [ $FileHoldersName == "sanskritisharma" ]
             then
                  accountId=$SANSKRITI_SHARMA_ACCOUNTID
                  apiAuth=$SANSKRITI_SHARMA_API_AUTH
