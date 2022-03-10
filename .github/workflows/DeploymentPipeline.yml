@@ -5,8 +5,17 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-
+env: 
+           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
 jobs:
+  getSecrets:
+   runs-on: ubuntu-latest
+   steps:
+     - name: get secrets based on file holders name
+     - id: getSecrets
+       run: |
+           
   getEnvironmentInfo:
    runs-on: ubuntu-latest
    outputs:
@@ -44,12 +53,10 @@ jobs:
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
-      fileHolder'sName: ${{steps.setProcessLevelInfo.outputs.fileHolder'sName}}
+      fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
-    environment: Dev
-    env: 
-      BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+    
     runs-on: ubuntu-latest
     steps:
       - name: Package Creation and Deployment 
@@ -93,9 +100,9 @@ jobs:
               echo $environmentName
               echo "::set-output name=environmentName::$environmentName"
               
-              fileHolder'sName=$(echo ${fileRead} | jq '.[] | .fileHolder'sName')
-              echo $fileHolder'sName
-              echo "::set-output name=fileHolder'sName::$fileHolder'sName"
+              fileHoldersName=$(echo ${fileRead} | jq '.[] | .fileHoldersName')
+              echo $fileHoldersName
+              echo "::set-output name=fileHoldersName::$fileHoldersName"
               
               processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
               componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
@@ -122,11 +129,36 @@ jobs:
               DeploymentsArray=$(echo $deploymentID)
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
+              
+              if [ $fileHoldersName == "ashmitasawant" ]
+              then
+                accountId=$ASHMITA_SAWANT_ACCOUNTID
+                apiAuth=$ASHMITA_SAWANT_API_AUTH
+              elif [ $fileHoldersName == "lalikarpenter" ]
+              then
+                accountId=$LALIT_KARPENTER_ACCOUNTID
+                apiAuth=$LALIT_KARPENTER_API_AUTH
+              elif [ $fileHoldersName == "kartikdashora" ]
+              then
+                accountId=$KARTIK_DASHORA_ACCOUNTID
+                apiAuth=$KARTIK_DASHORA_API_AUTH
+              elif [ $fileHoldersName == "lalitkumawat" ]
+              then
+                accountId=$LALIT_KUMAWAT_ACCOUNTID
+                apiAuth=$LALIT_KUMAWAT_API_AUTH 
+              elif [ $fileHoldersName == "sanskritisharma" ]
+              then
+                accountId=$SANSKRITI_SHARMA_ACCOUNTID
+                apiAuth=$SANSKRITI_SHARMA_API_AUTH 
+              else 
+                accountId=null
+                apiAuth=null
+              fi
+              echo $accountId
+              echo $apiAuth
         
   createPackage:
-   environment: Dev
-   env: 
-      BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+ 
    runs-on: ubuntu-latest   
    outputs:
     packageId: ${{ steps.packageCreation.outputs.packageIds }}
@@ -134,6 +166,7 @@ jobs:
    steps:
       - uses: actions/checkout@v2
       - name: Package Creation
+        
         id: packageCreation
         run: |
               components=${{needs.getProcessInfo.outputs.componentIds}}
@@ -147,10 +180,10 @@ jobs:
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
                   then
                       CODE=`curl  --request POST \
-                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                   --header 'authorization: $ASHMITA_API_AUTH' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/'$accountId'/PackagedComponent' \
+                                   --url 'https://api.boomi.com/api/rest/v1/'$ASHMITA_ACCOUNTID'/PackagedComponent' \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
