@@ -129,6 +129,7 @@ jobs:
    outputs:
       AccountId: ${{ steps.setAccountInfo.outputs.AccountId }}
       ApiAuth: ${{ steps.setAccountInfo.outputs.ApiAuth }}
+      test: ${{ steps.setAccountInfo.outputs.test }}
    needs: getProcessInfo
    steps:
     - name: Set Account Info
@@ -164,6 +165,8 @@ jobs:
             echo $AccountId
             echo "::set-output name=AccountId::$AccountId"
             
+            test="ad"
+            echo "::set-output name=test::$test"
             ApiAuth=$(echo $apiAuth)  
             echo $ApiAuth
             echo "::set-output name=ApiAuth::$ApiAuth"
@@ -185,7 +188,7 @@ jobs:
               modes=${{needs.getProcessInfo.outputs.modes}} 
               AccountID=${{needs.setAccountInfo.outputs.AccountId}}
              
-              APIAuth=${{needs.setAccountInfo.outputs.ApiAuth}}
+              APIAuth=${{needs.setAccountInfo.outputs.test}}
               echo $APIAuth
               for ((i=0;i<${#components[@]};i++))
               do
@@ -219,8 +222,7 @@ jobs:
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
-             accountId=${{needs.getProcessInfo.outputs.accountId}}
-             echo $accountId
+             
               
              if [ ${modes[$i]} == "deploy" ]
              then 
