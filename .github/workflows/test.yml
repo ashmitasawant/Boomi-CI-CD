@@ -13,8 +13,8 @@ jobs:
    steps:
    - name: Sample Azure action
      env: 
-       AUTHAPITOKEN: ${{secrets.AUTHAPITOKEN}}
-     run: echo $AUTHAPITOKEN
+       ASHMITA_ACCOUNTID: ${{secrets.ASHMITA_ACCOUNTID}}
+     run: echo $ASHMITA_ACCOUNTID
   get:
    runs-on: ubuntu-latest
    steps:
