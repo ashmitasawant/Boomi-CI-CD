@@ -60,6 +60,10 @@ jobs:
              lastCommitTimestampForHxFiles=$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
              lastCommitTimestampForCrowFiles=$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json)
              lastCommitTimestampForEventsFiles=$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json)
+             
+             echo $lastCommitTimestampForHxFiles
+             echo $lastCommitTimestampForCrowFiles
+             echo $lastCommitTimestampForEventsFiles
 
               if [[ $(date -d "$lastCommitTimestampForHxFiles") > $(date -d "$lastCommitTimestampForCrowFiles") ]]
               then 
@@ -147,6 +151,25 @@ jobs:
               then
                 accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
+              elif [ $fileHoldersName == "LALIT_KARPENTER" ]
+              then
+                   accountId="LALIT_KARPENTER_ACCOUNTID"
+                   apiAuth="LALIT_KARPENTER_API_AUTH"
+              elif [ $fileHoldersName == "KARTIK_DASHORA" ]
+              then
+                   accountId="KARTIK_DASHORA_ACCOUNTID"
+                   apiAuth="KARTIK_DASHORA_API_AUTH"
+              elif [ $fileHoldersName == "LALIT_KUMAWAT" ]
+              then
+                   accountId="LALIT_KUMAWAT_ACCOUNTID"
+                   apiAuth="LALIT_KUMAWAT_API_AUTH"
+              elif [ $fileHoldersName == "SANSKRITI_SHARMA" ]
+              then
+                   accountId="SANSKRITI_SHARMA_ACCOUNTID"
+                   apiAuth="SANSKRITI_SHARMA_API_AUTH" 
+              else 
+                   accountId=null
+                   apiAuth=null
               fi
               echo $accountId
               echo $apiAuth
@@ -183,7 +206,34 @@ jobs:
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
-             
+             fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
+              
+              if [ $fileHoldersName == ASHMITA_SAWANT ]
+              then
+                accountId=$ASHMITA_SAWANT_ACCOUNTID
+                apiAuth=$ASHMITA_SAWANT_API_AUTH
+              elif [ $fileHoldersName == "LALIT_KARPENTER" ]
+              then
+                   accountId="LALIT_KARPENTER_ACCOUNTID"
+                   apiAuth="LALIT_KARPENTER_API_AUTH"
+              elif [ $fileHoldersName == "KARTIK_DASHORA" ]
+              then
+                   accountId="KARTIK_DASHORA_ACCOUNTID"
+                   apiAuth="KARTIK_DASHORA_API_AUTH"
+              elif [ $fileHoldersName == "LALIT_KUMAWAT" ]
+              then
+                   accountId="LALIT_KUMAWAT_ACCOUNTID"
+                   apiAuth="LALIT_KUMAWAT_API_AUTH"
+              elif [ $fileHoldersName == "SANSKRITI_SHARMA" ]
+              then
+                   accountId="SANSKRITI_SHARMA_ACCOUNTID"
+                   apiAuth="SANSKRITI_SHARMA_API_AUTH" 
+              else 
+                   accountId=null
+                   apiAuth=null
+              fi
+              echo $accountId
+              echo $apiAuth
               
              if [ ${modes[$i]} == "deploy" ]
              then 
@@ -202,10 +252,10 @@ jobs:
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                      CODE=`curl  --request POST \
-                               --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                               --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
+                               --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                
                              
@@ -223,10 +273,10 @@ jobs:
                     then 
                         envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                         CODE=`curl  --request POST \
-                               --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                               --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
+                               --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
                                --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                
                              
@@ -244,10 +294,10 @@ jobs:
                      then
                          envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
                          CODE=`curl  --request POST \
-                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                   --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
+                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
                                    --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                    echo $CODE 
                                      echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
@@ -262,10 +312,10 @@ jobs:
                       then 
                           envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
                           CODE=`curl  --request POST \
-                                 --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                 --header "authorization: ${apiAuth}" \
                                  --header 'content-type: application/json' \
                                  --header 'accept: application/json' \
-                                 --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage' \
+                                 --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
                                  --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                  echo $CODE 
                                      echo $CODE, >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
@@ -301,9 +351,9 @@ jobs:
                   if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
                   then
                     CODE=`curl  --request DELETE \
-                                   --header 'authorization: ${{env.BOOMI_AUTHORIZATION}}' \
+                                   --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/'$accountId'/DeployedPackage/'${deployments[$i]}''`
+                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage/'${deployments[$i]}'"`
                                    echo $CODE 
                   fi
                 done
