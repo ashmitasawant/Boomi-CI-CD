@@ -130,8 +130,34 @@ jobs:
    steps:
     - name: Set Account Info
       id: setAccountInfo
-      run: echo ${{needs.getProcessInfo.outputs.fileHoldersName}}
-              
+      run: |
+           FileHoldersName:$(echo ${{needs.getProcessInfo.outputs.fileHoldersName}})
+            if [ $FileHoldersName == ashmitasawant ]
+            then
+                accountId=$ASHMITA_SAWANT_ACCOUNTID
+                apiAuth=$ASHMITA_SAWANT_API_AUTH
+            elif [ $FileHoldersName == "lalikarpenter" ]
+            then
+                 accountId=$LALIT_KARPENTER_ACCOUNTID
+                 apiAuth=$LALIT_KARPENTER_API_AUTH
+            elif [ $FileHoldersName == "kartikdashora" ]
+            then
+                 accountId=$KARTIK_DASHORA_ACCOUNTID
+                 apiAuth=$KARTIK_DASHORA_API_AUTH
+            elif [ $FileHoldersName == "lalitkumawat" ]
+            then
+                 accountId=$LALIT_KUMAWAT_ACCOUNTID
+                 apiAuth=$LALIT_KUMAWAT_API_AUTH
+            elif [ $FileHoldersName == "sanskritisharma" ]
+            then
+                 accountId=$SANSKRITI_SHARMA_ACCOUNTID
+                 apiAuth=$SANSKRITI_SHARMA_API_AUTH
+            else 
+                 accountId=null
+                 apiAuth=null
+            fi
+            echo $accountId
+            echo $apiAuth   
              
   createPackage:
  
