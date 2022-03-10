@@ -2,9 +2,11 @@ on: push
 env: 
    ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
 jobs:
-  my-job:
-    runs-on: ubuntu-latest
-    steps:
+  job1:
+   runs-on: ubuntu-latest
+   outputs:
+    secret-number: ${{steps.sets-a-secret.outputs.secret-number}}
+   steps:
       - id: sets-a-secret
         run: |
           the_secret=$ASHMITA_SAWANT_ACCOUNTID
@@ -12,3 +14,10 @@ jobs:
           echo "::set-output name=secret-number::$the_secret"
       - run: |
           echo "the secret number is ${{ steps.sets-a-secret.outputs.secret-number }}"
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - id: getsecret
+        run: |
+             echo ${{needs.job1.outputs.secret-number}}
