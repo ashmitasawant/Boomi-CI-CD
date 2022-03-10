@@ -12,6 +12,5 @@ jobs:
   
    steps:
    - name: Sample Azure action
-     env: # Or as an environment variable
-      credentials: ${{ secrets.BOOMI_AUTHORIZATION }}
-     run: echo ${{env.credentials}}
+    
+     run: echo ${{secrets.APIAUTHTOKEN}}
