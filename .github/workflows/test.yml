@@ -9,15 +9,8 @@ jobs:
    steps:
       - id: sets-a-secret
         run: |
-          the_secret=$ASHMITA_SAWANT_ACCOUNTID
-          echo "::add-mask::$the_secret"
-          echo "::set-output name=secret-number::$the_secret"
-      - run: |
-          echo "the secret number is ${{ steps.sets-a-secret.outputs.secret-number }}"
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
-    steps:
-      - id: getsecret
-        run: |
-             echo ${{needs.job1.outputs.secret-number}}
+              git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
+              git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
+              git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json
+   
+ 
