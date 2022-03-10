@@ -158,7 +158,7 @@ jobs:
                                    --header 'authorization: ${apiAuth}' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/${accountIdIdToUse}/PackagedComponent' \
+                                   --url 'https://api.boomi.com/api/rest/v1/'${accountIdIdToUse}'/PackagedComponent' \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
