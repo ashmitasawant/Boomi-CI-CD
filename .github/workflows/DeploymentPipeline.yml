@@ -126,6 +126,9 @@ jobs:
               
   setAccountInfo:
    runs-on: ubuntu-latest
+   outputs:
+      AccountId: ${{ steps.setAccountInfo.outputs.AccountId }}
+      ApiAuth: ${{ steps.setAccountInfo.outputs.ApiAuth }}
    needs: getProcessInfo
    steps:
     - name: Set Account Info
@@ -156,15 +159,17 @@ jobs:
                  accountId=null
                  apiAuth=null
             fi
-            echo $accountId
-            echo $apiAuth   
-             
+            AccountId=$(echo $accountId)
+            echo "::set-output name=AccountId::$AccountId"
+            ApiAuth=$(echo $apiAuth)   
+            echo "::set-output name=ApiAuth::$ApiAuth"
+            
   createPackage:
  
    runs-on: ubuntu-latest   
    outputs:
     packageId: ${{ steps.packageCreation.outputs.packageIds }}
-   needs: getProcessInfo
+   needs: [getProcessInfo,setAccountInfo]
    steps:
       - uses: actions/checkout@v2
       - name: Package Creation
@@ -181,10 +186,10 @@ jobs:
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
                   then
                       CODE=`curl  --request POST \
-                                   --header 'authorization: $ASHMITA_API_AUTH' \
+                                   --header 'authorization: ${{needs.setAccountInfo.outputs.ApiAuth' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url 'https://api.boomi.com/api/rest/v1/'$ASHMITA_ACCOUNTID'/PackagedComponent' \
+                                   --url 'https://api.boomi.com/api/rest/v1/'$${{needs.setAccountInfo.outputs.AccountId'/PackagedComponent' \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
