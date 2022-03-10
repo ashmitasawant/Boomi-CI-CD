@@ -12,6 +12,5 @@ jobs:
       - id: sets-a-secret
         run: |
                git ls-files -z | xargs -0 -n1 -I{} -- git log -1 --format="%ai {}" {}
-                git ls-files ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json | xargs -n 1 git log -1 --format=%cd --date=iso --
-                git ls-files ./DeploymentConfiguration/ProcessDetails.Events_Demo.dev.json | xargs -n 1 git log -1 --format=%cd --date=iso --
-
+               git log -1 --pretty="format:%ai       %cr     %h" ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
+               
