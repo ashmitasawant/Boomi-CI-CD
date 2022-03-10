@@ -184,8 +184,8 @@ jobs:
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
               AccountID=${{needs.setAccountInfo.outputs.AccountId}}
-              echo $AccountID
-              APIAuth:${{needs.setAccountInfo.outputs.ApiAuth}}
+             
+              APIAuth=${{needs.setAccountInfo.outputs.ApiAuth}}
               echo $APIAuth
               for ((i=0;i<${#components[@]};i++))
               do
