@@ -140,6 +140,7 @@ jobs:
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
               accountId=${{needs.getProcessInfo.outputs.accountId}}
+              echo $accountId
               
               for ((i=0;i<${#components[@]};i++))
               do
@@ -173,7 +174,9 @@ jobs:
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
-             
+             accountId=${{needs.getProcessInfo.outputs.accountId}}
+             echo $accountId
+              
              if [ ${modes[$i]} == "deploy" ]
              then 
                 packageIds=(${{needs.createPackage.outputs.packageId}})
@@ -282,6 +285,9 @@ jobs:
         run: |
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
               modes=${{needs.getProcessInfo.outputs.modes}}
+              accountId=${{needs.getProcessInfo.outputs.accountId}}
+              echo $accountId
+              
               for ((i=0;i<${#deployments[@]};i++))
                 do
                   if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
