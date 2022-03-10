@@ -11,9 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-                function gls() {
                 for f in $(git ls-files); do git --no-pager log --color -1 --date=short --pretty=format:'%C(cyan)%ai%Creset' -- $f ; echo  " $f"; done |sort -r
-                }
                  
 
 
