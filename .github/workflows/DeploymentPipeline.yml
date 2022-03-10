@@ -166,8 +166,7 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-              fileHolder'sName=${{needs.getProcessInfo.outputs.fileHolder'sName}}
-              echo $accountId
+             
               
               for ((i=0;i<${#components[@]};i++))
               do
