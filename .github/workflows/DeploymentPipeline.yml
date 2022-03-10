@@ -5,7 +5,9 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-
+env: 
+           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
 jobs:
             
   getEnvironmentInfo:
@@ -45,7 +47,7 @@ jobs:
       packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
       processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
       environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
-      fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
+      accountIdToUse: ${{steps.setProcessLevelInfo.outputs.accountIdToUse}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
     
@@ -92,9 +94,9 @@ jobs:
               echo $environmentName
               echo "::set-output name=environmentName::$environmentName"
               
-              fileHoldersName=$(echo ${fileRead} | jq '.[] | .fileHoldersName')
-              echo $fileHoldersName
-              echo "::set-output name=fileHoldersName::$fileHoldersName"
+              accountIdToUse=$(echo ${fileRead} | jq '.[] | .accountIdToUse')
+              echo $accountIdToUse
+              echo "::set-output name=accountIdToUse::$accountIdToUse"
               
               processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
               componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
@@ -122,62 +124,14 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
               
-  setAccountInfo:
-   runs-on: ubuntu-latest
-   env: 
-           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
-           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
-   outputs:
-      AccountId: ${{ steps.setAccountInfo.outputs.AccountId }}
-      ApiAuth: ${{ steps.setAccountInfo.outputs.ApiAuth }}
-      test: ${{ steps.setAccountInfo.outputs.test }}
-   needs: getProcessInfo
-   steps:
-    - name: Set Account Info
-      id: setAccountInfo
-      run: |
-           FileHoldersName=$(echo ${{needs.getProcessInfo.outputs.fileHoldersName}})
-           echo $FileHoldersName
-            if [ $FileHoldersName == "ashmitasawant" ]
-            then
-                accountId=$ASHMITA_SAWANT_ACCOUNTID
-                apiAuth=$ASHMITA_SAWANT_API_AUTH
-            elif [ $FileHoldersName == "lalikarpenter" ]
-            then
-                 accountId=$LALIT_KARPENTER_ACCOUNTID
-                 apiAuth=$LALIT_KARPENTER_API_AUTH
-            elif [ $FileHoldersName == "kartikdashora" ]
-            then
-                 accountId=$KARTIK_DASHORA_ACCOUNTID
-                 apiAuth=$KARTIK_DASHORA_API_AUTH
-            elif [ $FileHoldersName == "lalitkumawat" ]
-            then
-                 accountId=$LALIT_KUMAWAT_ACCOUNTID
-                 apiAuth=$LALIT_KUMAWAT_API_AUTH
-            elif [ $FileHoldersName == "sanskritisharma" ]
-            then
-                 accountId=$SANSKRITI_SHARMA_ACCOUNTID
-                 apiAuth=$SANSKRITI_SHARMA_API_AUTH
-            else 
-                 accountId=null
-                 apiAuth=null
-            fi
-            AccountId=$(echo $accountId)
-            echo $AccountId
-            echo "::set-output name=AccountId::$AccountId"
-            
-            test="ad"
-            echo "::set-output name=test::$test"
-            ApiAuth=$(echo $apiAuth)  
-            echo $ApiAuth
-            echo "::set-output name=ApiAuth::$ApiAuth"
+  
             
   createPackage:
- 
+   
    runs-on: ubuntu-latest   
    outputs:
     packageId: ${{ steps.packageCreation.outputs.packageIds }}
-   needs: [getProcessInfo,setAccountInfo]
+   needs: getProcessInfo
    steps:
       - uses: actions/checkout@v2
       - name: Package Creation
@@ -187,10 +141,15 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-              AccountID=${{needs.setAccountInfo.outputs.AccountId}}
-             
-              APIAuth=${{needs.setAccountInfo.outputs.test}}
-              echo $APIAuth
+              accountIdToUse=${{needs.getProcessInfo.outputs.accountIdToUse}}
+              
+              if [ $accountIdToUse == ASHMITA_SAWANT_ACCOUNTID ]
+              then
+                accountIdIdToUse=$ASHMITA_SAWANT_ACCOUNTID
+                apiAuth=$ASHMITA_SAWANT_API_AUTH
+              fi
+              echo $accountIdIdToUse
+              echo $apiAuth
               for ((i=0;i<${#components[@]};i++))
               do
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
