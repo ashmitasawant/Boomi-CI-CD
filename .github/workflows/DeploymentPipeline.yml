@@ -186,7 +186,7 @@ jobs:
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
                   then
                       CODE=`curl  --request POST \
-                                   --header 'authorization: ${{needs.setAccountInfo.outputs.ApiAuth' \
+                                   --header 'authorization: ${{needs.setAccountInfo.outputs.ApiAuth}}' \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
                                    --url 'https://api.boomi.com/api/rest/v1/'${{needs.setAccountInfo.outputs.AccountId}}'/PackagedComponent' \
