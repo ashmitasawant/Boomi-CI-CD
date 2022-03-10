@@ -8,16 +8,21 @@ on:
 env: 
    ASHMITA_ACCOUNTID: ${{secrets.ASHMITA_ACCOUNTID}}
 jobs:
-  getEnvironmentInfo:
+  getInfo:
    runs-on: ubuntu-latest
-  
+   outputs:
+    secret: ${{steps.secret.outputs.some-token}}
    steps:
    - name: Sample Azure action
-     
-     run: echo $ASHMITA_ACCOUNTID
+     id: secret
+     run: |
+          TOKEN1=$ASHMITA_ACCOUNTID
+          echo "::add-mask::$TOKEN1"
+          echo "::set-output name=some-token::$TOKEN1"
   get:
    runs-on: ubuntu-latest
+   needs: getInfo
    steps:
    - name: Sample Azure action
      
-     run: echo $ASHMITA_ACCOUNTID
+     run: echo ${{needs.getInfo.outputs.some-token}}
