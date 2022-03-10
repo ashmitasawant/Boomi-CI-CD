@@ -5,7 +5,8 @@ on:
     paths:
      - 'DeploymentConfiguration/*'
   workflow_dispatch:
-
+env: 
+ AUTHAPITOKEN: ${{secrets.AUTHAPITOKEN}}
 jobs:
   getEnvironmentInfo:
    runs-on: ubuntu-latest
@@ -13,4 +14,10 @@ jobs:
    steps:
    - name: Sample Azure action
     
-     run: echo ${{secrets.AUTHAPITOKEN}}
+     run: echo ${{env.AUTHAPITOKEN}}
+  get:
+   runs-on: ubuntu-latest
+   steps:
+   - name: Sample Azure action
+    
+     run: echo ${{env.AUTHAPITOKEN}}
