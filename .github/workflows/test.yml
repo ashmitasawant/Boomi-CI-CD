@@ -12,6 +12,5 @@ jobs:
       - id: sets-a-secret
         run: |
              
-               git diff --summary          
-
+               git log -1 7a7641e
               
