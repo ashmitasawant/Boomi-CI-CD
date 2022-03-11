@@ -13,3 +13,4 @@ jobs:
         run: |
              git pull; 
              git log -1 --format="%at" DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json | xargs -I{} date -d @{} +%Y/%m/%d_%H:%M:%S
+             git log -n 1 --pretty=format:%cd DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
