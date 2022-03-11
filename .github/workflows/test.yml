@@ -12,6 +12,6 @@ jobs:
       - id: sets-a-secret
         run: |
              
-               git log --name-status              
+               git diff --ProcessDetails.Crow_Demo.dev.json          
 
               
