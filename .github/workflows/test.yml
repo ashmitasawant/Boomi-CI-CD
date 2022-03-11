@@ -12,7 +12,7 @@ jobs:
       - id: sets-a-secret
         run: |
              
-             git show -s --pretty=format:%H -- DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
+             git show -s --pretty=format:%cr -- DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
               
 
               
