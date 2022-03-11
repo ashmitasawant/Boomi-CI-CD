@@ -11,5 +11,5 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git show -s --format=%cd <commit> DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
+              git show -s --format=%cd <commit> ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json
                
