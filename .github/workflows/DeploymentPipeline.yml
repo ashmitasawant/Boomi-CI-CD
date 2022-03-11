@@ -352,7 +352,7 @@ jobs:
                 do
                   if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
                   then
-                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/DeployedPackage/362a2a22-d3d2-460a-99d2-dbeb043036dc -H "authorization: Basic Qk9PTUlfVE9LRU4uYXNobWl0YS5zYXdhbnRAbmVvc2FscGhhLmNvbTpiZjIyMTExYS0zN2MwLTRhZTItYmFhNC05ZDdlNzc2NzMxMWE=" -H "content-type: application/json"`
+                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage/${deployments[$i]} -H "authorization: ${apiAuth}" -H "content-type: application/json"`
                                    echo $CODE 
                                    echo ${deployments[$i]}
                   fi
