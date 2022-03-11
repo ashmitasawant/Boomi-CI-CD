@@ -355,9 +355,9 @@ jobs:
                     CODE=`curl  --request DELETE \
                                    --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
-                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage/'"${deployments[$i]}"'"`
+                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage/"'"${deployments[$i]}"'""`
                                    echo $CODE 
-                                   echo $deployments[$i]
+                                   echo ${deployments[$i]}
                   fi
                 done
             
