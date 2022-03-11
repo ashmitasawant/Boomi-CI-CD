@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git ls-files -o && git checkout
+              git status --porcelain | awk 'match($1, "D"){print $2}' | xargs git rm
               
                            
