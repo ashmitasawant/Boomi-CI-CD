@@ -11,8 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git log https://github.com/ashmitasawant/Boomi-CI-CD/blob/6b1f94b422191222952711002f09836876ed77c8/DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
-
+               $ git show -s --format=%ci e907ee4 
               
 
               
