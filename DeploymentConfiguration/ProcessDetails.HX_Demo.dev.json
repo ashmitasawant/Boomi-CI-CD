@@ -1,7 +1,7 @@
 [{
 
 	"environmentName": "Development",
-	"accountIdToUse":"ASHMITA_SAWANT_ACCOUNTID",
+	"fileHoldersName":"ASHMITA_SAWANT",
 	"processDetails": [{
 				"processName": "TestWS",
 				"componentID": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5",
