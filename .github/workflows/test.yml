@@ -11,8 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git log -- DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
-              git ls-tree -r --name-only HEAD | while read filename; do
-              echo "$(git log -1 --format="%ci" -- $filename) $filename"
-              done
+              git log -1 --pretty="format:%ct" Boomi-CI-CD/DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json)
 
+              
