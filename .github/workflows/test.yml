@@ -12,4 +12,5 @@ jobs:
       - id: sets-a-secret
         run: |
               git log --name-status -10 DeploymentConfiguration/
+              git log --name-only --oneline
                            
