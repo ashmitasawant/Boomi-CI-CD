@@ -1,16 +1,61 @@
-name: test
-on: workflow_dispatch
+name: Deployment Pipeline
+
+on:
+  push:
+    paths:
+     - 'DeploymentConfiguration/*'
+     
+  workflow_dispatch:
 env: 
-   ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
+           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
 jobs:
-  job1:
+            
+  getEnvironmentInfo:
    runs-on: ubuntu-latest
    outputs:
-    secret-number: ${{steps.sets-a-secret.outputs.secret-number}}
+     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
+     devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
+     testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
+     testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
    steps:
-      - uses: actions/checkout@v2
-      - id: sets-a-secret
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Process Info
+        uses: actions/checkout@v2
+      - id: setEnvironmentLevelInfo
         run: |
-             git pull; 
-             git log -1 --format="%at" DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json | xargs -I{} date -d @{} +%Y/%m/%d_%H:%M:%S
-             git log -n 1 --pretty=format:%cd DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
+            DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
+            devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $devEnvironmentID
+            echo "::set-output name=devEnvironmentId::$devEnvironmentID"
+            
+            devAtomID=$(echo ${DevEnvironmentDetails} | jq '.[] | .atomId')
+            echo $devAtomID
+            echo "::set-output name=devAtomId::$devAtomID"
+            
+            TestEnvironmentDetails=$(cat ./EnvironmentConfiguration/Test.Env.Config.json)
+            testEnvironmentID=$(echo  ${TestEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $testEnvironmentID
+            echo "::set-output name=testEnvironmentId::$testEnvironmentID"
+            
+            testAtomID=$(echo ${TestEnvironmentDetails} | jq '.[] | .atomId')
+            echo $testAtomID
+            echo "::set-output name=testAtomId::$testAtomID"
+  
+  getProcessInfo:
+    outputs:
+      componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
+      packageVersions: ${{ steps.setProcessLevelInfo.outputs.packageVersions }}
+      processNames: ${{steps.setProcessLevelInfo.outputs.processNames}}
+      environmentName: ${{steps.setProcessLevelInfo.outputs.environmentName}}
+      fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
+      modes: ${{steps.setProcessLevelInfo.outputs.modes}}
+      deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
+    
+    runs-on: ubuntu-latest
+    steps:
+      - name: Package Creation and Deployment 
+        uses: actions/checkout@v2
+      - id: setProcessLevelInfo
+        run: |
+              ls ./DeploymentConfiguration/
