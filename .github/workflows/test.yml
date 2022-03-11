@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git log --name-status -10 DeploymentConfiguration/
-              git log --name-only --oneline
+              git log -1
+              
                            
