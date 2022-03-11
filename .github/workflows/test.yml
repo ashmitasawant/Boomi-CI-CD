@@ -11,5 +11,5 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git log --pretty=oneline > DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
-             
+              git log --name-status -10 Boomi-CI-CD/DeploymentConfiguration/
+                           
