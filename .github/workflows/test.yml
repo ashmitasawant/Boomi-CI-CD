@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git show -s --format=%ci <commit> -- ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
+              git show -s --format=%ci <commit> ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
               git log -1 --pretty="format:%ct" ./DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
 
               
