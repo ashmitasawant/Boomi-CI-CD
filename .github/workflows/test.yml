@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git log -1
+              git log -2
               
                            
