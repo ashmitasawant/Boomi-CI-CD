@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git ls-tree -r --name-only HEAD | ForEach-Object { "$(git log -1 --format="%ai" -- "$_")`t$_" }
+              git ls-tree -r --name-only HEAD | ForEach-Object { "$(git log -1 --format="%ai" -- "$_")`t$_"` }
 
 
               
