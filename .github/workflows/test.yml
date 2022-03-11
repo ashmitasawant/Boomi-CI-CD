@@ -91,4 +91,229 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
               
+
+  createPackage:
+   
+   runs-on: ubuntu-latest   
+   outputs:
+    packageId: ${{ steps.packageCreation.outputs.packageIds }}
+   needs: getProcessInfo
+   steps:
+      - uses: actions/checkout@v2
+      - name: Package Creation
+        
+        id: packageCreation
+        run: |
+              components=${{needs.getProcessInfo.outputs.componentIds}}
+              packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
+              modes=${{needs.getProcessInfo.outputs.modes}} 
+              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
               
+              if [ $fileHoldersName == ASHMITA_SAWANT ]
+              then
+                accountId=$ASHMITA_SAWANT_ACCOUNTID
+                apiAuth=$ASHMITA_SAWANT_API_AUTH
+              elif [ $fileHoldersName == "LALIT_KARPENTER" ]
+              then
+                   accountId="LALIT_KARPENTER_ACCOUNTID"
+                   apiAuth="LALIT_KARPENTER_API_AUTH"
+              elif [ $fileHoldersName == "KARTIK_DASHORA" ]
+              then
+                   accountId="KARTIK_DASHORA_ACCOUNTID"
+                   apiAuth="KARTIK_DASHORA_API_AUTH"
+              elif [ $fileHoldersName == "LALIT_KUMAWAT" ]
+              then
+                   accountId="LALIT_KUMAWAT_ACCOUNTID"
+                   apiAuth="LALIT_KUMAWAT_API_AUTH"
+              elif [ $fileHoldersName == "SANSKRITI_SHARMA" ]
+              then
+                   accountId="SANSKRITI_SHARMA_ACCOUNTID"
+                   apiAuth="SANSKRITI_SHARMA_API_AUTH" 
+              else 
+                   accountId=null
+                   apiAuth=null
+              fi
+              echo $accountId
+              echo $apiAuth
+              
+              for ((i=0;i<${#components[@]};i++))
+              do
+                  if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
+                  then
+                      CODE=`curl  --request POST \
+                                   --header "authorization: ${apiAuth}" \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/PackagedComponent" \
+                                   --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
+                                   echo $CODE
+                                   packageIds=$(echo ${CODE} | jq '.packageId')
+                                   packageIdsArray+="$packageIds "
+                  fi
+              done              
+              echo "::set-output name=packageIds::$packageIdsArray"
+              
+              
+  deployPackage: 
+   environment: Dev
+   env: 
+      BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+   runs-on: ubuntu-latest    
+   needs: [createPackage,getProcessInfo,getEnvironmentInfo]
+   steps:   
+     - uses: actions/checkout@v2
+     - name: Package Deploy
+       id: packageDeploy
+       run: |
+             envName=${{needs.getProcessInfo.outputs.environmentName}}
+             echo $envName
+             modes=${{needs.getProcessInfo.outputs.modes}}
+             fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
+              
+              if [ $fileHoldersName == ASHMITA_SAWANT ]
+              then
+                accountId=$ASHMITA_SAWANT_ACCOUNTID
+                apiAuth=$ASHMITA_SAWANT_API_AUTH
+              elif [ $fileHoldersName == "LALIT_KARPENTER" ]
+              then
+                   accountId="LALIT_KARPENTER_ACCOUNTID"
+                   apiAuth="LALIT_KARPENTER_API_AUTH"
+              elif [ $fileHoldersName == "KARTIK_DASHORA" ]
+              then
+                   accountId="KARTIK_DASHORA_ACCOUNTID"
+                   apiAuth="KARTIK_DASHORA_API_AUTH"
+              elif [ $fileHoldersName == "LALIT_KUMAWAT" ]
+              then
+                   accountId="LALIT_KUMAWAT_ACCOUNTID"
+                   apiAuth="LALIT_KUMAWAT_API_AUTH"
+              elif [ $fileHoldersName == "SANSKRITI_SHARMA" ]
+              then
+                   accountId="SANSKRITI_SHARMA_ACCOUNTID"
+                   apiAuth="SANSKRITI_SHARMA_API_AUTH" 
+              else 
+                   accountId=null
+                   apiAuth=null
+              fi
+              echo $accountId
+              echo $apiAuth
+              
+             if [ ${modes[$i]} == "deploy" ]
+             then 
+                packageIds=(${{needs.createPackage.outputs.packageId}})
+             else
+                ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+                packages=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId')
+                packageIds=($packages)
+             fi
+             echo $packageIds
+             echo "Index 0 value:" ${packageIds[0]} 
+             
+             for ((i=0;i<${#packageIds[@]};i++))
+               do
+                 if [ $envName == "Development" ] && [ ${modes[$i]} == "deploy" ] 
+                 then
+                     envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
+                     CODE=`curl  --request POST \
+                               --header "authorization: ${apiAuth}" \
+                               --header 'content-type: application/json' \
+                               --header 'accept: application/json' \
+                               --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                               --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
+                               
+                             
+                               echo $CODE 
+                              
+                                   echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json
+                                   git config user.name ashmitasawant
+                                   git config user.email ashmitasawant3@gmail.com
+                                   git add .
+                                   git commit -m "Published Changes"
+                                   git config pull.rebase false
+                                   git push --force origin main
+                    fi
+                    if [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
+                    then 
+                        envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
+                        CODE=`curl  --request POST \
+                               --header "authorization: ${apiAuth}" \
+                               --header 'content-type: application/json' \
+                               --header 'accept: application/json' \
+                               --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                               --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
+                               
+                             
+                               echo $CODE 
+                              
+                                   echo $CODE, >> DeploymentOutcomeDev/HXv1Demo.Dev.Outcome.json
+                                   git config user.name ashmitasawant
+                                   git config user.email ashmitasawant3@gmail.com
+                                   git add .
+                                   git commit -m "Published Changes"
+                                   git config pull.rebase false
+                                   git push --force origin main
+                     fi
+                     if [[ $envName == "Test" ]]  && [[ ${modes[$i]} == "deploy" ]]
+                     then
+                         envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
+                         CODE=`curl  --request POST \
+                                   --header "authorization: ${apiAuth}" \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                                   --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
+                                   echo $CODE 
+                                     echo $CODE >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
+                                     git config user.name ashmitasawant
+                                     git config user.email ashmitasawant3@gmail.com
+                                     git add .
+                                     git commit -m "Published Changes"
+                                     git config pull.rebase false
+                                     git push --force origin main
+                     fi
+                     if [ $envName == "Test" ] && [ ${modes[$i]} == "re-deploy" ]  
+                      then 
+                          envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
+                          CODE=`curl  --request POST \
+                                 --header "authorization: ${apiAuth}" \
+                                 --header 'content-type: application/json' \
+                                 --header 'accept: application/json' \
+                                 --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                                 --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
+                                 echo $CODE 
+                                     echo $CODE, >> DeploymentOutcomeTest/HXv1Demo.Test.Outcome.json
+                                     git config user.name ashmitasawant
+                                     git config user.email ashmitasawant3@gmail.com
+                                     git add .
+                                     git commit -m "Published Changes"
+                                     git config pull.rebase false
+                                     git push --force origin main
+                       fi
+                   done          
+                      
+                           
+  
+  undeployPackage:
+   environment: Dev
+   env: 
+      BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+   runs-on: ubuntu-latest
+   needs: [getProcessInfo,deployPackage]
+   steps:
+      - uses: actions/checkout@v2
+      - name: Package Undeploy
+        id: packageUndeploy
+        run: |
+              deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
+              modes=${{needs.getProcessInfo.outputs.modes}}
+              accountId=${{needs.getProcessInfo.outputs.accountId}}
+              echo $accountId
+              
+              for ((i=0;i<${#deployments[@]};i++))
+                do
+                  if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
+                  then
+                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage/${deployments[$i]} -H "authorization: ${apiAuth}" -H "content-type: application/json"`
+                                   echo $CODE 
+                                   echo ${deployments[$i]}
+                  fi
+                done
