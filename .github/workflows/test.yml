@@ -11,5 +11,5 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              gitk -- DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json 
+              git log --pretty=oneline > DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
              
