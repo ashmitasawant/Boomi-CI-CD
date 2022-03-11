@@ -11,4 +11,4 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git show -s --date=format:'%Y%m%d-%H%M' --format=%cd  7a7641e
+             git log -1 --format="%at" | xargs -I{} date -d @{} +%Y/%m/%d_%H:%M:%S
