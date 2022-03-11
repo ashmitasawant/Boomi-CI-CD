@@ -11,6 +11,5 @@ jobs:
       - uses: actions/checkout@v2
       - id: sets-a-secret
         run: |
-              git log --pretty="format:%ct       %cr     %h" DeploymentConfiguration/ProcessDetails.Crow_Demo.dev.json
-              
+               git ls-files -z | xargs -0 -n1 -I{} -- git log -1 --format="%ai {}" {}
                            
