@@ -1,22 +1,16 @@
-on: [push]
-
+name: test
+on: workflow_dispatch
+env: 
+   ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
 jobs:
-  example_check_commits_job:
-    runs-on: ubuntu-latest
-    name: Check for commits within the last 2 hours
-    steps:
-      - name: Checkout with maximum fetch depth
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Run CommitsWithinTime script
-        uses: AlexHolderDeveloper/CommitsWithinTime@v1.1.5
-        id: commitswithintime
-        with:
-          hours: 2
-      # Use the output from the `commitswithintime` step
-      - name: Get the output from CommitsWithinTime
+  job1:
+   runs-on: ubuntu-latest
+   outputs:
+    secret-number: ${{steps.sets-a-secret.outputs.secret-number}}
+   steps:
+      - uses: actions/checkout@v2
+      - id: sets-a-secret
         run: |
-          echo "The 'has-new-commits-within-time' value is ${{ steps.commitswithintime.outputs.has-new-commits-within-time }}"
-          echo "The 'number-of-commits-within-time' value is ${{ steps.commitswithintime.outputs.number-of-commits-within-time }}"
-          echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
+              git log -p -4
+              
+                           
