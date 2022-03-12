@@ -14,3 +14,4 @@
 {"@type":"DeployedPackage","deploymentId":"81cc0205-3891-4c41-a391-736de752b543","version":70,"packageId":"dc772e22-2db3-4ec7-ac2c-f85ca2bcadbc","packageVersion":"v.24","environmentId":"5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259","componentId":"a7f1b658-ea28-4b36-9627-187f5d6f6446","componentVersion":4,"componentType":"process","deployedDate":"2022-03-11T14:01:37Z","deployedBy":"ashmita.sawant@neosalpha.com","active":true},
 {"@type":"Error","message":"The packaged component (null) is not found."},
 {"@type":"Error","message":"The packaged component (null) is not found."},
+,
