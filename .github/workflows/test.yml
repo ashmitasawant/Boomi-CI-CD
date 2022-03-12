@@ -27,7 +27,7 @@ jobs:
       - id: setProcessLevelInfo
         run: |
               fileToRead=$(ls ./DeploymentConfiguration/)
-              fileRead=$(cat ./DeploymentConfiguration/"$fileToRead")
+              fileRead=$(cat ./DeploymentConfiguration/ARC_"$fileToRead")
               echo $fileRead
                
               echo $fileRead >> Archive/"$fileToRead"
