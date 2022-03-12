@@ -335,6 +335,8 @@ jobs:
                                 "environmentId": "'$environmentId'"
                               }
                              }'
+                      echo $outcome
+                      echo $filePath
                       echo $outcome, >> $filePath
                                      git config user.name ashmitasawant
                                      git config user.email ashmitasawant3@gmail.com
