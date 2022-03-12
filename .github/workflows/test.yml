@@ -27,10 +27,10 @@ jobs:
       - id: setProcessLevelInfo
         run: |
               fileToRead=$(ls ./DeploymentConfiguration/)
-              fileRead=$(cat ./DeploymentConfiguration/ARC_"$fileToRead")
+              fileRead=$(cat ./DeploymentConfiguration/"$fileToRead")
               echo $fileRead
                
-              echo $fileRead >> Archive/"$fileToRead"
+              echo $fileRead >> Archive/ARC_"$fileToRead"
                  git config user.name ashmitasawant
                  git config user.email ashmitasawant3@gmail.com
                  git add .
