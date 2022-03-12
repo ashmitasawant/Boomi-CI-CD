@@ -20,4 +20,6 @@ jobs:
               git rm Archive/test.txt
                git config user.name ashmitasawant
                git config user.email ashmitasawant3@gmail.com
-              git commit
+              git commit -m "Removed file test.txt"
+               git config pull.rebase false
+               git push --force origin main
