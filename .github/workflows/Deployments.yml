@@ -47,18 +47,23 @@ jobs:
               packageVersion=$(echo  ${fileRead} | jq '.[] | .processDetails[].packageVersion')
               mode=$(echo  ${fileRead} | jq '.[] | .processDetails[].mode')
               deploymentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].deploymentID')
+              
               ComponentsArray=$(echo $componentID)
               echo $ComponentsArray
               echo "::set-output name=componentIds::($ComponentsArray)"
+              
               ProcessNamesArray=$(echo $processName)
               echo $ProcessNamesArray
               echo "::set-output name=processNames::($ProcessNamesArray)"
+              
               PackageVersionArray=$(echo $packageVersion)
               echo $PackageVersionArray
               echo "::set-output name=packageVersions::($PackageVersionArray)"
+              
               ModeArray=$(echo $mode)
               echo $ModeArray
               echo "::set-output name=modes::($ModeArray)"
+              
               DeploymentsArray=$(echo $deploymentID)
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
@@ -174,6 +179,7 @@ jobs:
        id: packageDeploy
        run: |
              envName=${{needs.getProcessInfo.outputs.environmentName}}
+             processNames={{needs.getProcessInfo.outputs.processNames}}
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
@@ -218,6 +224,8 @@ jobs:
              
              for ((i=0;i<${#packageIds[@]};i++))
                do
+                 componentName=${processNames[$i]}
+                 echo $componentName
                  if [ $envName == "Development" ] && [ ${modes[$i]} == "deploy" ] 
                  then
                      envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
@@ -227,7 +235,6 @@ jobs:
                                --header 'accept: application/json' \
                                --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
-                               
                              
                                echo $CODE 
                               
