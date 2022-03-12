@@ -59,7 +59,7 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
              
-              fileHoldersName:$(git log -n 1 --pretty='format:%an' -- .github/workflows/test.yml)
+              fileHoldersName=$(git log -n 1 --pretty='format:%an' -- .github/workflows/test.yml)
               echo $fileHoldersName
               
               
