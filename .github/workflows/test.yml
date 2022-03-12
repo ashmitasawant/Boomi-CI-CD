@@ -107,7 +107,7 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
+              fileHoldersName="'${{needs.getProcessInfo.outputs.fileHoldersName}}'"
               
               if [ $fileHoldersName == "Ashmita Sawant" ]
               then
