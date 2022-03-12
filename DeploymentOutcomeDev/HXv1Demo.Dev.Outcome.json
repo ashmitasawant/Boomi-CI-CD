@@ -33,3 +33,4 @@
 {"@type":"Error","message":"The packaged component (null) is not found."},
 {"@type":"Error","message":"The packaged component (null) is not found."},
 { "deployedDatetime": "null", "details": { "componentName": "TestWS", "componentId": "null", "packageVersion": "null", "packageId": "null", "deploymentId": "null", "componentVersion": "null", "environmentId": "null" } },
+{ "deployedDatetime": "null", "details": { "componentName": "TestWS", "componentId": "null", "packageVersion": "null", "packageId": "null", "deploymentId": "null", "componentVersion": "null", "environmentId": "null" } },
