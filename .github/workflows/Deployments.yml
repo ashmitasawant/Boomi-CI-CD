@@ -179,7 +179,7 @@ jobs:
        id: packageDeploy
        run: |
              envName=${{needs.getProcessInfo.outputs.environmentName}}
-             processNames={{needs.getProcessInfo.outputs.processNames}}
+             processNames=${{needs.getProcessInfo.outputs.processNames}}
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
