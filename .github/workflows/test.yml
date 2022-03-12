@@ -107,25 +107,25 @@ jobs:
               components=${{needs.getProcessInfo.outputs.componentIds}}
               packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
               modes=${{needs.getProcessInfo.outputs.modes}} 
-              fileHoldersName="${{needs.getProcessInfo.outputs.fileHoldersName}}"
+              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
               
-              if [ $fileHoldersName == "Ashmita Sawant" ]
+              if [ $fileHoldersName == Ashmita Sawant ]
               then
                 accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
-              elif [ $fileHoldersName == "Lalit Karpenter" ]
+              elif [ $fileHoldersName == Lalit Karpenter ]
               then
                    accountId="LALIT_KARPENTER_ACCOUNTID"
                    apiAuth="LALIT_KARPENTER_API_AUTH"
-              elif [ $fileHoldersName == "Kartik Dashora" ]
+              elif [ $fileHoldersName == Kartik Dashora ]
               then
                    accountId="KARTIK_DASHORA_ACCOUNTID"
                    apiAuth="KARTIK_DASHORA_API_AUTH"
-              elif [ $fileHoldersName == "Lalit Kumawat" ]
+              elif [ $fileHoldersName == Lalit Kumawat ]
               then
                    accountId="LALIT_KUMAWAT_ACCOUNTID"
                    apiAuth="LALIT_KUMAWAT_API_AUTH"
-              elif [ $fileHoldersName == "Sanskriti Sharma" ]
+              elif [ $fileHoldersName == Sanskriti Sharma ]
               then
                    accountId="SANSKRITI_SHARMA_ACCOUNTID"
                    apiAuth="SANSKRITI_SHARMA_API_AUTH" 
@@ -168,25 +168,25 @@ jobs:
              envName=${{needs.getProcessInfo.outputs.environmentName}}
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
-             fileHoldersName="${{needs.getProcessInfo.outputs.fileHoldersName}}"
+             fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
               
-              if [ $fileHoldersName == "Ashmita Sawant" ]
+              if [ $fileHoldersName == Ashmita Sawant ]
               then
                 accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
-              elif [ $fileHoldersName == "Lalit Karpenter" ]
+              elif [ $fileHoldersName == Lalit Karpenter ]
               then
                    accountId="LALIT_KARPENTER_ACCOUNTID"
                    apiAuth="LALIT_KARPENTER_API_AUTH"
-              elif [ $fileHoldersName == "Kartik Dashora" ]
+              elif [ $fileHoldersName == Kartik Dashora ]
               then
                    accountId="KARTIK_DASHORA_ACCOUNTID"
                    apiAuth="KARTIK_DASHORA_API_AUTH"
-              elif [ $fileHoldersName == "Lalit Kumawat ]
+              elif [ $fileHoldersName == Lalit Kumawat ]
               then
                    accountId="LALIT_KUMAWAT_ACCOUNTID"
                    apiAuth="LALIT_KUMAWAT_API_AUTH"
-              elif [ $fileHoldersName == "Sanskriti Sharma" ]
+              elif [ $fileHoldersName == Sanskriti Sharma ]
               then
                    accountId="SANSKRITI_SHARMA_ACCOUNTID"
                    apiAuth="SANSKRITI_SHARMA_API_AUTH" 
