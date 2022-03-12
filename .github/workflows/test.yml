@@ -30,7 +30,7 @@ jobs:
               fileRead=$(cat ./DeploymentConfiguration/"$fileToRead")
               echo $fileRead
                
-              echo $fileRead >> Archive/"$fileToRead"
+              echo $fileRead >> DeploymentConfiguration/Archive/"$fileToRead"
                  git config user.name ashmitasawant
                  git config user.email ashmitasawant3@gmail.com
                  git add .
