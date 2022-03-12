@@ -3,7 +3,7 @@ name: Deployment Pipeline
 on:
   push:
     paths:
-     - 'DeploymentConfiguration/*'
+     - 'DeploymentConfiguration/*.json'
      
   workflow_dispatch:
 env: 
@@ -90,7 +90,8 @@ jobs:
               DeploymentsArray=$(echo $deploymentID)
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
-              
+             
+             
 
   createPackage:
    
