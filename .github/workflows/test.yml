@@ -10,38 +10,6 @@ env:
            ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
            ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
 jobs:
-            
-  getEnvironmentInfo:
-   runs-on: ubuntu-latest
-   outputs:
-     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
-     devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
-     testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
-     testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
-   steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Get Process Info
-        uses: actions/checkout@v2
-      - id: setEnvironmentLevelInfo
-        run: |
-            DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
-            devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
-            echo $devEnvironmentID
-            echo "::set-output name=devEnvironmentId::$devEnvironmentID"
-            
-            devAtomID=$(echo ${DevEnvironmentDetails} | jq '.[] | .atomId')
-            echo $devAtomID
-            echo "::set-output name=devAtomId::$devAtomID"
-            
-            TestEnvironmentDetails=$(cat ./EnvironmentConfiguration/Test.Env.Config.json)
-            testEnvironmentID=$(echo  ${TestEnvironmentDetails} | jq '.[] | .environmentId')
-            echo $testEnvironmentID
-            echo "::set-output name=testEnvironmentId::$testEnvironmentID"
-            
-            testAtomID=$(echo ${TestEnvironmentDetails} | jq '.[] | .atomId')
-            echo $testAtomID
-            echo "::set-output name=testAtomId::$testAtomID"
-  
   getProcessInfo:
     outputs:
       componentIds: ${{ steps.setProcessLevelInfo.outputs.componentIds }}
@@ -91,7 +59,42 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
              
-             
+              fileHoldersName:$(git log -n 1 --pretty='format:%an' -- .github/workflows/test.yml)
+              echo $fileHoldersName
+              
+              
+  getEnvironmentInfo:
+   runs-on: ubuntu-latest
+   outputs:
+     devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
+     devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
+     testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
+     testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
+   steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Process Info
+        uses: actions/checkout@v2
+      - id: setEnvironmentLevelInfo
+        run: |
+            DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
+            devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $devEnvironmentID
+            echo "::set-output name=devEnvironmentId::$devEnvironmentID"
+            
+            devAtomID=$(echo ${DevEnvironmentDetails} | jq '.[] | .atomId')
+            echo $devAtomID
+            echo "::set-output name=devAtomId::$devAtomID"
+            
+            TestEnvironmentDetails=$(cat ./EnvironmentConfiguration/Test.Env.Config.json)
+            testEnvironmentID=$(echo  ${TestEnvironmentDetails} | jq '.[] | .environmentId')
+            echo $testEnvironmentID
+            echo "::set-output name=testEnvironmentId::$testEnvironmentID"
+            
+            testAtomID=$(echo ${TestEnvironmentDetails} | jq '.[] | .atomId')
+            echo $testAtomID
+            echo "::set-output name=testAtomId::$testAtomID"
+  
+  
 
   createPackage:
    
