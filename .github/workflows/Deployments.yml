@@ -238,8 +238,8 @@ jobs:
                                    git commit -m "Published Changes"
                                    git config pull.rebase false
                                    git push --force origin main
-                    fi
-                    if [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
+                   
+                    elif [ $envName == "Development" ] && [ ${modes[$i]} == "re-deploy" ]  
                     then 
                         envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
                         CODE=`curl  --request POST \
@@ -259,8 +259,8 @@ jobs:
                                    git commit -m "Published Changes"
                                    git config pull.rebase false
                                    git push --force origin main
-                     fi
-                     if [[ $envName == "Test" ]]  && [[ ${modes[$i]} == "deploy" ]]
+                    
+                     elif [[ $envName == "Test" ]]  && [[ ${modes[$i]} == "deploy" ]]
                      then
                          envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
                          CODE=`curl  --request POST \
@@ -277,8 +277,8 @@ jobs:
                                      git commit -m "Published Changes"
                                      git config pull.rebase false
                                      git push --force origin main
-                     fi
-                     if [ $envName == "Test" ] && [ ${modes[$i]} == "re-deploy" ]  
+                     
+                     elif [ $envName == "Test" ] && [ ${modes[$i]} == "re-deploy" ]  
                       then 
                           envId=${{needs.getEnvironmentInfo.outputs.testEnvironmentId}}
                           CODE=`curl  --request POST \
@@ -295,7 +295,10 @@ jobs:
                                      git commit -m "Published Changes"
                                      git config pull.rebase false
                                      git push --force origin main
-                       fi
+                     else 
+                       $CODE=""
+                     fi
+                     echo $CODE
                    done          
                       
                            
