@@ -18,4 +18,6 @@ jobs:
               git log .github/workflows/test.yml | grep Author: | cut -d' ' -f2- | uniq | head -n5
               git log -n 1 --pretty='format:%an' -- .github/workflows/test.yml
               git rm Archive/test.txt
+               git config user.name ashmitasawant
+               git config user.email ashmitasawant3@gmail.com
               git commit
