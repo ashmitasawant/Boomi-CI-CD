@@ -34,10 +34,6 @@ jobs:
               echo $environmentName
               echo "::set-output name=environmentName::$environmentName"
               
-              fileHoldersName=$(echo ${fileRead} | jq '.[] | .fileHoldersName')
-              echo $fileHoldersName
-              echo "::set-output name=fileHoldersName::$fileHoldersName"
-              
               processName=$(echo ${fileRead} | jq '.[] | .processDetails[].processName')
               componentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].componentID')
               packageVersion=$(echo  ${fileRead} | jq '.[] | .processDetails[].packageVersion')
@@ -61,6 +57,7 @@ jobs:
              
               fileHoldersName=$(git log -n 1 --pretty='format:%an' -- .github/workflows/test.yml)
               echo $fileHoldersName
+              echo "::set-output name=fileHoldersName::$fileHoldersName"
               
               
   getEnvironmentInfo:
@@ -95,7 +92,6 @@ jobs:
             echo "::set-output name=testAtomId::$testAtomID"
   
   
-
   createPackage:
    
    runs-on: ubuntu-latest   
@@ -113,23 +109,23 @@ jobs:
               modes=${{needs.getProcessInfo.outputs.modes}} 
               fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
               
-              if [ $fileHoldersName == ASHMITA_SAWANT ]
+              if [ $fileHoldersName == Ashmita Sawant ]
               then
                 accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
-              elif [ $fileHoldersName == "LALIT_KARPENTER" ]
+              elif [ $fileHoldersName == Lalit Karpenter ]
               then
                    accountId="LALIT_KARPENTER_ACCOUNTID"
                    apiAuth="LALIT_KARPENTER_API_AUTH"
-              elif [ $fileHoldersName == "KARTIK_DASHORA" ]
+              elif [ $fileHoldersName == Kartik Dashora ]
               then
                    accountId="KARTIK_DASHORA_ACCOUNTID"
                    apiAuth="KARTIK_DASHORA_API_AUTH"
-              elif [ $fileHoldersName == "LALIT_KUMAWAT" ]
+              elif [ $fileHoldersName == Lalit Kumawat ]
               then
                    accountId="LALIT_KUMAWAT_ACCOUNTID"
                    apiAuth="LALIT_KUMAWAT_API_AUTH"
-              elif [ $fileHoldersName == "SANSKRITI_SHARMA" ]
+              elif [ $fileHoldersName == Sanskriti Sharma ]
               then
                    accountId="SANSKRITI_SHARMA_ACCOUNTID"
                    apiAuth="SANSKRITI_SHARMA_API_AUTH" 
