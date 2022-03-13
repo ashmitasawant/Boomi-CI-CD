@@ -2,3 +2,4 @@
 { "deployedDatetime": $(echo ${CODE} | jq .deployedDate), "message": $(echo ${CODE} | jq .message) },
 { "deployedDatetime": $(echo ${CODE} | jq .deployedDate), "message": $(echo ${CODE} | jq .message) },
 { "deployedDatetime": null, "message": "The packaged component (null) is not found." },
+{ "deployedDatetime": null, "message": "The packaged component (null) is not found." },
