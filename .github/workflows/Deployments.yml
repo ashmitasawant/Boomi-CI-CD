@@ -239,8 +239,17 @@ jobs:
                                echo $CODE 
                                outcome='{
                                         "deployedDatetime": '"$(echo ${CODE} | jq '.deployedDate')"',
-                                        "message":  '"$(echo ${CODE} | jq '.message')"'
-                                        }'
+                                        "details": 
+                                         {
+                                          "componentName": "'$componentName'",
+                                          "componentId": '"$(echo ${CODE} | jq '.componentId')"',
+                                          "packageVersion": '"$(echo ${CODE} | jq '.packageVersion')"',
+                                          "packageId": '"$(echo ${CODE} | jq '.packageId')"',
+                                          "deploymentId": '"$(echo ${CODE} | jq '.deploymentId')"',
+                                          "componentVersion": '"$(echo ${CODE} | jq '.componentVersion')"',
+                                          "environmentId": '"$(echo ${CODE} | jq '.environmentId')"'
+                                         }
+                                       }'
                                      echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
                                      git config user.name ashmitasawant
                                      git config user.email ashmitasawant3@gmail.com
@@ -263,7 +272,19 @@ jobs:
                                
                              
                                echo $CODE 
-                              
+                               outcome='{
+                                        "deployedDatetime": '"$(echo ${CODE} | jq '.deployedDate')"',
+                                        "details": 
+                                         {
+                                          "componentName": "'$componentName'",
+                                          "componentId": '"$(echo ${CODE} | jq '.componentId')"',
+                                          "packageVersion": '"$(echo ${CODE} | jq '.packageVersion')"',
+                                          "packageId": '"$(echo ${CODE} | jq '.packageId')"',
+                                          "deploymentId": '"$(echo ${CODE} | jq '.deploymentId')"',
+                                          "componentVersion": '"$(echo ${CODE} | jq '.componentVersion')"',
+                                          "environmentId": '"$(echo ${CODE} | jq '.environmentId')"'
+                                         }
+                                       }'
                                        echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
                                       
                                        git config user.name ashmitasawant
@@ -285,7 +306,19 @@ jobs:
                                    --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                    
                                    echo $CODE 
-                                    
+                                   outcome='{
+                                        "deployedDatetime": '"$(echo ${CODE} | jq '.deployedDate')"',
+                                        "details": 
+                                         {
+                                          "componentName": "'$componentName'",
+                                          "componentId": '"$(echo ${CODE} | jq '.componentId')"',
+                                          "packageVersion": '"$(echo ${CODE} | jq '.packageVersion')"',
+                                          "packageId": '"$(echo ${CODE} | jq '.packageId')"',
+                                          "deploymentId": '"$(echo ${CODE} | jq '.deploymentId')"',
+                                          "componentVersion": '"$(echo ${CODE} | jq '.componentVersion')"',
+                                          "environmentId": '"$(echo ${CODE} | jq '.environmentId')"'
+                                         }
+                                       }' 
                                        echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
                                        git config user.name ashmitasawant
                                        git config user.email ashmitasawant3@gmail.com
@@ -307,7 +340,19 @@ jobs:
                                  --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                  
                                  echo $CODE 
-                                 
+                                 outcome='{
+                                        "deployedDatetime": '"$(echo ${CODE} | jq '.deployedDate')"',
+                                        "details": 
+                                         {
+                                          "componentName": "'$componentName'",
+                                          "componentId": '"$(echo ${CODE} | jq '.componentId')"',
+                                          "packageVersion": '"$(echo ${CODE} | jq '.packageVersion')"',
+                                          "packageId": '"$(echo ${CODE} | jq '.packageId')"',
+                                          "deploymentId": '"$(echo ${CODE} | jq '.deploymentId')"',
+                                          "componentVersion": '"$(echo ${CODE} | jq '.componentVersion')"',
+                                          "environmentId": '"$(echo ${CODE} | jq '.environmentId')"'
+                                         }
+                                       }'
                                       echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
                                       git config user.name ashmitasawant
                                       git config user.email ashmitasawant3@gmail.com
