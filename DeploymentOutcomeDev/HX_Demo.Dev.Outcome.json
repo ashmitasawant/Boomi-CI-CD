@@ -3,3 +3,4 @@
 { "deployedDatetime": $(echo ${CODE} | jq .deployedDate), "message": $(echo ${CODE} | jq .message) },
 { "deployedDatetime": null, "message": "The packaged component (null) is not found." },
 { "deployedDatetime": null, "message": "The packaged component (null) is not found." },
+{ "deployedDatetime": "2022-03-13T09:34:15Z", "details": { "componentName": "TestWS", "componentId": "bb076cd7-8f1e-42a7-843c-3b9c5dda0bb5", "packageVersion": "v.30", "packageId": "02509de6-2cc1-4737-b9eb-f3f5ca2b7402", "deploymentId": "1f7797ee-4c07-419a-ab7a-2a48f5d8ff59", "componentVersion": 13, "environmentId": "5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259" } },
