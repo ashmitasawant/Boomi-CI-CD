@@ -1,1 +1,2 @@
 
+{ "deployedDatetime": $(echo ${CODE} | jq .deployedDate), "message": $(echo ${CODE} | jq .message) },
