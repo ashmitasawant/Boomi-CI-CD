@@ -9,6 +9,8 @@ on:
 env: 
            ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
            ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
+           ASHMITA_SAWANT_USERNAME: ${{secrets.ASHMITA_SAWANT_USERNAME}} 
+           ASHMITA_SAWANT_EMAIL: ${{secrets.ASHMITA_SAWANT_EMAIL}}
 jobs:
   getProcessInfo:
     outputs:
