@@ -37,3 +37,42 @@
                              "environmentId": ""5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259""
                             }
                           }, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
+{ "deployedDatetime": ""2022-03-13T09:20:35Z"", "details": { "componentName": "TestForWS", "componentId": ""a7f1b658-ea28-4b36-9627-187f5d6f6446"", "packageVersion": ""v.29"", "packageId": ""0cdc1fca-0f75-4d77-8a53-40c771cc8d6c"", "deploymentId": ""dada56b0-5797-4f1c-96cb-f5c4bbae4ce7"", "componentVersion": "4", "environmentId": ""5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259"" } }, Changes
+                        git config pull.rebase false
+                        git push --force origin main
+                 
+                    
+      
+       elif [ Development == Development ] && [ deploy == re-deploy ]  
+       then 
+           envId=5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259
+           CODE={"@type":"Error","message":"Unable to read message body.  Please make sure the structure is correct."}
+                  
+                
+                  echo {"@type":"DeployedPackage","deploymentId":"dada56b0-5797-4f1c-96cb-f5c4bbae4ce7","version":75,"packageId":"0cdc1fca-0f75-4d77-8a53-40c771cc8d6c","packageVersion":"v.29","environmentId":"5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259","componentId":"a7f1b658-ea28-4b36-9627-187f5d6f6446","componentVersion":4,"componentType":"process","deployedDate":"2022-03-13T09:20:35Z","deployedBy":"ashmita.sawant@neosalpha.com","active":true} 
+                 outcome='{
+                           deployedDatetime: "$(echo ${CODE} | jq .deployedDate)",
+                           details: 
+                            {
+                             componentName: $componentName,
+                             componentId: "$(echo ${CODE} | jq .componentId)",
+                             packageVersion: "$(echo ${CODE} | jq .packageVersion)",
+                             packageId: "$(echo ${CODE} | jq .packageId)",
+                             deploymentId: "$(echo ${CODE} | jq .deploymentId)",
+                             componentVersion: "$(echo ${CODE} | jq .componentVersion)",
+                             environmentId: "$(echo ${CODE} | jq .environmentId)"
+                            }
+                          }'
+                          echo {
+                           "deployedDatetime": ""2022-03-13T09:20:35Z"",
+                           "details": 
+                            {
+                             "componentName": "TestForWS",
+                             "componentId": ""a7f1b658-ea28-4b36-9627-187f5d6f6446"",
+                             "packageVersion": ""v.29"",
+                             "packageId": ""0cdc1fca-0f75-4d77-8a53-40c771cc8d6c"",
+                             "deploymentId": ""dada56b0-5797-4f1c-96cb-f5c4bbae4ce7"",
+                             "componentVersion": "4",
+                             "environmentId": ""5d9c830c-1f65-4fed-b7ef-fdbbbaf7d259""
+                            }
+                          }, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
