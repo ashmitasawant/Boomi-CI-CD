@@ -238,19 +238,19 @@ jobs:
                              
                                echo $CODE 
                                outcome='{
-                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
+                                        "deployedDatetime": "'"$(echo ${CODE} | jq '.deployedDate')"'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
-                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
-                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
-                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
-                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
-                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
+                                          "componentId": "'"$(echo ${CODE} | jq '.componentId')"'",
+                                          "packageVersion": "'"$(echo ${CODE} | jq '.packageVersion')"'",
+                                          "packageId": "'"$(echo ${CODE} | jq '.packageId')"'",
+                                          "deploymentId": "'"$(echo ${CODE} | jq '.deploymentId')"'",
+                                          "componentVersion": "'"$(echo ${CODE} | jq '.componentVersion')"'",
+                                          "environmentId": "'"$(echo ${CODE} | jq '.environmentId')"'"
                                          }
                                        }'
-                               echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
+                                     echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
                                      git config user.name ashmitasawant
                                      git config user.email ashmitasawant3@gmail.com
                                      git add .
@@ -273,21 +273,27 @@ jobs:
                              
                                echo $CODE 
                               outcome='{
-                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
+                                        "deployedDatetime": "'"$(echo ${CODE} | jq '.deployedDate')"'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
-                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
-                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
-                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
-                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
-                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
+                                          "componentId": "'"$(echo ${CODE} | jq '.componentId')"'",
+                                          "packageVersion": "'"$(echo ${CODE} | jq '.packageVersion')"'",
+                                          "packageId": "'"$(echo ${CODE} | jq '.packageId')"'",
+                                          "deploymentId": "'"$(echo ${CODE} | jq '.deploymentId')"'",
+                                          "componentVersion": "'"$(echo ${CODE} | jq '.componentVersion')"'",
+                                          "environmentId": "'"$(echo ${CODE} | jq '.environmentId')"'"
                                          }
                                        }'
-                               echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
-                                
-                                   
+                                       echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
+                                      
+                                       git config user.name ashmitasawant
+                                       git config user.email ashmitasawant3@gmail.com
+                                       git add .
+                                       git commit -m "Published Changes"
+                                       git config pull.rebase false
+                                       git push --force origin main
+
                     
                      elif [[ $envName == "Test" ]]  && [[ ${modes[$i]} == "deploy" ]]
                      then
@@ -301,19 +307,25 @@ jobs:
                                    
                                    echo $CODE 
                                     outcome='{
-                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
+                                        "deployedDatetime": "'"$(echo ${CODE} | jq '.deployedDate')"'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
-                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
-                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
-                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
-                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
-                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
+                                          "componentId": "'"$(echo ${CODE} | jq '.componentId')"'",
+                                          "packageVersion": "'"$(echo ${CODE} | jq '.packageVersion')"'",
+                                          "packageId": "'"$(echo ${CODE} | jq '.packageId')"'",
+                                          "deploymentId": "'"$(echo ${CODE} | jq '.deploymentId')"'",
+                                          "componentVersion": "'"$(echo ${CODE} | jq '.componentVersion')"'",
+                                          "environmentId": "'"$(echo ${CODE} | jq '.environmentId')"'"
                                          }
                                        }'
-                               echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json"
+                                       echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json"
+                                       git config user.name ashmitasawant
+                                       git config user.email ashmitasawant3@gmail.com
+                                       git add .
+                                       git commit -m "Published Changes"
+                                       git config pull.rebase false
+                                       git push --force origin main
                                 
                                     
                      
@@ -329,20 +341,25 @@ jobs:
                                  
                                  echo $CODE 
                                  outcome='{
-                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
+                                        "deployedDatetime": "'"$(echo ${CODE} | jq '.deployedDate')"'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
-                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
-                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
-                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
-                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
-                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
+                                          "componentId": "'"$(echo ${CODE} | jq '.componentId')"'",
+                                          "packageVersion": "'"$(echo ${CODE} | jq '.packageVersion')"'",
+                                          "packageId": "'"$(echo ${CODE} | jq '.packageId')"'",
+                                          "deploymentId": "'"$(echo ${CODE} | jq '.deploymentId')"'",
+                                          "componentVersion": "'"$(echo ${CODE} | jq '.componentVersion')"'",
+                                          "environmentId": "'"$(echo ${CODE} | jq '.environmentId')"'"
                                          }
                                        }'
-                               echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json"
-                                  
+                                      echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json"
+                                      git config user.name ashmitasawant
+                                      git config user.email ashmitasawant3@gmail.com
+                                      git add .
+                                      git commit -m "Published Changes"
+                                      git config pull.rebase false
+                                      git push --force origin main
                                      
                      else 
                        $CODE=""
