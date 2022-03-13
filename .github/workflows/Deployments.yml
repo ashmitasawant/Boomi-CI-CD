@@ -238,8 +238,8 @@ jobs:
                              
                                echo $CODE 
                                outcome='{
-                                        "deployedDatetime": $(echo ${CODE} | jq '.deployedDate'),
-                                        "message":  $(echo ${CODE} | jq '.message')
+                                        "deployedDatetime": '"$(echo ${CODE} | jq '.deployedDate')"',
+                                        "message":  '"$(echo ${CODE} | jq '.message')"'
                                         }'
                                      echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
                                      git config user.name ashmitasawant
