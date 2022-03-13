@@ -238,16 +238,16 @@ jobs:
                              
                                echo $CODE 
                                outcome='{
-                                        "deployedDatetime": "$(echo ${CODE} | jq '.deployedDate')",
+                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "$(echo ${CODE} | jq '.componentId')",
-                                          "packageVersion": "$(echo ${CODE} | jq '.packageVersion')",
-                                          "packageId": "$(echo ${CODE} | jq '.packageId')",
-                                          "deploymentId": "$(echo ${CODE} | jq '.deploymentId')",
-                                          "componentVersion": "$(echo ${CODE} | jq '.componentVersion')",
-                                          "environmentId": "$(echo ${CODE} | jq '.environmentId')"
+                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
+                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
+                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
+                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
+                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
+                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
                                          }
                                        }'
                                echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
@@ -272,17 +272,17 @@ jobs:
                                
                              
                                echo $CODE 
-                               outcome='{
-                                        "deployedDatetime": "$(echo ${CODE} | jq '.deployedDate')",
+                              outcome='{
+                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "$(echo ${CODE} | jq '.componentId')",
-                                          "packageVersion": "$(echo ${CODE} | jq '.packageVersion')",
-                                          "packageId": "$(echo ${CODE} | jq '.packageId')",
-                                          "deploymentId": "$(echo ${CODE} | jq '.deploymentId')",
-                                          "componentVersion": "$(echo ${CODE} | jq '.componentVersion')",
-                                          "environmentId": "$(echo ${CODE} | jq '.environmentId')"
+                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
+                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
+                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
+                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
+                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
+                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
                                          }
                                        }'
                                echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
@@ -301,16 +301,16 @@ jobs:
                                    
                                    echo $CODE 
                                     outcome='{
-                                        "deployedDatetime": "$(echo ${CODE} | jq '.deployedDate')",
+                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "$(echo ${CODE} | jq '.componentId')",
-                                          "packageVersion": "$(echo ${CODE} | jq '.packageVersion')",
-                                          "packageId": "$(echo ${CODE} | jq '.packageId')",
-                                          "deploymentId": "$(echo ${CODE} | jq '.deploymentId')",
-                                          "componentVersion": "$(echo ${CODE} | jq '.componentVersion')",
-                                          "environmentId": "$(echo ${CODE} | jq '.environmentId')"
+                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
+                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
+                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
+                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
+                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
+                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
                                          }
                                        }'
                                echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json"
@@ -329,16 +329,16 @@ jobs:
                                  
                                  echo $CODE 
                                  outcome='{
-                                        "deployedDatetime": "$(echo ${CODE} | jq '.deployedDate')",
+                                        "deployedDatetime": "'$(echo ${CODE} | jq '.deployedDate')'",
                                         "details": 
                                          {
                                           "componentName": "'$componentName'",
-                                          "componentId": "$(echo ${CODE} | jq '.componentId')",
-                                          "packageVersion": "$(echo ${CODE} | jq '.packageVersion')",
-                                          "packageId": "$(echo ${CODE} | jq '.packageId')",
-                                          "deploymentId": "$(echo ${CODE} | jq '.deploymentId')",
-                                          "componentVersion": "$(echo ${CODE} | jq '.componentVersion')",
-                                          "environmentId": "$(echo ${CODE} | jq '.environmentId')"
+                                          "componentId": "'$(echo ${CODE} | jq '.componentId')'",
+                                          "packageVersion": "'$(echo ${CODE} | jq '.packageVersion')'",
+                                          "packageId": "'$(echo ${CODE} | jq '.packageId')'",
+                                          "deploymentId": "'$(echo ${CODE} | jq '.deploymentId')'",
+                                          "componentVersion": "'$(echo ${CODE} | jq '.componentVersion')'",
+                                          "environmentId": "'$(echo ${CODE} | jq '.environmentId')'"
                                          }
                                        }'
                                echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json"
