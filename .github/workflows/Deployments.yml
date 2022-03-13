@@ -351,7 +351,7 @@ jobs:
                                            "componentId": '"$(echo ${CODE} | jq '.componentId')"',
                                            "packageId": '"$(echo ${CODE} | jq '.packageId')"'
                                          }'
-                        echo $rollback, >>  DeploymentOutcomeDev/HX_Demo.Dev.Rollback.json    
+                        echo $rollback, >>  DeploymentOutcomeTest/HX_Demo.Test.Rollback.json    
                         echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
                                        git config user.name $username
                                        git config user.email $email
@@ -391,7 +391,7 @@ jobs:
                                            "componentId": '"$(echo ${CODE} | jq '.componentId')"',
                                            "packageId": '"$(echo ${CODE} | jq '.packageId')"'
                                          }'
-                        echo $rollback, >>  DeploymentOutcomeDev/HX_Demo.Dev.Rollback.json    
+                        echo $rollback, >>  DeploymentOutcomeTest/HX_Demo.Test.Rollback.json    
                         echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
                                       git config user.name $username
                                       git config user.email $email
