@@ -250,7 +250,7 @@ jobs:
                                           "environmentId": "$(echo ${CODE} | jq '.environmentId')"
                                          }
                                        }'
-                               echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Dev.Outcome.json"
+                               echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
                                      git config user.name ashmitasawant
                                      git config user.email ashmitasawant3@gmail.com
                                      git add .
@@ -285,7 +285,7 @@ jobs:
                                           "environmentId": "$(echo ${CODE} | jq '.environmentId')"
                                          }
                                        }'
-                               echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Dev.Outcome.json"
+                               echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json"
                                 
                                    
                     
@@ -347,7 +347,7 @@ jobs:
                      else 
                        $CODE=""
                      fi
-                     echo $CODE
+                     echo $outcome
                      
                    done          
                       
