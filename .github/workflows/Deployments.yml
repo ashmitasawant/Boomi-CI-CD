@@ -188,28 +188,42 @@ jobs:
               then
                 accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
+                username=$ASHMITA_SAWANT_USERNAME
+                email=$ASHMITA_SAWANT_EMAIL
               elif [[ $fileHoldersName == "Lalit Karpenter" ]]
               then
                    accountId="LALIT_KARPENTER_ACCOUNTID"
                    apiAuth="LALIT_KARPENTER_API_AUTH"
+                   username=$LALIT_KARPENTER_USERNAME
+                   email=$LALIT_KARPENTER_EMAIL
               elif [[ $fileHoldersName == "Kartik Dashora" ]]
               then
                    accountId="KARTIK_DASHORA_ACCOUNTID"
                    apiAuth="KARTIK_DASHORA_API_AUTH"
+                   username=$KARTIK_DASHORA_USERNAME
+                   email=$KARTIK_DASHORA_EMAIL
               elif [[ $fileHoldersName == "Lalit Kumawat" ]]
               then
                    accountId="LALIT_KUMAWAT_ACCOUNTID"
                    apiAuth="LALIT_KUMAWAT_API_AUTH"
+                   username=$LALIT_KUMAWAT_USERNAME
+                   email=$LALIT_KUMAWAT_EMAIL
               elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
               then
                    accountId="SANSKRITI_SHARMA_ACCOUNTID"
                    apiAuth="SANSKRITI_SHARMA_API_AUTH" 
+                   username=$SANSKRITI_SHARMA_USERNAME
+                   email=$SANSKRITI_SHARMA_EMAIL
               else 
                    accountId=null
                    apiAuth=null
+                   username=null
+                   email=null
               fi
               echo $accountId
               echo $apiAuth
+              echo $username
+              echo $email
               
              if [ ${modes[$i]} == "deploy" ]
              then 
@@ -251,8 +265,8 @@ jobs:
                                          }
                                        }'
                          echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
-                                     git config user.name ashmitasawant
-                                     git config user.email ashmitasawant3@gmail.com
+                                     git config user.name $username
+                                     git config user.email $email
                                      git add .
                                      git commit -m "Published Changes"
                                      git config pull.rebase false
@@ -285,8 +299,8 @@ jobs:
                                        }'
                        echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
                                       
-                                       git config user.name ashmitasawant
-                                       git config user.email ashmitasawant3@gmail.com
+                                       git config user.name $username
+                                       git config user.email $email
                                        git add .
                                        git commit -m "Published Changes"
                                        git config pull.rebase false
@@ -318,8 +332,8 @@ jobs:
                                          }
                                        }' 
                         echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
-                                       git config user.name ashmitasawant
-                                       git config user.email ashmitasawant3@gmail.com
+                                       git config user.name $username
+                                       git config user.email $email
                                        git add .
                                        git commit -m "Published Changes"
                                        git config pull.rebase false
@@ -352,8 +366,8 @@ jobs:
                                          }
                                        }'
                         echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
-                                      git config user.name ashmitasawant
-                                      git config user.email ashmitasawant3@gmail.com
+                                      git config user.name $username
+                                      git config user.email $email
                                       git add .
                                       git commit -m "Published Changes"
                                       git config pull.rebase false
