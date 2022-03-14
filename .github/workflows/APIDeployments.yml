@@ -1,0 +1,85 @@
+name: API Packaging and Deploying Pipeline
+
+# Controls when the workflow will run
+on:
+  push:
+    paths:
+     - 'DeploymentConfiguration/ApiDetails.HX_Demo.dev.json'
+  workflow_dispatch:
+env: 
+           BOOMI_ACCOUNTID: ${{secrets.BOOMI_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
+           ASHMITA_SAWANT_USERNAME: ${{secrets.ASHMITA_SAWANT_USERNAME}} 
+           ASHMITA_SAWANT_EMAIL: ${{secrets.ASHMITA_SAWANT_EMAIL}}
+jobs:
+   getAPI_Details:
+    runs-on: ubuntu-latest
+    outputs:
+      
+      apiComponentIds: ${{ steps.setAPILevelInfo.outputs.apiComponentIds }}
+      packageVersions: ${{ steps.setAPILevelInfo.outputs.packageVersions }}
+      fileHoldersName: ${{steps.setAPILevelInfo.outputs.fileHoldersName}}
+      processNames: ${{steps.setAPILevelInfo.outputs.apiNames}}
+      apiNames: ${{steps.setAPILevelInfo.outputs.processNames}}
+      environmentName: ${{steps.setAPILevelInfo.outputs.environmentName}}
+      modes: ${{steps.setAPILevelInfo.outputs.modes}}
+      deploymentIds: ${{steps.setAPILevelInfo.outputs.apiDeploymentIds}}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get API Info
+        uses: actions/checkout@v2
+      - id: setAPILevelInfo
+        run: |
+              fileToRead=$(ls ./HX_APIDeploymentConfiguration/)
+              fileRead=$(cat ./HX_APIDeploymentConfiguration/"$fileToRead")
+              echo $fileRead
+              
+              echo $fileRead >> APIsArchive/ARC_"$fileToRead"
+                 git config user.name ashmitasawant
+                 git config user.email ashmitasawant3@gmail.com
+                 git add .
+                 git commit -m "Published Changes"
+                 git config pull.rebase false
+                 git push --force origin main
+                 
+              environmentName=$(echo ${fileRead} | jq '.[] | .environmentName')
+              echo $environmentName
+              echo "::set-output name=environmentName::$environmentName"
+              
+              
+              processName=$(echo ${fileRead} | jq '.[] | .apiDetails[].processName')
+              apiName=$(echo ${fileRead} | jq '.[] | .apiDetails[].apiName')
+              componentID=$(echo  ${fileRead} | jq '.[] | .apiDetails[].componentID')
+              apiComponentID=$(echo  ${fileRead} | jq '.[] | .apiDetails[].apiComponentID')
+              packageVersion=$(echo  ${fileRead} | jq '.[] | .apiDetails[].packageVersion')
+              mode=$(echo  ${fileRead} | jq '.[] | .apiDetails[].mode')
+              deploymentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].deploymentID')
+              
+              ComponentsArray=$(echo $componentID)
+              echo $ComponentsArray
+              echo "::set-output name=componentIds::($ComponentsArray)"
+              
+              APIComponentsArray=$(echo $apiComponentID)
+              echo $APIComponentsArray
+              echo "::set-output name=apiComponentIds::($APIComponentsArray)"
+              
+              ProcessNamesArray=$(echo $processName)
+              echo $ProcessNamesArray
+              echo "::set-output name=processNames::($ProcessNamesArray)"
+              
+              PackageVersionArray=$(echo $packageVersion)
+              echo $PackageVersionArray
+              echo "::set-output name=packageVersions::($PackageVersionArray)"
+              
+              ModeArray=$(echo $mode)
+              echo $ModeArray
+              echo "::set-output name=modes::($ModeArray)"
+              
+              DeploymentsArray=$(echo $deploymentID)
+              echo $DeploymentsArray
+              echo "::set-output name=deploymentIds::($DeploymentsArray)"
+             
+              fileHoldersName=$(git log -n 1 --pretty='format:%an' -- HX_APIDeploymentConfiguration/"$fileToRead")
+              echo $fileHoldersName
+              echo "::set-output name=fileHoldersName::'$fileHoldersName'"
+              
