@@ -40,7 +40,7 @@ jobs:
               echo "::set-output name=uniqueKey::$uniqueKey"
               
               fileHoldersName=$(git log -n 1 --pretty='format:%an' -- HX_APIDeploymentConfiguration/"$fileToRead")
-              echo $fileHoldersName
+              echo "File Committer's name is:" $fileHoldersName
               echo "::set-output name=fileHoldersName::'$fileHoldersName'"
               
                if [[ $fileHoldersName == "Ashmita Sawant" ]]
@@ -160,7 +160,7 @@ jobs:
 
           id: packageCreation
           run: |
-                components=${{needs.getAPI_Details.outputs.componentIds}}
+                components=${{needs.getAPI_Details.outputs.apiComponentIds}}
                 packageVersions=${{needs.getAPI_Details.outputs.packageVersions}}
                 modes=${{needs.getAPI_Details.outputs.modes}} 
                 fileHoldersName=${{needs.getAPI_Details.outputs.fileHoldersName}}
