@@ -7,7 +7,7 @@ on:
      
   workflow_dispatch:
 env: 
-           ASHMITA_SAWANT_ACCOUNTID: ${{secrets.ASHMITA_SAWANT_ACCOUNTID}}
+           BOOMI_ACCOUNTID: ${{secrets.BOOMI_ACCOUNTID}}
            ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
            ASHMITA_SAWANT_USERNAME: ${{secrets.ASHMITA_SAWANT_USERNAME}} 
            ASHMITA_SAWANT_EMAIL: ${{secrets.ASHMITA_SAWANT_EMAIL}}
@@ -126,29 +126,24 @@ jobs:
               
               if [[ $fileHoldersName == "Ashmita Sawant" ]]
               then
-                accountId=$ASHMITA_SAWANT_ACCOUNTID
-                apiAuth=$ASHMITA_SAWANT_API_AUTH
+                   apiAuth=$ASHMITA_SAWANT_API_AUTH
               elif [[ $fileHoldersName == "Lalit Karpenter" ]]
               then
-                   accountId=$LALIT_KARPENTER_ACCOUNTID
                    apiAuth=$LALIT_KARPENTER_API_AUTH
               elif [[ $fileHoldersName == "Kartik Dashora" ]]
               then
-                   accountId=$KARTIK_DASHORA_ACCOUNTID
                    apiAuth=$KARTIK_DASHORA_API_AUTH
               elif [[ $fileHoldersName == "Lalit Kumawat" ]]
               then
-                   accountId=$LALIT_KUMAWAT_ACCOUNTID
                    apiAuth=$LALIT_KUMAWAT_API_AUTH
               elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
               then
-                   accountId=$SANSKRITI_SHARMA_ACCOUNTID
-                   apiAuth=$SANSKRITI_SHARMA_API_AUTH
-              else 
-                   accountId=null
+                  apiAuth=$SANSKRITI_SHARMA_API_AUTH
+              else
                    apiAuth=null
               fi
-              echo $accountId
+              BoomiAccountId=$BOOMI_ACCOUNTID
+              echo $BoomiAccountId
               echo $apiAuth
               
               for ((i=0;i<${#components[@]};i++))
@@ -159,7 +154,7 @@ jobs:
                                    --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/PackagedComponent" \
+                                   --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/PackagedComponent" \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
@@ -188,41 +183,36 @@ jobs:
               
               if [[ $fileHoldersName == "Ashmita Sawant" ]]
               then
-                accountId=$ASHMITA_SAWANT_ACCOUNTID
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
                 username=$ASHMITA_SAWANT_USERNAME
                 email=$ASHMITA_SAWANT_EMAIL
               elif [[ $fileHoldersName == "Lalit Karpenter" ]]
               then
-                   accountId=$LALIT_KARPENTER_ACCOUNTID
                    apiAuth=$LALIT_KARPENTER_API_AUTH
                    username=$LALIT_KARPENTER_USERNAME
                    email=$LALIT_KARPENTER_EMAIL
               elif [[ $fileHoldersName == "Kartik Dashora" ]]
               then
-                   accountId=$KARTIK_DASHORA_ACCOUNTID
                    apiAuth=$KARTIK_DASHORA_API_AUTH
                    username=$KARTIK_DASHORA_USERNAME
                    email=$KARTIK_DASHORA_EMAIL
               elif [[ $fileHoldersName == "Lalit Kumawat" ]]
               then
-                   accountId=$LALIT_KUMAWAT_ACCOUNTID
                    apiAuth=$LALIT_KUMAWAT_API_AUTH
                    username=$LALIT_KUMAWAT_USERNAME
                    email=$LALIT_KUMAWAT_EMAIL
               elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
               then
-                   accountId=$SANSKRITI_SHARMA_ACCOUNTID
                    apiAuth=$SANSKRITI_SHARMA_API_AUTH
                    username=$SANSKRITI_SHARMA_USERNAME
                    email=$SANSKRITI_SHARMA_EMAIL
               else 
-                   accountId=null
                    apiAuth=null
                    username=null
                    email=null
               fi
-              echo $accountId
+              BoomiAccountId=$BOOMI_ACCOUNTID
+              echo $BoomiAccountId
               echo $apiAuth
               echo $username
               echo $email
@@ -249,7 +239,7 @@ jobs:
                                --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                               --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                              
                                echo $CODE 
@@ -288,7 +278,7 @@ jobs:
                                --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                               --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
                                --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                
                              
@@ -329,7 +319,7 @@ jobs:
                                    --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                                   --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
                                    --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                    
                                    echo $CODE 
@@ -369,7 +359,7 @@ jobs:
                                  --header "authorization: ${apiAuth}" \
                                  --header 'content-type: application/json' \
                                  --header 'accept: application/json' \
-                                 --url "https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage" \
+                                 --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
                                  --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                  
                                  echo $CODE 
@@ -422,14 +412,13 @@ jobs:
         run: |
               deployments=${{needs.getProcessInfo.outputs.deploymentIds}}
               modes=${{needs.getProcessInfo.outputs.modes}}
-              accountId=${{needs.getProcessInfo.outputs.accountId}}
-              echo $accountId
+              
               
               for ((i=0;i<${#deployments[@]};i++))
                 do
                   if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
                   then
-                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/${accountId}/DeployedPackage/${deployments[$i]} -H "authorization: ${apiAuth}" -H "content-type: application/json"`
+                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/${$BOOMI_ACCOUNTID}/DeployedPackage/${deployments[$i]} -H "authorization: ${apiAuth}" -H "content-type: application/json"`
                                    echo $CODE 
                                    echo ${deployments[$i]}
                   fi
