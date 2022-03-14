@@ -36,10 +36,41 @@ jobs:
               uniqueKey=$(echo ${arrIN[1]})
               echo $uniqueKey
               echo "::set-output name=uniqueKey::$uniqueKey"
-
+              
+              fileHoldersName=$(git log -n 1 --pretty='format:%an' -- DeploymentConfiguration/"$fileToRead")
+              echo "File Committer's Name is:" $fileHoldersName
+              echo "::set-output name=fileHoldersName::'$fileHoldersName'"
+              
+              if [[ $fileHoldersName == "Ashmita Sawant" ]]
+              then
+                username=$ASHMITA_SAWANT_USERNAME
+                email=$ASHMITA_SAWANT_EMAIL
+              elif [[ $fileHoldersName == "Lalit Karpenter" ]]
+              then
+                   username=$LALIT_KARPENTER_USERNAME
+                   email=$LALIT_KARPENTER_EMAIL
+              elif [[ $fileHoldersName == "Kartik Dashora" ]]
+              then
+                   username=$KARTIK_DASHORA_USERNAME
+                   email=$KARTIK_DASHORA_EMAIL
+              elif [[ $fileHoldersName == "Lalit Kumawat" ]]
+              then
+                   username=$LALIT_KUMAWAT_USERNAME
+                   email=$LALIT_KUMAWAT_EMAIL
+              elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
+              then
+                   username=$SANSKRITI_SHARMA_USERNAME
+                   email=$SANSKRITI_SHARMA_EMAIL
+              else 
+                   username=null
+                   email=null
+              fi
+              echo $username
+              echo $email
+              
               echo $fileRead >> ProcessesArchive/ARC_"$fileToRead"
-                 git config user.name ashmitasawant
-                 git config user.email ashmitasawant3@gmail.com
+                 git config user.name $username
+                 git config user.email $email
                  git add .
                  git commit -m "Published Changes"
                  git config pull.rebase false
@@ -75,9 +106,7 @@ jobs:
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
              
-              fileHoldersName=$(git log -n 1 --pretty='format:%an' -- DeploymentConfiguration/"$fileToRead")
-              echo "File Committer's Name is:" $fileHoldersName
-              echo "::set-output name=fileHoldersName::'$fileHoldersName'"
+             
               
               
   getEnvironmentInfo:
