@@ -25,7 +25,7 @@ jobs:
     
     runs-on: ubuntu-latest
     steps:
-      - name: Package Creation and Deployment 
+      - name: Getting/Setting Process Info 
         uses: actions/checkout@v2
       - id: setProcessLevelInfo
         run: |
@@ -119,7 +119,7 @@ jobs:
      testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
    steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Get Process Info
+      - name: Get Environment Info
         uses: actions/checkout@v2
       - id: setEnvironmentLevelInfo
         run: |
