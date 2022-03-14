@@ -254,7 +254,7 @@ jobs:
              then 
                 packageIds=(${{needs.createPackage.outputs.packageId}})
              else
-                ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.HX_Demo.dev.json)
+                ProcessDetails=$(cat ./DeploymentConfiguration/ProcessDetails.${uniqueKey}.dev.json)
                 packages=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId')
                 packageIds=($packages)
              fi
