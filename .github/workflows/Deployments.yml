@@ -35,7 +35,7 @@ jobs:
               arrIN=(${fileToRead//./ })
               uniqueKey=$(echo ${arrIN[1]})
               echo $uniqueKey
-              echo"::set-output name=uniqueKey::$uniqueKey"
+              echo "::set-output name=uniqueKey::$uniqueKey"
 
               echo $fileRead >> ProcessesArchive/ARC_"$fileToRead"
                  git config user.name ashmitasawant
