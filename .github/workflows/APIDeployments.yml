@@ -35,6 +35,7 @@ jobs:
               echo $fileToRead
               fileRead=$(cat ./APIDeploymentConfiguration/"$fileToRead")
               echo $fileRead
+              arrIN=(${fileToRead//./ })
               uniqueKey=$(echo ${arrIN[1]})
               echo $uniqueKey
               echo "::set-output name=uniqueKey::$uniqueKey"
