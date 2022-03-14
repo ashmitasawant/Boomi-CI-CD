@@ -31,7 +31,10 @@ jobs:
               fileToRead=$(ls ./DeploymentConfiguration/)
               fileRead=$(cat ./DeploymentConfiguration/"$fileToRead")
               echo $fileRead
-               
+              arrIN=(${fileToRead//./ })
+              uniqueKey=$(echo ${arrIN[1]})
+              echo $uniqueKey
+
               echo $fileRead >> ProcessesArchive/ARC_"$fileToRead"
                  git config user.name ashmitasawant
                  git config user.email ashmitasawant3@gmail.com
