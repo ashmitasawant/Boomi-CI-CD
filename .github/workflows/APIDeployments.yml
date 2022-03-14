@@ -114,6 +114,94 @@ jobs:
               DeploymentsArray=$(echo $deploymentID)
               echo $DeploymentsArray
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
-             
-             
+ 
+   getEnvironmentInfo:
+     needs: getAPI_Details
+     runs-on: ubuntu-latest
+     outputs:
+       devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
+       devAtomId: ${{steps.setEnvironmentLevelInfo.outputs.devAtomId}}
+       testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
+       testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
+     steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        - name: Get Environment Info
+          uses: actions/checkout@v2
+        - id: setEnvironmentLevelInfo
+          run: |
+              DevEnvironmentDetails=$(cat ./EnvironmentConfiguration/Dev.Env.Config.json)
+              devEnvironmentID=$(echo  ${DevEnvironmentDetails} | jq '.[] | .environmentId')
+              echo $devEnvironmentID
+              echo "::set-output name=devEnvironmentId::$devEnvironmentID"
+
+              devAtomID=$(echo ${DevEnvironmentDetails} | jq '.[] | .atomId')
+              echo $devAtomID
+              echo "::set-output name=devAtomId::$devAtomID"
+
+              TestEnvironmentDetails=$(cat ./EnvironmentConfiguration/Test.Env.Config.json)
+              testEnvironmentID=$(echo  ${TestEnvironmentDetails} | jq '.[] | .environmentId')
+              echo $testEnvironmentID
+              echo "::set-output name=testEnvironmentId::$testEnvironmentID"
+
+              testAtomID=$(echo ${TestEnvironmentDetails} | jq '.[] | .atomId')
+              echo $testAtomID
+              echo "::set-output name=testAtomId::$testAtomID"
+
+  
+   createPackage:
+   
+     runs-on: ubuntu-latest   
+     outputs:
+      packageId: ${{ steps.packageCreation.outputs.packageIds }}
+     needs: getAPI_Details
+     steps:
+        - uses: actions/checkout@v2
+        - name: Package Creation
+
+          id: packageCreation
+          run: |
+                components=${{needs.getProcessInfo.outputs.componentIds}}
+                packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
+                modes=${{needs.getProcessInfo.outputs.modes}} 
+                fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
+
+                if [[ $fileHoldersName == "Ashmita Sawant" ]]
+                then
+                     apiAuth=$ASHMITA_SAWANT_API_AUTH
+                elif [[ $fileHoldersName == "Lalit Karpenter" ]]
+                then
+                     apiAuth=$LALIT_KARPENTER_API_AUTH
+                elif [[ $fileHoldersName == "Kartik Dashora" ]]
+                then
+                     apiAuth=$KARTIK_DASHORA_API_AUTH
+                elif [[ $fileHoldersName == "Lalit Kumawat" ]]
+                then
+                     apiAuth=$LALIT_KUMAWAT_API_AUTH
+                elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
+                then
+                    apiAuth=$SANSKRITI_SHARMA_API_AUTH
+                else
+                     apiAuth=null
+                fi
+                BoomiAccountId=$BOOMI_ACCOUNTID
+                echo $BoomiAccountId
+                echo $apiAuth
+                
+                for ((i=0;i<${#components[@]};i++))
+                do
+                  if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
+                  then
+                      CODE=`curl  --request POST \
+                                   --header "authorization: ${apiAuth}" \
+                                   --header 'content-type: application/json' \
+                                   --header 'accept: application/json' \
+                                   --url "https://api.boomi.com/api/rest/v1/${BoomiAccountId}/PackagedComponent" \
+                                   --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
+                                   echo $CODE
+                                   packageIds=$(echo ${CODE} | jq '.packageId')
+                                   packageIdsArray+="$packageIds "
+                  fi
+                done              
+                echo "::set-output name=packageIds::$packageIdsArray"
+
               
