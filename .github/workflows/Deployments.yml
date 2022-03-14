@@ -147,7 +147,7 @@ jobs:
    runs-on: ubuntu-latest   
    outputs:
     packageId: ${{ steps.packageCreation.outputs.packageIds }}
-   needs: getProcessInfo
+   needs: [getProcessInfo,getEnvironmentInfo]
    steps:
       - uses: actions/checkout@v2
       - name: Package Creation
