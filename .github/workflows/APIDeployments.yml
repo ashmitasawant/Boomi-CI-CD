@@ -39,7 +39,7 @@ jobs:
               echo $uniqueKey
               echo "::set-output name=uniqueKey::$uniqueKey"
               
-              fileHoldersName=$(git log -n 1 --pretty='format:%an' -- HX_APIDeploymentConfiguration/"$fileToRead")
+              fileHoldersName=$(git log -n 1 --pretty='format:%an' -- APIDeploymentConfiguration/"$fileToRead")
               echo "File Committer's name is:" $fileHoldersName
               echo "::set-output name=fileHoldersName::'$fileHoldersName'"
               
