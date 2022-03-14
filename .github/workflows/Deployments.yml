@@ -147,7 +147,7 @@ jobs:
               fi
               BoomiAccountId=$BOOMI_ACCOUNTID
               echo $BoomiAccountId
-              
+              echo $apiAuth
               for ((i=0;i<${#components[@]};i++))
               do
                   if [ ${modes[$i]} != "re-deploy" ] && [ ${modes[$i]} != "undeploy" ] && [ ${modes[$i]} != "none" ]
