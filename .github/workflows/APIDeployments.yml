@@ -160,10 +160,10 @@ jobs:
 
           id: packageCreation
           run: |
-                components=${{needs.getProcessInfo.outputs.componentIds}}
-                packageVersions=${{needs.getProcessInfo.outputs.packageVersions}}
-                modes=${{needs.getProcessInfo.outputs.modes}} 
-                fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
+                components=${{needs.getAPI_Details.outputs.componentIds}}
+                packageVersions=${{needs.getAPI_Details.outputs.packageVersions}}
+                modes=${{needs.getAPI_Details.outputs.modes}} 
+                fileHoldersName=${{needs.getAPI_Details.outputs.fileHoldersName}}
 
                 if [[ $fileHoldersName == "Ashmita Sawant" ]]
                 then
