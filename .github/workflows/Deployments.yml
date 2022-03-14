@@ -74,7 +74,7 @@ jobs:
               echo "::set-output name=deploymentIds::($DeploymentsArray)"
              
               fileHoldersName=$(git log -n 1 --pretty='format:%an' -- DeploymentConfiguration/"$fileToRead")
-              echo $fileHoldersName
+              echo "File Committer's Name is:" $fileHoldersName
               echo "::set-output name=fileHoldersName::'$fileHoldersName'"
               
               
