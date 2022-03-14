@@ -21,6 +21,7 @@ jobs:
       fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
       modes: ${{steps.setProcessLevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setProcessLevelInfo.outputs.deploymentIds}}
+      uniqueKey: ${{steps.setProcessLevelInfo.outputs.uniqueKey}} 
     
     runs-on: ubuntu-latest
     steps:
@@ -34,6 +35,7 @@ jobs:
               arrIN=(${fileToRead//./ })
               uniqueKey=$(echo ${arrIN[1]})
               echo $uniqueKey
+              echo"::set-output name=uniqueKey::$uniqueKey"
 
               echo $fileRead >> ProcessesArchive/ARC_"$fileToRead"
                  git config user.name ashmitasawant
@@ -182,7 +184,8 @@ jobs:
              echo $envName
              modes=${{needs.getProcessInfo.outputs.modes}}
              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
-              
+             uniqueKey=${{needs.getProcessInfo.outputs.uniqueKey}}
+             echo $uniqueKey
               if [[ $fileHoldersName == "Ashmita Sawant" ]]
               then
                 apiAuth=$ASHMITA_SAWANT_API_AUTH
