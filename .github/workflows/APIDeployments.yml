@@ -30,8 +30,9 @@ jobs:
         uses: actions/checkout@v2
       - id: setAPILevelInfo
         run: |
-              fileToRead=$(ls ./HX_APIDeploymentConfiguration/)
-              fileRead=$(cat ./HX_APIDeploymentConfiguration/"$fileToRead")
+              fileToRead=$(ls ./APIDeploymentConfiguration/)
+              echo $fileToRead
+              fileRead=$(cat ./APIDeploymentConfiguration/"$fileToRead")
               echo $fileRead
               
               echo $fileRead >> APIsArchive/ARC_"$fileToRead"
@@ -53,7 +54,7 @@ jobs:
               apiComponentID=$(echo  ${fileRead} | jq '.[] | .apiDetails[].apiComponentID')
               packageVersion=$(echo  ${fileRead} | jq '.[] | .apiDetails[].packageVersion')
               mode=$(echo  ${fileRead} | jq '.[] | .apiDetails[].mode')
-              deploymentID=$(echo  ${fileRead} | jq '.[] | .processDetails[].deploymentID')
+              deploymentID=$(echo  ${fileRead} | jq '.[] | .apiDetails[].deploymentID')
               
               ComponentsArray=$(echo $componentID)
               echo $ComponentsArray
@@ -62,6 +63,10 @@ jobs:
               APIComponentsArray=$(echo $apiComponentID)
               echo $APIComponentsArray
               echo "::set-output name=apiComponentIds::($APIComponentsArray)"
+              
+              APINamesArray=$(echo $apiName)
+              echo $APINamesArray
+              echo "::set-output name=apiNames::($APINamesArray)"
               
               ProcessNamesArray=$(echo $processName)
               echo $ProcessNamesArray
