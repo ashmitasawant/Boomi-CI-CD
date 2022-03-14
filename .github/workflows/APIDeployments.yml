@@ -204,4 +204,56 @@ jobs:
                 done              
                 echo "::set-output name=packageIds::$packageIdsArray"
 
+   deployPackage: 
+   
+     runs-on: ubuntu-latest    
+     needs: [createPackage,getAPI_Details,getEnvironmentInfo]
+     steps:   
+       - uses: actions/checkout@v2
+       - name: Package Deploy
+         id: packageDeploy
+         run: |
+               envName=${{needs.getAPI_Details.outputs.environmentName}}
+               apiNames=${{needs.getAPI_Details.outputs.apiNames}}
+               echo $envName
+               echo $apiNames
+               modes=${{needs.getAPI_Details.outputs.modes}}
+               fileHoldersName=${{needs.getAPI_Details.outputs.fileHoldersName}}
+               uniqueKey=${{needs.getAPI_Details.outputs.uniqueKey}}
+               echo $uniqueKey
+                if [[ $fileHoldersName == "Ashmita Sawant" ]]
+                then
+                  apiAuth=$ASHMITA_SAWANT_API_AUTH
+                  username=$ASHMITA_SAWANT_USERNAME
+                  email=$ASHMITA_SAWANT_EMAIL
+                elif [[ $fileHoldersName == "Lalit Karpenter" ]]
+                then
+                     apiAuth=$LALIT_KARPENTER_API_AUTH
+                     username=$LALIT_KARPENTER_USERNAME
+                     email=$LALIT_KARPENTER_EMAIL
+                elif [[ $fileHoldersName == "Kartik Dashora" ]]
+                then
+                     apiAuth=$KARTIK_DASHORA_API_AUTH
+                     username=$KARTIK_DASHORA_USERNAME
+                     email=$KARTIK_DASHORA_EMAIL
+                elif [[ $fileHoldersName == "Lalit Kumawat" ]]
+                then
+                     apiAuth=$LALIT_KUMAWAT_API_AUTH
+                     username=$LALIT_KUMAWAT_USERNAME
+                     email=$LALIT_KUMAWAT_EMAIL
+                elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
+                then
+                     apiAuth=$SANSKRITI_SHARMA_API_AUTH
+                     username=$SANSKRITI_SHARMA_USERNAME
+                     email=$SANSKRITI_SHARMA_EMAIL
+                else 
+                     apiAuth=null
+                     username=null
+                     email=null
+                fi
+                BoomiAccountId=$BOOMI_ACCOUNTID
+                echo $BoomiAccountId
+                echo $apiAuth
+                echo $username
+                echo $email
               
