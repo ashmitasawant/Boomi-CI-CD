@@ -199,9 +199,7 @@ jobs:
               
               
   deployPackage: 
-   environment: Dev
-   env: 
-      BOOMI_AUTHORIZATION: ${{ secrets.BOOMI_AUTHORIZATION }}
+   
    runs-on: ubuntu-latest    
    needs: [createPackage,getProcessInfo,getEnvironmentInfo]
    steps:   
