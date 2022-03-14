@@ -264,8 +264,8 @@ jobs:
                                            "componentId": '"$(echo ${CODE} | jq '.componentId')"',
                                            "packageId": '"$(echo ${CODE} | jq '.packageId')"'
                                          }'
-                         echo $rollback, >>  DeploymentOutcomeDev/HX_Demo.Dev.Rollback.json             
-                         echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
+                         echo $rollback, >>  DeploymentOutcomeDev/"$uniqueKey".Dev.Rollback.json             
+                         echo $outcome, >> DeploymentOutcomeDev/"$uniqueKey".Dev.Outcome.json
                                      git config user.name $username
                                      git config user.email $email
                                      git add .
@@ -303,8 +303,8 @@ jobs:
                                            "componentId": '"$(echo ${CODE} | jq '.componentId')"',
                                            "packageId": '"$(echo ${CODE} | jq '.packageId')"'
                                          }'
-                       echo $rollback, >>  DeploymentOutcomeDev/HX_Demo.Dev.Rollback.json    
-                       echo $outcome, >> DeploymentOutcomeDev/HX_Demo.Dev.Outcome.json
+                       echo $rollback, >>  DeploymentOutcomeDev/"$uniqueKey".Dev.Rollback.json    
+                       echo $outcome, >> DeploymentOutcomeDev/"$uniqueKey".Dev.Outcome.json
                                       
                                        git config user.name $username
                                        git config user.email $email
@@ -343,8 +343,8 @@ jobs:
                                            "componentId": '"$(echo ${CODE} | jq '.componentId')"',
                                            "packageId": '"$(echo ${CODE} | jq '.packageId')"'
                                          }'
-                        echo $rollback, >>  DeploymentOutcomeTest/HX_Demo.Test.Rollback.json    
-                        echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
+                        echo $rollback, >>  DeploymentOutcomeTest/"$uniqueKey".Test.Rollback.json    
+                        echo $outcome, >> DeploymentOutcomeTest/"$uniqueKey".Test.Outcome.json
                                        git config user.name $username
                                        git config user.email $email
                                        git add .
@@ -383,8 +383,8 @@ jobs:
                                            "componentId": '"$(echo ${CODE} | jq '.componentId')"',
                                            "packageId": '"$(echo ${CODE} | jq '.packageId')"'
                                          }'
-                        echo $rollback, >>  DeploymentOutcomeTest/HX_Demo.Test.Rollback.json    
-                        echo $outcome, >> DeploymentOutcomeTest/HX_Demo.Test.Outcome.json
+                        echo $rollback, >>  DeploymentOutcomeTest/"$uniqueKey".Test.Rollback.json    
+                        echo $outcome, >> DeploymentOutcomeTest/"$uniqueKey".Test.Outcome.json
                                       git config user.name $username
                                       git config user.email $email
                                       git add .
