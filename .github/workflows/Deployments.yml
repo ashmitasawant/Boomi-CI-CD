@@ -145,9 +145,7 @@ jobs:
               else
                    apiAuth=null
               fi
-              BoomiAccountId=$BOOMI_ACCOUNTID
-              echo $BoomiAccountId
-              echo $apiAuth
+             
               
               for ((i=0;i<${#components[@]};i++))
               do
@@ -157,7 +155,7 @@ jobs:
                                    --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/PackagedComponent" \
+                                   --url "https://api.boomi.com/api/rest/v1/${BOOMI_ACCOUNTID}/PackagedComponent" \
                                    --data '{"componentId": "'${components[$i]}'","packageVersion":"'${packageVersions[$i]}'", "notes":"Package for deployment" }'`
                                    echo $CODE
                                    packageIds=$(echo ${CODE} | jq '.packageId')
@@ -214,8 +212,7 @@ jobs:
                    username=null
                    email=null
               fi
-              BoomiAccountId=$BOOMI_ACCOUNTID
-              echo $BoomiAccountId
+            
               echo $apiAuth
               echo $username
               echo $email
@@ -242,7 +239,7 @@ jobs:
                                --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
+                               --url "https://api.boomi.com/api/rest/v1/${BOOMI_ACCOUNTID}/DeployedPackage" \
                                --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                              
                                echo $CODE 
@@ -281,7 +278,7 @@ jobs:
                                --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/json' \
                                --header 'accept: application/json' \
-                               --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
+                               --url "https://api.boomi.com/api/rest/v1/${BOOMI_ACCOUNTID}/DeployedPackage" \
                                --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                
                              
@@ -322,7 +319,7 @@ jobs:
                                    --header "authorization: ${apiAuth}" \
                                    --header 'content-type: application/json' \
                                    --header 'accept: application/json' \
-                                   --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
+                                   --url "https://api.boomi.com/api/rest/v1/${BOOMI_ACCOUNTID}/DeployedPackage" \
                                    --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
                                    
                                    echo $CODE 
@@ -362,7 +359,7 @@ jobs:
                                  --header "authorization: ${apiAuth}" \
                                  --header 'content-type: application/json' \
                                  --header 'accept: application/json' \
-                                 --url "https://api.boomi.com/api/rest/v1/${$BoomiAccountId}/DeployedPackage" \
+                                 --url "https://api.boomi.com/api/rest/v1/${BOOMI_ACCOUNTID}/DeployedPackage" \
                                  --data '{"environmentId":"'$envId'","packageId": '${packageIds[$i]}'}'`
                                  
                                  echo $CODE 
@@ -421,7 +418,7 @@ jobs:
                 do
                   if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
                   then
-                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/${$BOOMI_ACCOUNTID}/DeployedPackage/${deployments[$i]} -H "authorization: ${apiAuth}" -H "content-type: application/json"`
+                    CODE=`curl -X DELETE https://api.boomi.com/api/rest/v1/${BOOMI_ACCOUNTID}/DeployedPackage/${deployments[$i]} -H "authorization: ${apiAuth}" -H "content-type: application/json"`
                                    echo $CODE 
                                    echo ${deployments[$i]}
                   fi
