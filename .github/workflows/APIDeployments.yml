@@ -19,12 +19,12 @@ jobs:
       apiComponentIds: ${{ steps.setAPILevelInfo.outputs.apiComponentIds }}
       packageVersions: ${{ steps.setAPILevelInfo.outputs.packageVersions }}
       fileHoldersName: ${{steps.setAPILevelInfo.outputs.fileHoldersName}}
-      processNames: ${{steps.setAPILevelInfo.outputs.apiNames}}
-      apiNames: ${{steps.setAPILevelInfo.outputs.processNames}}
+      processNames: ${{steps.setAPILevelInfo.outputs.processNames}}
+      apiNames: ${{steps.setAPILevelInfo.outputs.apiNames}}
       environmentName: ${{steps.setAPILevelInfo.outputs.environmentName}}
       modes: ${{steps.setAPILevelInfo.outputs.modes}}
       deploymentIds: ${{steps.setAPILevelInfo.outputs.apiDeploymentIds}}
-      uniqueKey: ${{steps.setProcessLevelInfo.outputs.uniqueKey}} 
+      uniqueKey: ${{steps.setAPILevelInfo.outputs.uniqueKey}} 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get API Info
