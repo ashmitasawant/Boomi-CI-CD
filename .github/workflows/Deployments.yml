@@ -110,6 +110,7 @@ jobs:
               
               
   getEnvironmentInfo:
+   needs: getProcessInfo
    runs-on: ubuntu-latest
    outputs:
      devEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.devEnvironmentId}}
