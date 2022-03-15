@@ -444,7 +444,25 @@ jobs:
               modes=${{needs.getProcessInfo.outputs.modes}}
               BoomiAccountId=$BOOMI_ACCOUNTID
               echo $BoomiAccountId
-              
+              fileHoldersName=${{needs.getProcessInfo.outputs.fileHoldersName}}
+              if [[ $fileHoldersName == "Ashmita Sawant" ]]
+              then
+                   apiAuth=$ASHMITA_SAWANT_API_AUTH
+              elif [[ $fileHoldersName == "Lalit Karpenter" ]]
+              then
+                   apiAuth=$LALIT_KARPENTER_API_AUTH
+              elif [[ $fileHoldersName == "Kartik Dashora" ]]
+              then
+                   apiAuth=$KARTIK_DASHORA_API_AUTH
+              elif [[ $fileHoldersName == "Lalit Kumawat" ]]
+              then
+                   apiAuth=$LALIT_KUMAWAT_API_AUTH
+              elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
+              then
+                  apiAuth=$SANSKRITI_SHARMA_API_AUTH
+              else
+                   apiAuth=null
+              fi
               for ((i=0;i<${#deployments[@]};i++))
                 do
                   if [[ ${modes[$i]} == "undeploy" ]] && [[ $deployments != "" ]] 
