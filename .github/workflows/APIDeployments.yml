@@ -268,3 +268,47 @@ jobs:
                 fi
                 echo $packageIds
                 echo "Index 0 value:" ${packageIds[0]} 
+                
+                 for ((i=0;i<${#packageIds[@]};i++))
+               do
+                 componentName=${apiNames[$i]}
+                 echo $componentName
+                 if [ $envName == "Development" ] && [ ${modes[$i]} == "deploy" ] 
+                 then
+                     envId=${{needs.getEnvironmentInfo.outputs.devEnvironmentId}}
+                     CODE=`curl  --request POST \
+                               --header "authorization: ${apiAuth}" \
+                               --header 'content-type: application/json' \
+                               --header 'accept: application/json' \
+                               --url "https://api.boomi.com/api/rest/v1/${BoomiAccountId}/DeployedPackage" \
+                               --data '{"environmentId": "'$envId'","packageId": "'${packageIds[$i]}'"}'`
+                             
+                               echo $CODE 
+                               outcome='{
+                                        "deployedDatetime": '"$(echo ${CODE} | jq '.deployedDate')"',
+                                        "details": 
+                                         {
+                                          "componentName": "'$componentName'",
+                                          "componentId": '"$(echo ${CODE} | jq '.componentId')"',
+                                          "packageVersion": '"$(echo ${CODE} | jq '.packageVersion')"',
+                                          "packageId": '"$(echo ${CODE} | jq '.packageId')"',
+                                          "deploymentId": '"$(echo ${CODE} | jq '.deploymentId')"',
+                                          "componentVersion": '"$(echo ${CODE} | jq '.componentVersion')"',
+                                          "environmentId": '"$(echo ${CODE} | jq '.environmentId')"'
+                                         }
+                                       }'
+                                       
+                               rollback='{
+                                           "componentName": "'$componentName'",
+                                           "componentId": '"$(echo ${CODE} | jq '.componentId')"',
+                                           "packageId": '"$(echo ${CODE} | jq '.packageId')"'
+                                         }'
+                         echo $rollback, >>  APIsDeploymentOutcomeDev/"$uniqueKey".Dev.Rollback.json             
+                         echo $outcome, >> APIsDeploymentOutcomeDev/"$uniqueKey".Dev.Outcome.json
+                                     git config user.name $username
+                                     git config user.email $email
+                                     git add .
+                                     git commit -m "Published Changes"
+                                     git config pull.rebase false
+                                     git push --force origin main                 
+                   
