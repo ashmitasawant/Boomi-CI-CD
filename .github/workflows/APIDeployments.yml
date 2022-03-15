@@ -257,4 +257,14 @@ jobs:
                 echo $apiAuth
                 echo $username
                 echo $email
-              
+               
+                if [ ${modes[$i]} == "deploy" ]
+                then 
+                  packageIds=(${{needs.createPackage.outputs.packageId}})
+                else
+                  ProcessDetails=$(cat ./APIDeploymentConfiguration/ApiDetails.${uniqueKey}.dev.json)
+                  packages=$(echo ${ProcessDetails} | jq '.[] | .processDetails[].packageId')
+                  packageIds=($packages)
+                fi
+                echo $packageIds
+                echo "Index 0 value:" ${packageIds[0]} 
