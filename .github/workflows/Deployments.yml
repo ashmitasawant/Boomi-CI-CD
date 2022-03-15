@@ -424,7 +424,7 @@ jobs:
                                       git push --force origin main              
                                      
                      else 
-                       $CODE=""
+                        CODE=""
                      fi
                      echo $outcome
                      
