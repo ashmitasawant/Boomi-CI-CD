@@ -490,4 +490,6 @@ jobs:
               git rm -r DeploymentConfiguration/README.md
               git config user.name ashmitasawant
               git config user.email ashmitasawant3@gmail.com
-              git commit -m "Published Changes"
+              git commit -m "Deleted file"
+              git config pull.rebase false
+              git push --force origin main   
