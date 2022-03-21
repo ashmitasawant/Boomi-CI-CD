@@ -485,5 +485,9 @@ jobs:
         id: removeConfigFile
         run: |
               uniqueKey=${{needs.getProcessInfo.outputs.uniqueKey}}
+             
+             
               git rm -r DeploymentConfiguration/README.md
+              git config user.name ashmitasawant
+              git config user.email ashmitasawant3@gmail.com
               git commit -m "Published Changes"
