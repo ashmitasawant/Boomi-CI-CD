@@ -122,7 +122,7 @@ jobs:
      testEnvironmentId: ${{steps.setEnvironmentLevelInfo.outputs.testEnvironmentId}}
      testAtomId: ${{steps.setEnvironmentLevelInfo.outputs.testAtomId}}
    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it 
       - name: Get Environment Info
         uses: actions/checkout@v2
       - id: setEnvironmentLevelInfo
