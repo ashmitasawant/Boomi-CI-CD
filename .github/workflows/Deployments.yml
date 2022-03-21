@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v2
       - id: setProcessLevelInfo
         run: |
-              fileToRead=$(ls -1 *.json ./DeploymentConfiguration/)
+              fileToRead=$(ls -1 ./DeploymentConfiguration/*.json )
               echo $fileToRead
               fileRead=$(cat ./DeploymentConfiguration/"$fileToRead")
               echo $fileRead
