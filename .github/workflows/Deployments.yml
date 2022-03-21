@@ -31,7 +31,7 @@ jobs:
         run: |
               fileToRead=$(ls -1 ./DeploymentConfiguration/*.json )
               echo $fileToRead
-              fileRead=$(cat ./DeploymentConfiguration/"$fileToRead")
+              fileRead=$(cat ./"$fileToRead")
               echo $fileRead
               arrIN=(${fileToRead//./ })
               uniqueKey=$(echo ${arrIN[1]})
