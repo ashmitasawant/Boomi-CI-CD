@@ -484,4 +484,6 @@ jobs:
       - name: Remove Process Configuration File
         id: removeConfigFile
         run: |
-              echo "End"
+              uniqueKey=${{needs.getProcessInfo.outputs.uniqueKey}}
+              git rm -r DeploymentConfiguration/README.md
+              git commit -m "Published Changes"
