@@ -30,7 +30,7 @@ jobs:
       - id: setProcessLevelInfo
         run: |
               fileToBeRead=$(ls -1 ./DeploymentConfiguration/*.json )
-              arrIN=(${fileToRead//// })
+              arrIN=(${fileToBeRead//// })
               fileToRead=$(echo ${arrIN[2]})
               echo $fileToRead
               echo $fileToRead
