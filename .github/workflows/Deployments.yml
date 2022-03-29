@@ -2,8 +2,6 @@ name: Deployment Pipeline
 
 on:
   push
-     
-  workflow_dispatch:
 env: 
            BOOMI_ACCOUNTID: ${{secrets.BOOMI_ACCOUNTID}}
            ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
