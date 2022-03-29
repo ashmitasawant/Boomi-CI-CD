@@ -1,9 +1,7 @@
 name: Deployment Pipeline
 
 on:
-  push:
-    paths:
-     - 'DeploymentConfiguration/*.json'
+  push
      
   workflow_dispatch:
 env: 
