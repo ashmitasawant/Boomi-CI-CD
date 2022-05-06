@@ -96,6 +96,19 @@ jobs:
                  echo $environmentId
                  xml=$(cat ./UpdateComponentsExtensions/rowsDetails.xml)
                  echo $xml
-                 CODE=`curl -X POST https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update -H "authorization: ${apiAuth}" -H "content-type: application/xml" -d ${xml}`
+                 CODE=`curl -X POST https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update -H "authorization: ${apiAuth}" -H "content-type: application/xml" -d <bns:EnvironmentExtensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bns="http://api.platform.boomi.com/" environmentId="bad76642-bf60-4de0-8a54-79931e3bcd8e" extensionGroupId="" id="bad76642-bf60-4de0-8a54-79931e3bcd8e">
+                        <bns:crossReferences>
+                            <bns:crossReference id="90708b33-6aee-4f21-932d-01288f62a111" overrideValues="true" name="Account Table">
+                                <bns:CrossReferenceRows>
+                                    <bns:row ref1="0018000000Ptpg5AAB" ref2="Edge Hall"/>
+                                    <bns:row ref1="0018000000Ptpg9AAB" ref2="Grand Hotels &amp; Resorts Ltd"/>
+                                    <bns:row ref1="0018000000PtpgCAAR" ref2="United Oil &amp; Gas Corp."/>
+                                    <bns:row ref1="0018000000PtpgAAAR" ref2="Express Logistics and Transport"/>
+                                    <bns:row ref1="0018000000Ptpg4AAB" ref2="United Oil &amp; Gas, Singapore"/>
+                                    <bns:row ref1="0018000000Ptpg2AAB" ref2="GenePoint"/>
+                                </bns:CrossReferenceRows>
+                            </bns:crossReference>
+                        </bns:crossReferences>
+                    </bns:EnvironmentExtensions>`
                  echo $CODE                                 
                done
