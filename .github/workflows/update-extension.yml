@@ -14,7 +14,7 @@ jobs:
     crossReferenceId: ${{ steps.get_CR_Details.outputs.crossReferenceId }}
     environmentId: ${{ steps.get_CR_Details.outputs.environmentId }}
     crossReferenceName: ${{ steps.get_CR_Details.outputs.crossReferenceName }}
-    fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
+    fileHoldersName: ${{steps.get_CR_Details.outputs.fileHoldersName}}
     
    runs-on: ubuntu-latest
    steps:
