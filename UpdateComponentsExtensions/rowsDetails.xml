@@ -2,7 +2,7 @@
     <bns:crossReferences>
         <bns:crossReference id="90708b33-6aee-4f21-932d-01288f62a111" overrideValues="true" name="Account Table">
             <bns:CrossReferenceRows>
-                <bns:row ref1="0018000000Ptpg5AAB" ref2="Edge Hall of Fame"/>
+                <bns:row ref1="0018000000Ptpg5AAB" ref2="Edge Hall of The Fame"/>
                 <bns:row ref1="0018000000Ptpg9AAB" ref2="Grand Hotels &amp; Resorts Ltd"/>
                 <bns:row ref1="0018000000PtpgCAAR" ref2="United Oil &amp; Gas Corp."/>
                 <bns:row ref1="0018000000PtpgAAAR" ref2="Express Logistics and Transport"/>
