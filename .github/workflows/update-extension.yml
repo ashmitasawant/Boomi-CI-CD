@@ -46,14 +46,23 @@ jobs:
               
   updateCrossReferenceExtensions:
     # The type of runner that the job will run on
+    needs: getCrossReferenceDetails 
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Update Cross Reference Extensions
         uses: actions/checkout@v2
-        needs: 
       - id: update_CR_Extensions
         run: |
+               crossReferenceId=${{needs.getCrossReferenceDetails.outputs.crossReferenceId}}
+               echo $crossReferenceId
+               environmentId=${{needs.getCrossReferenceDetails.outputs.environmentId}}
+               echo $environmentId
+               crossReferenceName=${{needs.getCrossReferenceDetails.outputs.crossReferenceName}}
+               echo $crossReferenceName
+               
+               for ((i=0;i<${#crossReferenceId[@]};i++))
+               do
                CODE=`curl  --request POST \
                                    --header 'authorization: Basic YXNobWl0YS5zYXdhbnRAbmVvc2FscGhhLmNvbTpBYmhhc2gqMDcwOA==' \
                                    --header 'content-type: application/xml' \
