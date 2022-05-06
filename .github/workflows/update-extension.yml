@@ -96,6 +96,6 @@ jobs:
                  echo $environmentId
                  xml=$(cat ./UpdateComponentsExtensions/rowsDetails.xml)
                  echo $xml
-                 CODE=`curl -X POST https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update' -H "authorization: ${apiAuth}" -H "content-type: application/xml"`
+                 CODE=`curl -X POST https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update' -H "authorization: ${apiAuth}" -H "content-type: application/xml" -d ${xml}`
                  echo $CODE                                 
                done
