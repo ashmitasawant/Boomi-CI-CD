@@ -92,13 +92,14 @@ jobs:
                 
                for ((i=0;i<${#crossReferenceId[@]};i++))
                do
-               environmentId=${{needs.getCrossReferenceDetails.outputs.environmentId}}
-               echo $environmentId
-               xml=$(cat ./UpdateComponentsExtensions/rowsDetails.xml)
-               CODE=`curl  --request POST \
-                                   --header 'authorization: ${apiAuth}' \
-                                   --header 'content-type: application/xml' \
-                                   --url 'https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update' \
-                                   --data '${xml}'`
-                                   echo $CODE                                 
-                           
+                 environmentId=${{needs.getCrossReferenceDetails.outputs.environmentId}}
+                 echo $environmentId
+                 xml=$(cat ./UpdateComponentsExtensions/rowsDetails.xml)
+                 echo $xml
+                 CODE=`curl  --request POST \
+                                     --header 'authorization: ${apiAuth}' \
+                                     --header 'content-type: application/xml' \
+                                     --url 'https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update' \
+                                     --data '${xml}'`
+                                     echo $CODE                                 
+               done
