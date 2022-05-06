@@ -17,9 +17,9 @@ jobs:
              fileRead=$(cat ./UpdateComponentsExtensions/CrossReference.json)
              echo $fileRead
              crossReferenceId=$(echo ${fileRead} | jq '.[] | .crossReferenceId')
-             echo crossReferenceId
+             echo $crossReferenceId
              environmentId=$(echo ${fileRead} | jq '.[] | .environmentId')
-             echo environmentId
+             echo $environmentId
              crossReferenceName=$(echo ${fileRead} | jq '.[] | .crossReferenceName')
-             echo crossReferenceName
+             echo $crossReferenceName
                                    
