@@ -18,8 +18,24 @@ jobs:
              echo $fileRead
              crossReferenceId=$(echo ${fileRead} | jq '.[] | .crossReferenceId')
              echo $crossReferenceId
+             
              environmentId=$(echo ${fileRead} | jq '.[] | .environmentId')
              echo $environmentId
+             
              crossReferenceName=$(echo ${fileRead} | jq '.[] | .crossReferenceName')
              echo $crossReferenceName
+             
+              crossReferenceIdArray=$(echo $crossReferenceId)
+              echo $crossReferenceIdArray
+              echo "::set-output name=crossReferenceId::($crossReferenceIdArray)"
+              
+              environmentIdArray=$(echo $environmentId)
+              echo $environmentIdArray
+              echo "::set-output name=environmentId::($environmentIdArray)"
+              
+              crossReferenceNameArray=$(echo $crossReferenceName)
+              echo $crossReferenceNameArray
+              echo "::set-output name=crossReferenceName::($crossReferenceNameArray)"
+              
                                    
+                           
