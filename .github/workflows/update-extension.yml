@@ -3,8 +3,10 @@ name: Update Cross Reference Extensions
 # Controls when the workflow will run
 on:
   workflow_dispatch
+env: 
+           BOOMI_ACCOUNTID: ${{secrets.BOOMI_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   getCrossReferenceDetails:
@@ -12,15 +14,21 @@ jobs:
     crossReferenceId: ${{ steps.get_CR_Details.outputs.crossReferenceId }}
     environmentId: ${{ steps.get_CR_Details.outputs.environmentId }}
     crossReferenceName: ${{ steps.get_CR_Details.outputs.crossReferenceName }}
+    fileHoldersName: ${{steps.setProcessLevelInfo.outputs.fileHoldersName}}
     
    runs-on: ubuntu-latest
    steps:
      - name: Get Cross Reference Details
        uses: actions/checkout@v2
      - id: get_CR_Details
-       run: | 
+       run: |   
              fileRead=$(cat ./UpdateComponentsExtensions/CrossReference.json)
              echo $fileRead
+             
+             fileHoldersName=$(git log -n 1 --pretty='format:%an' -- UpdateComponentsExtensions/CrossReference.json)
+             echo "File Committer's Name is:" $fileHoldersName
+             echo "::set-output name=fileHoldersName::'$fileHoldersName'"
+             
              crossReferenceId=$(echo ${fileRead} | jq '.[] | .crossReferenceId')
              echo $crossReferenceId
              
@@ -56,30 +64,41 @@ jobs:
         run: |
                crossReferenceId=${{needs.getCrossReferenceDetails.outputs.crossReferenceId}}
                echo $crossReferenceId
-               environmentId=${{needs.getCrossReferenceDetails.outputs.environmentId}}
-               echo $environmentId
+               
                crossReferenceName=${{needs.getCrossReferenceDetails.outputs.crossReferenceName}}
                echo $crossReferenceName
                
+               fileHoldersName=${{needs.getCrossReferenceDetails.outputs.fileHoldersName}}
+              
+                if [[ $fileHoldersName == "Ashmita Sawant" ]]
+                then
+                     apiAuth=$ASHMITA_SAWANT_API_AUTH
+                elif [[ $fileHoldersName == "Lalit Karpenter" ]]
+                then
+                     apiAuth=$LALIT_KARPENTER_API_AUTH
+                elif [[ $fileHoldersName == "Kartik Dashora" ]]
+                then
+                     apiAuth=$KARTIK_DASHORA_API_AUTH
+                elif [[ $fileHoldersName == "Lalit Kumawat" ]]
+                then
+                     apiAuth=$LALIT_KUMAWAT_API_AUTH
+                elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
+                then
+                    apiAuth=$SANSKRITI_SHARMA_API_AUTH
+                else
+                     apiAuth=null
+                fi
+                BoomiAccountId=$BOOMI_ACCOUNTID
+                
                for ((i=0;i<${#crossReferenceId[@]};i++))
                do
+               environmentId=${{needs.getCrossReferenceDetails.outputs.environmentId}}
+               echo $environmentId
+               xml=$(cat ./UpdateComponentsExtensions/rowsDetails.xml)
                CODE=`curl  --request POST \
-                                   --header 'authorization: Basic YXNobWl0YS5zYXdhbnRAbmVvc2FscGhhLmNvbTpBYmhhc2gqMDcwOA==' \
+                                   --header 'authorization: ${apiAuth}' \
                                    --header 'content-type: application/xml' \
-                                   --url 'https://api.boomi.com/api/rest/v1/trainingashmitasawant-D9P8J7/EnvironmentExtensions/bad76642-bf60-4de0-8a54-79931e3bcd8e/update' \
-                                   --data '<bns:EnvironmentExtensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bns="http://api.platform.boomi.com/" environmentId="bad76642-bf60-4de0-8a54-79931e3bcd8e" extensionGroupId="" id="bad76642-bf60-4de0-8a54-79931e3bcd8e">
-                                            <bns:crossReferences>
-                                                <bns:crossReference id="90708b33-6aee-4f21-932d-01288f62a111" overrideValues="true" name="Account Table">
-                                                    <bns:CrossReferenceRows>
-                                                        <bns:row ref1="0018000000Ptpg5AAB" ref2="Edge Hall"/>
-                                                        <bns:row ref1="0018000000Ptpg9AAB" ref2="Grand Hotels &amp; Resorts Ltd"/>
-                                                        <bns:row ref1="0018000000PtpgCAAR" ref2="United Oil &amp; Gas Corp."/>
-                                                        <bns:row ref1="0018000000PtpgAAAR" ref2="Express Logistics and Transport"/>
-                                                        <bns:row ref1="0018000000Ptpg4AAB" ref2="United Oil &amp; Gas, Singapore"/>
-                                                        <bns:row ref1="0018000000Ptpg2AAB" ref2="GenePoint"/>
-                                                    </bns:CrossReferenceRows>
-                                                </bns:crossReference>
-                                            </bns:crossReferences>
-                                        </bns:EnvironmentExtensions>'`
+                                   --url 'https://api.boomi.com/api/rest/v1/${BoomiAccountId}/${environmentId[$i]}/update' \
+                                   --data '${xml}'`
                                    echo $CODE                                 
                            
