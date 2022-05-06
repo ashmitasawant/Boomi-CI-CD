@@ -8,6 +8,11 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   getCrossReferenceDetails:
+   outputs:
+    crossReferenceId: ${{ steps.get_CR_Details.outputs.crossReferenceId }}
+    environmentId: ${{ steps.get_CR_Details.outputs.environmentId }}
+    crossReferenceName: ${{ steps.get_CR_Details.outputs.crossReferenceName }}
+    
    runs-on: ubuntu-latest
    steps:
      - name: Get Cross Reference Details
