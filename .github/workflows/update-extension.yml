@@ -96,7 +96,7 @@ jobs:
                  echo $environmentId
                  xml=$(cat ./UpdateComponentsExtensions/rowsDetails.xml)
                  echo $xml
-                 CODE=`curl --location --request POST 'https://api.boomi.com/api/rest/v1/${BoomiAccountId}/EnvironmentExtensions/'${environmentId[$i]'/update' \
+                 CODE=`curl --location --request POST 'https://api.boomi.com/api/rest/v1/${BoomiAccountId}/EnvironmentExtensions/'${environmentId[$i]}'/update' \
                             --header 'Authorization: Basic YXNobWl0YS5zYXdhbnRAbmVvc2FscGhhLmNvbTpBYmhhc2gqMDcwOA==' \
                             --header 'Content-Type: application/xml' \
                             --data-raw '<bns:EnvironmentExtensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bns="http://api.platform.boomi.com/" environmentId="bad76642-bf60-4de0-8a54-79931e3bcd8e" extensionGroupId="" id="bad76642-bf60-4de0-8a54-79931e3bcd8e">
