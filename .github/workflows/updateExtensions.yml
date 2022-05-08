@@ -33,6 +33,6 @@ jobs:
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
                echo $readCSV
              else 
-               readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/"$cr_toDeploy".csv)
+               readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/$cr_toDeploy.csv)
                echo $readCSV
              fi
