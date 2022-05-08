@@ -32,8 +32,7 @@ jobs:
              then 
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
                echo $readCSV
-             else
-             then 
+             else 
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/"$cr_toDeploy")
                echo $readCSV
              fi
