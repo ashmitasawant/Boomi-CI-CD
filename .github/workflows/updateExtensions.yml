@@ -25,7 +25,8 @@ jobs:
              read_CRConfig=$(cat ./UpdateComponentsExtensions/CrossReference.json)
              echo $read_CRConfig
              cr_toDeploy=$(echo ${read_CRConfig} | jq '.[] | .cr_toDeploy')
-             echo $cr_toDeploy
+             cr_toBeDeployed=$(echo "$cr_toDeploy" | tr -d '"')
+             echo $cr_toBeDeployed
              cr_CompID=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].crossReferenceId')
              echo $cr_CompID
              if [[ $cr_toDeploy == "All" ]]
@@ -33,6 +34,6 @@ jobs:
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
                echo $readCSV
              else 
-               readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/'$cr_toDeploy'.csv)
+               readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/"$cr_toBeDeployed".csv)
                echo $readCSV
              fi
