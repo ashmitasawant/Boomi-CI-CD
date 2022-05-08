@@ -28,8 +28,11 @@ jobs:
              echo $cr_toDeploy
              cr_CompID=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].crossReferenceId')
              echo $cr_CompID
-             if [ $cr_toDeploy == "All" ]
+             if [[ $cr_toDeploy == "All" ]]
              then 
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
                echo $readCSV
+             else
+             then 
+               readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/"$cr_toDeploy")
              fi
