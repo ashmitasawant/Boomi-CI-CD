@@ -1,0 +1,26 @@
+name: Update Cross Reference Extensions
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch
+env: 
+           BOOMI_ACCOUNTID: ${{secrets.BOOMI_ACCOUNTID}}
+           ASHMITA_SAWANT_API_AUTH: ${{secrets.ASHMITA_SAWANT_API_AUTH}}
+
+jobs:
+  # This workflow contains a single job called "build"
+  getCrossReferenceDetails:
+   outputs:
+    crossReferenceId: ${{ steps.get_CR_Details.outputs.crossReferenceId }}
+    environmentId: ${{ steps.get_CR_Details.outputs.environmentId }}
+    crossReferenceName: ${{ steps.get_CR_Details.outputs.crossReferenceName }}
+    fileHoldersName: ${{steps.get_CR_Details.outputs.fileHoldersName}}
+    
+   runs-on: ubuntu-latest
+   steps:
+     - name: Get Cross Reference Details
+       uses: actions/checkout@v2
+     - id: get_CR_Details
+       run: |  
+             readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
+             echo $readCSV
