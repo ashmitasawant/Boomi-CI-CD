@@ -1,13 +1,14 @@
-[
-  {
-    "crossReferenceId":"90708b33-6aee-4f21-932d-01288f62a111",
-    "environmentId":"bad76642-bf60-4de0-8a54-79931e3bcd8e",
-    "crossReferenceName":"Account Table"
-   },
-  {
-    "crossReferenceId":"29786e25-76db-4fea-a136-2833c9b871dc",
-    "environmentId":"bad76642-bf60-4de0-8a54-79931e3bcd8e",
-    "crossReferenceName":"Inventory Status"
-  }
-
-]
+[{
+	"cr_toDeploy": "Account Table",
+	"cr_details": [{
+			"crossReferenceId": "90708b33-6aee-4f21-932d-01288f62a111",
+			"environmentId": "bad76642-bf60-4de0-8a54-79931e3bcd8e",
+			"crossReferenceName": "Account Table"
+		},
+		{
+			"crossReferenceId": "29786e25-76db-4fea-a136-2833c9b871dc",
+			"environmentId": "bad76642-bf60-4de0-8a54-79931e3bcd8e",
+			"crossReferenceName": "Inventory Status"
+		}
+	]
+}]
