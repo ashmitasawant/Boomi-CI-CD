@@ -22,5 +22,11 @@ jobs:
        uses: actions/checkout@v2
      - id: get_CR_Details
        run: |  
+             read_CRConfig=$(cat ./UpdateComponentsExtensions/CrossReference.json)
+             echo $read_CRConfig
+             cr_toDeploy=$(echo ${read_CRConfig} | jq '.[] | .cr_toDeploy')
+             echo $cr_toDeploy
+             cr_CompID=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].crossReferenceId')
+             echo $cr_CompID
              readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
              echo $readCSV
