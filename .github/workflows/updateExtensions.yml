@@ -98,18 +98,19 @@ jobs:
                 BoomiAccountId=$BOOMI_ACCOUNTID
                 echo $BoomiAccountId
                 
-               for ((i=0;i<${#environmentNames[@]};i++))
-               do
-                 if [ $category == "All" ]
+                if [ $category == "All" ]
                  then
                    name=null
                  else
                    name=$cr_deploy
                  fi
+               for ((i=0;i<${#environmentNames[@]};i++))
+               do
+                 
                  
                 
                  CODE=`curl --location --request POST 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=${cr_toDeploy}&envName='${environmentNames[$i]}'' \
-                            --header 'Authorization: ${apiAuth}' \
+                            --header 'Authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx' \
                             --header 'Content-Type: text/plain' \
                             --data-raw '${csv}'`
                  
