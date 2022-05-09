@@ -112,7 +112,7 @@ jobs:
                do
                
                  RUN=`curl  --request POST \
-                               --header "authorization: ${apiAuth}" \
+                               --header "authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
                                --header 'content-type: application/xml' \
                                --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${environmentNames[$i]}'' \
                                --data "'${csvRead}'"`
