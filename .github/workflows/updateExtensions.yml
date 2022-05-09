@@ -55,7 +55,7 @@ jobs:
                echo $readCSV
              fi
              echo $readCSV
-             echo "::set-output name=readCSV::$readCSV"
+             echo "::set-output name=readCSV::($readCSV)"
              
              
   executeProcess:
@@ -113,7 +113,7 @@ jobs:
                                --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/xml' \
                                --url "https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=${name}&envName=${environmentNames[$i]}" \
-                               --data ''${csv}''`
+                               --data "'${csv}'"`
                 
                
                  echo $RUN                               
