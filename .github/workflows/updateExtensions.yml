@@ -109,7 +109,7 @@ jobs:
                for ((i=0;i<${#environmentNames[@]};i++))
                do
                
-                 CODE=`curl --location --request POST 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=Inventory Status&envName='${environmentNames[$i]}'' \
+                 CODE=`curl --location --request POST 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=Inventory Status&envName=Test' \
                             --header 'Authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx' \
                             --header 'Content-Type: text/plain' \
                             --data-raw '${csv}'`
