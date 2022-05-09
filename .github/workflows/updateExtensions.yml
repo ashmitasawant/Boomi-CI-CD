@@ -55,7 +55,7 @@ jobs:
                echo $readCSV
              fi
              echo $readCSV
-             echo "::set-output name=readCSV::"$readCSV""
+             echo "::set-output name=readCSV::$readCSV"
              
              
   executeProcess:
