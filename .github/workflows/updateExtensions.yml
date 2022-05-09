@@ -15,6 +15,7 @@ jobs:
     environmentName: ${{ steps.get_CR_Details.outputs.environmentName }}
     readCSV: ${{steps.get_CR_Details.outputs.readCSV}}
     cr_toDeploy: ${{steps.get_CR_Details.outputs.cr_toDeploy}}
+    fileHoldersName: ${{steps.get_CR_Details.outputs.fileHoldersName}}
     
    runs-on: ubuntu-latest
    steps:
@@ -24,6 +25,11 @@ jobs:
        run: |  
              read_CRConfig=$(cat ./UpdateComponentsExtensions/CrossReference.json)
              echo $read_CRConfig
+             
+             fileHoldersName=$(git log -n 1 --pretty='format:%an' -- UpdateComponentsExtensions/CrossReference.json)
+             echo "File Committer's Name is:" $fileHoldersName
+             echo "::set-output name=fileHoldersName::'$fileHoldersName'"
+             
              envName=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].environmentName')
              echo $envName
              echo "::set-output name=environmentName::$envName"
@@ -69,7 +75,46 @@ jobs:
              cr_toDeploy=${{needs.getCrossReferenceDetails.outputs.cr_toDeploy}}
              echo $cr_toDeploy
              
-             
+             fileHoldersName=${{needs.getCrossReferenceDetails.outputs.fileHoldersName}}
+              
+                if [[ $fileHoldersName == "Ashmita Sawant" ]]
+                then
+                     apiAuth=$ASHMITA_SAWANT_API_AUTH
+                elif [[ $fileHoldersName == "Lalit Karpenter" ]]
+                then
+                     apiAuth=$LALIT_KARPENTER_API_AUTH
+                elif [[ $fileHoldersName == "Kartik Dashora" ]]
+                then
+                     apiAuth=$KARTIK_DASHORA_API_AUTH
+                elif [[ $fileHoldersName == "Lalit Kumawat" ]]
+                then
+                     apiAuth=$LALIT_KUMAWAT_API_AUTH
+                elif [[ $fileHoldersName == "Sanskriti Sharma" ]]
+                then
+                    apiAuth=$SANSKRITI_SHARMA_API_AUTH
+                else
+                     apiAuth=null
+                fi
+                BoomiAccountId=$BOOMI_ACCOUNTID
+                echo $BoomiAccountId
+                
+               for ((i=0;i<${#environmentNames[@]};i++))
+               do
+                 if [ $category == "All" ]
+                 then
+                   name=null
+                 else
+                   name=$cr_deploy
+                 fi
+                 
+                
+                 CODE=`curl --location --request POST 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=${cr_toDeploy}&envName='${environmentNames[$i]}'' \
+                            --header 'Authorization: ${apiAuth}' \
+                            --header 'Content-Type: text/plain' \
+                            --data-raw '${csv}'`
+                 
+                 echo $CODE                                 
+               done
            
              
              
