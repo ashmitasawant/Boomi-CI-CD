@@ -77,7 +77,7 @@ jobs:
              
              fileHoldersName=${{needs.getCrossReferenceDetails.outputs.fileHoldersName}}
               
-                if [[ $fileHoldersName == "Ashmita Sawant" ]]
+                if [[ $fileHoldersName == "ashmitasawant" ]]
                 then
                      apiAuth=$ASHMITA_SAWANT_API_AUTH
                 elif [[ $fileHoldersName == "Lalit Karpenter" ]]
