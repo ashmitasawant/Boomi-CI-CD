@@ -121,7 +121,7 @@ jobs:
                                         0018000000Ptpg4AAB,"United Oil & Gas, Singapore"
                                         0018000000Ptpg2AAB,GenePoint'`
                 
-                 
+               
                  echo $RUN                               
                  
                done
