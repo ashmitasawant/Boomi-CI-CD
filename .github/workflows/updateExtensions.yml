@@ -110,16 +110,10 @@ jobs:
                do
                
                  RUN=`curl  --request POST \
-                               --header "authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
+                               --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/xml' \
-                               --url "https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=AccountTable&envName=Test" \
-                               --data 'Account ID,Account Name
-                                        0018000000Ptpg5AAB,Edge Communications of Hall and Fame
-                                        0018000000Ptpg9AAB,Grand Hotels & Resorts Ltd
-                                        0018000000PtpgCAAR,United Oil & Gas Corp.
-                                        0018000000PtpgAAAR,Express Logistics and Transport
-                                        0018000000Ptpg4AAB,"United Oil & Gas, Singapore"
-                                        0018000000Ptpg2AAB,GenePoint'`
+                               --url "https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=${name}&envName=${environmentNames[$i]}" \
+                               --data '${csv}'`
                 
                
                  echo $RUN                               
