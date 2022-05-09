@@ -25,11 +25,17 @@ jobs:
        run: |  
              read_CRConfig=$(cat ./UpdateComponentsExtensions/CrossReference.json)
              echo $read_CRConfig
+             envName=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].environmentName')
+             echo $envName
+             echo "::set-ouyput name=environmentName:$envName"
+             
              cr_toDeploy=$(echo ${read_CRConfig} | jq '.[] | .cr_toDeploy')
              cr_toBeDeployed=$(echo "$cr_toDeploy" | tr -d '"')
              echo $cr_toBeDeployed
+             
              cr_CompID=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].crossReferenceId')
              echo $cr_CompID
+             
              if [[ $cr_toDeploy == "All" ]]
              then 
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/*)
@@ -41,8 +47,7 @@ jobs:
              echo $readCSV
              echo "::set-output name=readCSV::$readCSV"
              
-             environmentName=$(echo ${read_CRConfig} | jq '.[] | .cr_Details[].environmentName')
-             echo $environmentName
+             
   executeProcess:
    needs: getCrossReferenceDetails
    runs-on: ubuntu-latest
