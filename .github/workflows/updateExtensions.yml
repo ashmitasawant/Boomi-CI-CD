@@ -84,7 +84,7 @@ jobs:
                  then
                    name=null
                  else
-                   name=$cr_toDeploy
+                   name=$cr_toBeDeployed
                  fi
                  echo $name
                for ((i=0;i<${#envName[@]};i++))
