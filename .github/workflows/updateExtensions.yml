@@ -57,27 +57,6 @@ jobs:
              echo $readCSV
              echo "::set-output name=readCSV::$readCSV"
              
-             
-  executeProcess:
-   runs-on: ubuntu-latest
-   needs: getCrossReferenceDetails
-   steps:
-     - name: Execute Boomi Process to Update Cross Reference Extensions
-       uses: actions/checkout@v2
-     - id: updateExtensions
-       run: |
-             environmentNames=${{needs.getCrossReferenceDetails.outputs.environmentName}}
-             echo $environmentNames
-             csv='${{needs.getCrossReferenceDetails.outputs.readCSV}}'
-             echo $csv
-             csvRead='"'$csv'"'
-             echo $csvRead
-             category=${{needs.getCrossReferenceDetails.outputs.category}}
-             echo $category
-             cr_toDeploy=${{needs.getCrossReferenceDetails.outputs.cr_toDeploy}}
-             echo $cr_toDeploy
-             
-             fileHoldersName=${{needs.getCrossReferenceDetails.outputs.fileHoldersName}}
               
                 if [[ $fileHoldersName == "Ashmita Sawant" ]]
                 then
@@ -108,14 +87,14 @@ jobs:
                    name=$cr_toDeploy
                  fi
                  echo $name
-               for ((i=0;i<${#environmentNames[@]};i++))
+               for ((i=0;i<${#envName[@]};i++))
                do
                
                  RUN=`curl  --request POST \
                                --header "authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
                                --header 'content-type: application/xml' \
-                               --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${environmentNames[$i]}'' \
-                               --data "'${csvRead}'"`
+                               --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${envName[$i]}'' \
+                               --data "'${readCSV}'"`
                                
                 
                
