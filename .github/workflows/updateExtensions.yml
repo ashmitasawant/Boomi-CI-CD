@@ -109,19 +109,14 @@ jobs:
                for ((i=0;i<${#environmentNames[@]};i++))
                do
                
-                 CODE=`curl --location --request POST 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=Inventory Status&envName=Test' \
-                            --header 'Authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx' \
-                            --header 'Content-Type: text/plain' \
-                            --data-raw '"Book","Quantity"
-                            "Shiva Trilogy","10"
-                            "Basics of Boomi","10"
-                            "Cloud Computing","4"
-                            "Java Basics","50"
-                            "C","30"
-                            "C++","10"
-                            '`
+                 RUN=`curl --request POST \
+                            --header "Authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
+                            --data "name=Account Table" \
+                            --data "envName=Test" \
+                            "https://c01-sg.integrate-test.boomi.com/ws/rest/CSV"`
+                
                  
-                 echo $CODE                                 
+                 echo $RUN                               
                  
                done
            
