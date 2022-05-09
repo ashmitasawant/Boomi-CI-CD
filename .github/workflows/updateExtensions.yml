@@ -30,7 +30,7 @@ jobs:
              echo "File Committer's Name is:" $fileHoldersName
              echo "::set-output name=fileHoldersName::'$fileHoldersName'"
              
-             envName=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].environmentName')
+             envName=($(echo ${read_CRConfig} | jq '.[] | .cr_details[].environmentName'))
              echo $envName
              echo "::set-output name=environmentName::$envName"
              
