@@ -112,7 +112,7 @@ jobs:
                  RUN=`curl  --request POST \
                                --header "authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
                                --header 'content-type: application/xml' \
-                               --url "https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=Account Table&envName=Test" \
+                               --url "https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name=AccountTable&envName=Test" \
                                --data 'Account ID,Account Name
                                         0018000000Ptpg5AAB,Edge Communications of Hall and Fame
                                         0018000000Ptpg9AAB,Grand Hotels & Resorts Ltd
