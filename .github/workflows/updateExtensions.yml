@@ -31,7 +31,9 @@ jobs:
              echo "::set-output name=fileHoldersName::'$fileHoldersName'"
              
              envName=($(echo ${read_CRConfig} | jq '.[] | .cr_details[].environmentName'))
-             echo $envName
+             
+             envNames=$(echo "$envName" | tr -d '"')
+             echo $envNames
              echo "::set-output name=environmentName::$envName"
              
              category=$(echo ${read_CRConfig} | jq '.[] | .category')
@@ -87,13 +89,13 @@ jobs:
                    name=$cr_toBeDeployed
                  fi
                  echo $name
-               for ((i=0;i<${#envName[@]};i++))
+               for ((i=0;i<${#envNames[@]};i++))
                do
                
                  RUN=`curl  --request POST \
                                --header "authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
                                --header 'content-type: application/xml' \
-                               --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${envName[$i]}'' \
+                               --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${envNames[$i]}'' \
                                --data "'${readCSV}'"`
                                
                 
