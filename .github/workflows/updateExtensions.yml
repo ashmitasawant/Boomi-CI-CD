@@ -68,8 +68,10 @@ jobs:
        run: |
              environmentNames=${{needs.getCrossReferenceDetails.outputs.environmentName}}
              echo $environmentNames
-             csv='${{needs.getCrossReferenceDetails.outputs.readCSV}}'
+             csv=${{needs.getCrossReferenceDetails.outputs.readCSV}}
              echo $csv
+             csvRead='"'$csv'"'
+             echo $csvRead
              category=${{needs.getCrossReferenceDetails.outputs.category}}
              echo $category
              cr_toDeploy=${{needs.getCrossReferenceDetails.outputs.cr_toDeploy}}
@@ -113,7 +115,7 @@ jobs:
                                --header 'authorization: ${apiAuth}' \
                                --header 'content-type: application/xml' \
                                --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${environmentNames[$i]}'' \
-                               --data '${csv}'`
+                               --data '${csvRead}''`
                 
                
                  echo $RUN                               
