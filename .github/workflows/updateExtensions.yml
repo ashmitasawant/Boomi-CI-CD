@@ -11,9 +11,10 @@ jobs:
   # This workflow contains a single job called "build"
   getCrossReferenceDetails:
    outputs:
-    crossReferenceId: ${{ steps.get_CR_Details.outputs.crossReferenceId }}
+    category: ${{steps.get_CR_Details.outputs.category}}
     environmentName: ${{ steps.get_CR_Details.outputs.environmentName }}
     readCSV: ${{steps.get_CR_Details.outputs.readCSV}}
+    cr_toDeploy: ${{steps.get_CR_Details.outputs.cr_toDeploy}}
     
    runs-on: ubuntu-latest
    steps:
@@ -27,9 +28,14 @@ jobs:
              echo $envName
              echo "::set-output name=environmentName::$envName"
              
+             category=$(echo ${read_CRConfig} | jq '.[] | .category')
+             echo $category
+             echo "::set-output name=category::$category"
+             
              cr_toDeploy=$(echo ${read_CRConfig} | jq '.[] | .cr_toDeploy')
              cr_toBeDeployed=$(echo "$cr_toDeploy" | tr -d '"')
              echo $cr_toBeDeployed
+             echo "::set-output name=cr_toDeploy::$cr_toBeDeployed"
              
              cr_CompID=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].crossReferenceId')
              echo $cr_CompID
@@ -56,3 +62,14 @@ jobs:
        run: |
              environmentNames=${{needs.getCrossReferenceDetails.outputs.environmentName}}
              echo $environmentNames
+             csv=${{needs.getCrossReferenceDetails.outputs.readCSV}}
+             echo $csv
+             category=${{needs.getCrossReferenceDetails.outputs.category}}
+             echo $category
+             cr_toDeploy=${{needs.getCrossReferenceDetails.outputs.cr_toDeploy}}
+             echo $cr_toDeploy
+             
+             
+           
+             
+             
