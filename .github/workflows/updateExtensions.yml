@@ -105,6 +105,7 @@ jobs:
                  else
                    name=$cr_toDeploy
                  fi
+                 echo $name
                for ((i=0;i<${#environmentNames[@]};i++))
                do
                
