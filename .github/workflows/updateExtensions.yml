@@ -68,7 +68,7 @@ jobs:
        run: |
              environmentNames=${{needs.getCrossReferenceDetails.outputs.environmentName}}
              echo $environmentNames
-             csv=${{needs.getCrossReferenceDetails.outputs.readCSV}}
+             csv='${{needs.getCrossReferenceDetails.outputs.readCSV}}'
              echo $csv
              csvRead='"'$csv'"'
              echo $csvRead
