@@ -35,7 +35,7 @@ jobs:
              cr_toDeploy=$(echo ${read_CRConfig} | jq '.[] | .cr_toDeploy')
              cr_toBeDeployed=$(echo "$cr_toDeploy" | tr -d '"')
              echo $cr_toBeDeployed
-             echo "::set-output name=cr_toDeploy::$cr_toBeDeployed"
+             echo "::set-output name=cr_toDeploy::$cr_toDeploy"
              
              cr_CompID=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].crossReferenceId')
              echo $cr_CompID
