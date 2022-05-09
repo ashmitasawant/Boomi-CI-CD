@@ -25,7 +25,7 @@ jobs:
              echo $read_CRConfig
              envName=$(echo ${read_CRConfig} | jq '.[] | .cr_details[].environmentName')
              echo $envName
-             echo "::set-output name=environmentName:$envName"
+             echo "::set-output name=environmentName::$envName"
              
              cr_toDeploy=$(echo ${read_CRConfig} | jq '.[] | .cr_toDeploy')
              cr_toBeDeployed=$(echo "$cr_toDeploy" | tr -d '"')
