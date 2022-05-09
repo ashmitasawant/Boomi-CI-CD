@@ -12,9 +12,10 @@ jobs:
   getCrossReferenceDetails:
    outputs:
     crossReferenceId: ${{ steps.get_CR_Details.outputs.crossReferenceId }}
-    environmentId: ${{ steps.get_CR_Details.outputs.environmentId }}
+    environmentName: ${{ steps.get_CR_Details.outputs.environmentName }}
     crossReferenceName: ${{ steps.get_CR_Details.outputs.crossReferenceName }}
     fileHoldersName: ${{steps.get_CR_Details.outputs.fileHoldersName}}
+    readCSV: ${{steps.get_CR_Details.outputs.readCSV}}
     
    runs-on: ubuntu-latest
    steps:
@@ -37,3 +38,18 @@ jobs:
                readCSV=$(cat ./UpdateComponentsExtensions/CR_CSVs/"$cr_toBeDeployed".csv)
                echo $readCSV
              fi
+             echo $readCSV
+             echo "::set-output name=readCSV::$readCSV"
+             
+             environmentName=$(echo ${read_CRConfig} | jq '.[] | .cr_Details[].environmentName')
+             echo $environmentName
+  executeProcess:
+   needs: getCrossReferenceDetails
+   runs-on: ubuntu-latest
+   steps:
+     - name: Execute Boomi Process to Update Cross Reference Extensions
+       uses: actions/checkout@v2
+     - id: updateExtensions
+       run: |
+             environmentNames=${{needs.getCrossReferenceDetails.outputs.environmentName}}
+             echo $environmentNames
