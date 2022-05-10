@@ -80,7 +80,7 @@ jobs:
                 fi
                 BoomiAccountId=$BOOMI_ACCOUNTID
                 echo $BoomiAccountId
-                
+                echo $apiAuth
                 
                 if [ $category == "All" ]
                  then
@@ -93,7 +93,7 @@ jobs:
                do
                
                  RUN=`curl  --request POST \
-                               --header "authorization: Basic dHJhaW5pbmdhc2htaXRhc2F3YW50LUQ5UDhKNy5INks3NEM6ZjY3Y2QwM2YtNzRiYy00YmEyLTlhNzYtM2ZjYjI2NzQ1NWEx" \
+                               --header "authorization: ${apiAuth}" \
                                --header 'content-type: application/xml' \
                                --url 'https://c01-sg.integrate-test.boomi.com/ws/rest/CSV/?name='${name}'&envName='${envNames[$i]}'' \
                                --data "'${readCSV}'"`
